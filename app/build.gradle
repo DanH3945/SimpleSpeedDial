@@ -21,8 +21,15 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation "com.android.support:appcompat-v7:$rootProject.supportVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportVersion"
+
+    implementation "com.android.support:support-v4:$rootProject.supportVersion"
+    implementation "com.android.support:animated-vector-drawable:$rootProject.supportVersion"
+    implementation "com.android.support:exifinterface:$rootProject.supportVersion"
+    implementation "com.android.support:customtabs:$rootProject.supportVersion"
 
     implementation "de.psdev.licensesdialog:licensesdialog:$rootProject.licenseDialogVersion"
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"

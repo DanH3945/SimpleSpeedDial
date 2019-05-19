@@ -18,6 +18,10 @@ public class ContactsViewer {
         contacts = new ArrayList<>();
     }
 
+    public static ContactsViewer getInstance() {
+        return new ContactsViewer();
+    }
+
     private Cursor getContactsCursor(Context context) {
         return context.getContentResolver()
                 .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
