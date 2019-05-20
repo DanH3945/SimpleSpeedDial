@@ -5,7 +5,9 @@ import java.util.TreeMap;
 
 public class Contact {
 
+    private String id;
     private String name;
+    private String lookupKey;
     private Map<String, String> numbers;
 
     public String getName() {
@@ -28,6 +30,22 @@ public class Contact {
 
     public Map<String, String> getPhoneNumbers() {
         return numbers;
+    }
+
+    public String getLookupKey() {
+        return lookupKey;
+    }
+
+    public void setLookupKey(String lookupKey) {
+        this.lookupKey = lookupKey;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

@@ -76,19 +76,19 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         return mContactList.size() > 0 ? mContactList.size() : 0;
     }
 
-    public void setContactList(List<Contact> contactList) {
+    void setContactList(List<Contact> contactList) {
         mContactList = contactList;
         Timber.d("Setting Contact List with %s items", contactList.size());
         this.notifyDataSetChanged();
     }
 
-    public class ContactViewHolder extends RecyclerView.ViewHolder {
+    class ContactViewHolder extends RecyclerView.ViewHolder {
 
         CardView mRecyclerCard;
         TextView mTextView;
         RecyclerView mListView;
 
-        public ContactViewHolder(@NonNull View itemView) {
+        ContactViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mRecyclerCard = itemView.findViewById(R.id.contact_recycler_card);
@@ -104,7 +104,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         private Contact mContact;
         private Object[] mKeyArray;
 
-        public SubListAdapter(Contact contact) {
+        SubListAdapter(Contact contact) {
             this.mContact = contact;
             mKeyArray = contact.getPhoneNumbers().keySet().toArray();
         }
@@ -117,17 +117,17 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-            String numberType = (String) mKeyArray[i];
+        public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
+            final String numberType = (String) mKeyArray[i];
             viewHolder.mTypeTextView.setText(numberType);
 
-            String number = mContact.getPhoneNumbers().get(mKeyArray[i]);
+            final String number = mContact.getPhoneNumbers().get(mKeyArray[i]);
             viewHolder.mNumberTextView.setText(number);
 
             viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Timber.d("Selected %s with the number %s", mContact.getName(), mContact.getPhoneNumbers().get(i));
+                    Timber.d("Number selected for: %s with type: %s and number: %s", mContact.getName(), numberType, number);
                 }
             });
         }
@@ -138,13 +138,13 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             return numbersSize > 0 ? numbersSize : 0;
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        class ViewHolder extends RecyclerView.ViewHolder {
 
             LinearLayout mLayout;
             TextView mTypeTextView;
             TextView mNumberTextView;
 
-            public ViewHolder(@NonNull View itemView) {
+            ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 mLayout = itemView.findViewById(R.id.contact_recycler_sublist_linear_layout);

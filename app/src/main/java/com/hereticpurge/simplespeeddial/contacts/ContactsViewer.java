@@ -2,8 +2,11 @@ package com.hereticpurge.simplespeeddial.contacts;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.support.annotation.RequiresApi;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +15,10 @@ import timber.log.Timber;
 
 public class ContactsViewer {
 
-    private static List<Contact> contacts;
+    private static List<Contact> contactList;
 
     public ContactsViewer() {
-        contacts = new ArrayList<>();
+        contactList = new ArrayList<>();
     }
 
     public static ContactsViewer getInstance() {
@@ -25,34 +28,34 @@ public class ContactsViewer {
     private Cursor getContactsCursor(Context context) {
         return context.getContentResolver()
                 .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                        new String[]{Phone._ID, Phone.DISPLAY_NAME, Phone.NUMBER, Phone.TYPE}, null, null, Phone.DISPLAY_NAME + " ASC");
+                        new String[]{Phone._ID, Phone.DISPLAY_NAME, Phone.NUMBER, Phone.TYPE, Phone.LOOKUP_KEY}, null, null, Phone.DISPLAY_NAME + " ASC");
     }
 
 
     // Todo this should probably run on it's own thread.
     // Fix me
     public List<Contact> getContacts(Context context) {
-        Cursor cursor = getContactsCursor(context);
 
-        try {
+        try (Cursor cursor = getContactsCursor(context)) {
 
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
-                Contact contact = new Contact();
-
+                String id = null;
+                String contactName = null;
                 String numberType = null;
                 String phoneNumber = null;
+                String lookupKey = null;
 
                 for (int i = 0; i < cursor.getColumnCount(); i++) {
                     Timber.d("Column Name: %s -- Column Data: %s", cursor.getColumnName(i), cursor.getString(i));
 
                     switch (cursor.getColumnName(i)) {
                         case "_id":
-                            // we aren't using the id column so we just continue to the next loop
+                            id = cursor.getString(i);
                             continue;
 
                         case "display_name":
-                            contact.setName(cursor.getString(i));
+                            contactName = cursor.getString(i);
                             break;
 
                         case "data1":
@@ -62,21 +65,40 @@ public class ContactsViewer {
                         case "data2":
                             int typeLabelResource = Phone.getTypeLabelResource(cursor.getInt(i));
                             numberType = context.getString(typeLabelResource);
+
+                        case "lookup":
+                            lookupKey = cursor.getString(i);
                     }
                 }
-                if (numberType != null && phoneNumber != null) {
-                    if (contacts.contains(contact)) {
-                        contacts.get(contacts.indexOf(contact)).addPhoneNumber(numberType, phoneNumber);
-                    } else {
-                        contact.addPhoneNumber(numberType, phoneNumber);
-                        contacts.add(contact);
-                    }
+
+                Contact contact = new Contact();
+                contact.setName(contactName);
+
+                if (contactList.contains(contact)) {
+                    contactList.get(contactList.indexOf(contact)).addPhoneNumber(numberType, phoneNumber);
+
+                } else {
+
+                    contact.setId(id);
+                    contact.addPhoneNumber(numberType, phoneNumber);
+                    contact.setLookupKey(lookupKey);
+
+                    contactList.add(contact);
                 }
             }
-        } finally {
-            cursor.close();
         }
 
-        return contacts;
+        return contactList;
     }
+
+    @RequiresApi(23)
+    public static void showQuickContactSheet(Context context, View view, String lookupKey) {
+        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey);
+        ContactsContract.QuickContact.showQuickContact(context,
+                view,
+                uri,
+                null,
+                null);
+    }
+
 }
