@@ -3,12 +3,11 @@ package com.hereticpurge.simplespeeddial;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.hereticpurge.simplespeeddial.contacts.Contact;
@@ -36,17 +35,27 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
     @Override
     public void onBindViewHolder(@NonNull final ContactViewHolder viewHolder, int i) {
+
+        viewHolder.mTextView.setText(mContactList.get(i).getName());
+
+        List<String> contactNumbers = mContactList.get(i).getPhoneNumbers();
+
+        viewHolder.mListView.setAdapter(new SubListAdapter(contactNumbers));
+        viewHolder.mListView.setLayoutManager(new LinearLayoutManager(mContext));
+
         viewHolder.mRecyclerCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Timber.d("Clicked");
-                Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.slide_down_anim);
-                viewHolder.mRecyclerCard.startAnimation(anim);
+                if (viewHolder.mListView.getVisibility() == View.GONE) {
+                    viewHolder.mListView.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.mListView.setVisibility(View.GONE);
+                }
             }
         });
 
         Timber.d("Binding ViewHolder with %s on item # %s", mContactList.get(i).getName(), i);
-        viewHolder.mTextView.setText(mContactList.get(i).getName());
     }
 
     @Override
@@ -65,12 +74,53 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
         CardView mRecyclerCard;
         TextView mTextView;
+        RecyclerView mListView;
 
         public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mRecyclerCard = itemView.findViewById(R.id.contact_recycler_card);
             mTextView = itemView.findViewById(R.id.contact_recycler_card_text);
+            mListView = itemView.findViewById(R.id.contact_recycler_card_list);
+        }
+    }
+
+    // Recyclerview Adapter and View Holder for the sublist containing phone numbers.
+
+    public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ViewHolder> {
+
+        private List<String> mNumbers;
+
+        public SubListAdapter(List<String> numbers) {
+            this.mNumbers = numbers;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.contact_recycler_sub_list_item, viewGroup, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+            viewHolder.mTextView.setText(mNumbers.get(i));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mNumbers.size() > 0 ? mNumbers.size() : 0;
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            TextView mTextView;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                mTextView = itemView.findViewById(R.id.contact_recycler_sublist_text);
+            }
         }
     }
 }
