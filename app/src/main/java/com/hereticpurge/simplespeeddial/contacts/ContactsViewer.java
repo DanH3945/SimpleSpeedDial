@@ -25,7 +25,7 @@ public class ContactsViewer {
     private Cursor getContactsCursor(Context context) {
         return context.getContentResolver()
                 .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                        new String[] {Phone._ID, Phone.DISPLAY_NAME, Phone.NUMBER}, null, null,  Phone.DISPLAY_NAME + " ASC");
+                        new String[]{Phone._ID, Phone.DISPLAY_NAME, Phone.NUMBER, Phone.TYPE}, null, null, Phone.DISPLAY_NAME + " ASC");
     }
 
 
@@ -33,7 +33,6 @@ public class ContactsViewer {
     // Fix me
     public List<Contact> getContacts(Context context) {
         Cursor cursor = getContactsCursor(context);
-        cursor.moveToFirst();
 
         try {
 
@@ -41,8 +40,12 @@ public class ContactsViewer {
 
                 Contact contact = new Contact();
 
+                String numberType = null;
+                String phoneNumber = null;
+
                 for (int i = 0; i < cursor.getColumnCount(); i++) {
                     Timber.d("Column Name: %s -- Column Data: %s", cursor.getColumnName(i), cursor.getString(i));
+
                     switch (cursor.getColumnName(i)) {
                         case "_id":
                             // we aren't using the id column so we just continue to the next loop
@@ -53,19 +56,20 @@ public class ContactsViewer {
                             break;
 
                         case "data1":
-                            // data1 is the phone number column
-                            if (contacts.contains(contact)) {
-                                // If the contact already exists in the contact list we just add
-                                // the phone number to the list of numbers
-                                int index = contacts.indexOf(contact);
-                                contacts.get(index).addPhoneNumber(cursor.getString(i));
-                            } else {
-                                // If the contact isn't in the list we add the listed number
-                                // to the contact then add the whole contact to the list
-                                contact.addPhoneNumber(cursor.getString(i));
-                                contacts.add(contact);
-                            }
+                            phoneNumber = cursor.getString(i);
                             break;
+
+                        case "data2":
+                            int typeLabelResource = Phone.getTypeLabelResource(cursor.getInt(i));
+                            numberType = context.getString(typeLabelResource);
+                    }
+                }
+                if (numberType != null && phoneNumber != null) {
+                    if (contacts.contains(contact)) {
+                        contacts.get(contacts.indexOf(contact)).addPhoneNumber(numberType, phoneNumber);
+                    } else {
+                        contact.addPhoneNumber(numberType, phoneNumber);
+                        contacts.add(contact);
                     }
                 }
             }

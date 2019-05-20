@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hereticpurge.simplespeeddial.contacts.Contact;
@@ -81,7 +82,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         this.notifyDataSetChanged();
     }
 
-    public class ContactViewHolder extends RecyclerView.ViewHolder{
+    public class ContactViewHolder extends RecyclerView.ViewHolder {
 
         CardView mRecyclerCard;
         TextView mTextView;
@@ -91,7 +92,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             super(itemView);
 
             mRecyclerCard = itemView.findViewById(R.id.contact_recycler_card);
-            mTextView = itemView.findViewById(R.id.contact_recycler_card_text);
+            mTextView = itemView.findViewById(R.id.contact_recycler_card_name_text);
             mListView = itemView.findViewById(R.id.contact_recycler_card_list);
         }
     }
@@ -101,9 +102,11 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
     public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ViewHolder> {
 
         private Contact mContact;
+        private Object[] mKeyArray;
 
         public SubListAdapter(Contact contact) {
             this.mContact = contact;
+            mKeyArray = contact.getPhoneNumbers().keySet().toArray();
         }
 
         @NonNull
@@ -115,9 +118,13 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-            viewHolder.mTextView.setText(mContact.getPhoneNumbers().get(i));
+            String numberType = (String) mKeyArray[i];
+            viewHolder.mTypeTextView.setText(numberType);
 
-            viewHolder.mTextView.setOnClickListener(new View.OnClickListener() {
+            String number = mContact.getPhoneNumbers().get(mKeyArray[i]);
+            viewHolder.mNumberTextView.setText(number);
+
+            viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Timber.d("Selected %s with the number %s", mContact.getName(), mContact.getPhoneNumbers().get(i));
@@ -133,12 +140,16 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
         public class ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView mTextView;
+            LinearLayout mLayout;
+            TextView mTypeTextView;
+            TextView mNumberTextView;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
 
-                mTextView = itemView.findViewById(R.id.contact_recycler_sublist_text);
+                mLayout = itemView.findViewById(R.id.contact_recycler_sublist_linear_layout);
+                mTypeTextView = itemView.findViewById(R.id.contact_recycler_sublist_type_text);
+                mNumberTextView = itemView.findViewById(R.id.contact_recycler_sublist_number_text);
             }
         }
     }

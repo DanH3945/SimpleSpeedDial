@@ -1,12 +1,12 @@
 package com.hereticpurge.simplespeeddial.contacts;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Contact {
 
     private String name;
-    private List<String> numbers;
+    private Map<String, String> numbers;
 
     public String getName() {
         return name;
@@ -16,17 +16,17 @@ public class Contact {
         this.name = name;
     }
 
-    public void addPhoneNumber(String phoneNumber) {
+    public void addPhoneNumber(String numberType, String phoneNumber) {
         if (numbers == null) {
-            numbers = new ArrayList<>();
+            numbers = new TreeMap<>();
         }
 
-        if (!numbers.contains(phoneNumber)) {
-            numbers.add(phoneNumber);
+        if (!numbers.containsKey(phoneNumber)) {
+            numbers.put(numberType, phoneNumber);
         }
     }
 
-    public List<String> getPhoneNumbers() {
+    public Map<String, String> getPhoneNumbers() {
         return numbers;
     }
 
