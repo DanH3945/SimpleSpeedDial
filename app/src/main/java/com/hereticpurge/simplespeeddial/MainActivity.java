@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState == null) {
-            //loadFragment(PrimaryDisplayFragment.createInstance(), true, PrimaryDisplayFragment.TAG);
-            loadFragment(ContactListFragment.createInstance(), true, ContactListFragment.TAG);
+            loadFragment(PrimaryDisplayFragment.createInstance(), true, PrimaryDisplayFragment.TAG);
         }
     }
 
