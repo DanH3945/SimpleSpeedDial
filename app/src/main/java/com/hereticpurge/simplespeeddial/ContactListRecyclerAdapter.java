@@ -72,7 +72,6 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
     @Override
     public int getItemCount() {
-        Timber.d("Getting item count with a value of %s", (mContactList.size() > 0 ? mContactList.size() : 0));
         return mContactList.size() > 0 ? mContactList.size() : 0;
     }
 

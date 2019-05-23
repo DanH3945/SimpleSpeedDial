@@ -13,6 +13,7 @@ public class TimberDebugTree extends Timber.DebugTree {
 
         String filler = " ---------- ";
 
+        sb.append("TIMBER");
         sb.append(filler);
         sb.append(message);
         sb.append(filler);

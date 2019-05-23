@@ -38,13 +38,16 @@ public class PrimaryDisplayFragment extends Fragment {
         mContactListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Check if we have permission to read contacts
                 if (ContextCompat.checkSelfPermission(getActivity(),
                         Manifest.permission.READ_CONTACTS)
                         != PackageManager.PERMISSION_GRANTED) {
-
+                    // We do not have permission so ask for it. Get the result in the
+                    // onRequestPermissionResult method.
                     requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},
                             PERMISSIONS_REQUEST_READ_CONTACTS);
                 } else {
+                    // We do have permission so load the contacts display fragment
                     loadContactListFragment();
                 }
 
@@ -56,12 +59,15 @@ public class PrimaryDisplayFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Timber.d("Calling onRequestPermissionsResult");
+        // Callback from the permissions request made above.
+        // Switch is used incase we add more permission requests in the future.
         switch (requestCode) {
             case PERMISSIONS_REQUEST_READ_CONTACTS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // We got permission from the user so load the contacts display fragment
                     loadContactListFragment();
                 }
+                // We didn't get permission so stay where we are and don't load the contact fragment.
         }
     }
 
@@ -69,7 +75,10 @@ public class PrimaryDisplayFragment extends Fragment {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.main_fragment_container, ContactListFragment.createInstance(), ContactListFragment.TAG);
+        ft.addToBackStack(ContactListFragment.TAG);
         ft.commit();
         fm.executePendingTransactions();
     }
+
+
 }

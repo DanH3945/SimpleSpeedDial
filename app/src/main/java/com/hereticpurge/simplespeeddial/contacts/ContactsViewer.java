@@ -28,7 +28,10 @@ public class ContactsViewer {
     private Cursor getContactsCursor(Context context) {
         return context.getContentResolver()
                 .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                        new String[]{Phone._ID, Phone.DISPLAY_NAME, Phone.NUMBER, Phone.TYPE, Phone.LOOKUP_KEY}, null, null, Phone.DISPLAY_NAME + " ASC");
+                        new String[]{Phone._ID, Phone.DISPLAY_NAME, Phone.NUMBER, Phone.TYPE, Phone.LOOKUP_KEY},
+                        null,
+                        null,
+                        Phone.DISPLAY_NAME + " ASC");
     }
 
 
