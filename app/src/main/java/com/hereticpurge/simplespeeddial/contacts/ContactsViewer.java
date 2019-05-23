@@ -2,11 +2,8 @@ package com.hereticpurge.simplespeeddial.contacts;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.support.annotation.RequiresApi;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +11,10 @@ import java.util.List;
 import timber.log.Timber;
 
 public class ContactsViewer {
+
+    public interface ContactsCallback {
+        void onResponse(List<Contact> contactList);
+    }
 
     private static List<Contact> contactList;
 
@@ -34,10 +35,16 @@ public class ContactsViewer {
                         Phone.DISPLAY_NAME + " ASC");
     }
 
+    public void getContacts(final Context context, final ContactsCallback contactsCallback) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                contactsCallback.onResponse(readContacts(context));
+            }
+        }).start();
+    }
 
-    // Todo this should probably run on it's own thread.
-    // Fix me
-    public List<Contact> getContacts(Context context) {
+    private List<Contact> readContacts(Context context) {
 
         try (Cursor cursor = getContactsCursor(context)) {
 
@@ -93,15 +100,4 @@ public class ContactsViewer {
 
         return contactList;
     }
-
-    @RequiresApi(23)
-    public static void showQuickContactSheet(Context context, View view, String lookupKey) {
-        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey);
-        ContactsContract.QuickContact.showQuickContact(context,
-                view,
-                uri,
-                null,
-                null);
-    }
-
 }

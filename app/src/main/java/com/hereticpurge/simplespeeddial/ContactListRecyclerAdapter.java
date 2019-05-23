@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hereticpurge.simplespeeddial.contacts.Contact;
+import com.hereticpurge.simplespeeddial.contacts.ContactsViewer;
 
 import java.util.List;
 
@@ -26,6 +27,13 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
     public ContactListRecyclerAdapter(Context context) {
         mContext = context;
+
+        ContactsViewer.getInstance().getContacts(context, new ContactsViewer.ContactsCallback() {
+            @Override
+            public void onResponse(List<Contact> contactList) {
+                setContactList(contactList);
+            }
+        });
     }
 
     @NonNull

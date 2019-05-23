@@ -21,6 +21,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="24dp"
+        android:text="@string/primary_display_contact_list_button"
+        android:background="@drawable/primary_display_btn_background"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:textColor="@color/contact_list_btn_text_color"/>
 
 </android.support.constraint.ConstraintLayout>
