@@ -19,6 +19,7 @@ import com.hereticpurge.simplespeeddial.contacts.ContactsViewer;
 import com.hereticpurge.simplespeeddial.database.QuickContact;
 import com.hereticpurge.simplespeeddial.database.QuickContactDao;
 import com.hereticpurge.simplespeeddial.database.QuickContactDatabase;
+import com.hereticpurge.simplespeeddial.widget.WidgetProvider;
 
 import java.util.List;
 
@@ -154,6 +155,8 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
                                     mContact.getName(),
                                     numberType,
                                     number);
+
+                            WidgetProvider.notifyWidgets(mContext);
                         }
                     });
                 }

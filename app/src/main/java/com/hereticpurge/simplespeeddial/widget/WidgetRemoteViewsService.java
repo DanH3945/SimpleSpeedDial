@@ -1,5 +1,6 @@
 package com.hereticpurge.simplespeeddial.widget;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,7 +13,9 @@ import com.hereticpurge.simplespeeddial.database.QuickContactDatabase;
 
 import java.util.List;
 
-public class WidgetRemoteViewsProvider extends RemoteViewsService {
+import timber.log.Timber;
+
+public class WidgetRemoteViewsService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -41,16 +44,18 @@ public class WidgetRemoteViewsProvider extends RemoteViewsService {
 
         @Override
         public void onDestroy() {
-            mDatabase.close();
         }
 
         @Override
         public int getCount() {
+            Timber.d("Getting app widget count with value: %s", mQuickContactList.size() > 0 ? mQuickContactList.size() : 0);
             return mQuickContactList.size() > 0 ? mQuickContactList.size() : 0;
         }
 
         @Override
         public RemoteViews getViewAt(int position) {
+            Timber.d("Building widget remote view at position: %s", position);
+
             RemoteViews baseView =
                     new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
 
@@ -65,6 +70,7 @@ public class WidgetRemoteViewsProvider extends RemoteViewsService {
 
             baseView.setOnClickFillInIntent(R.id.widget_item_card, intent);
 
+            Timber.d("Finished Building view, returning.");
             return baseView;
         }
 
