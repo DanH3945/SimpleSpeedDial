@@ -27,6 +27,7 @@
                 android:resource="@xml/simple_speed_dial_widget_info" />
         </receiver>
 
+        <service android:name=".widget.WidgetRemoteViewsProvider" />
     </application>
 
 </manifest>

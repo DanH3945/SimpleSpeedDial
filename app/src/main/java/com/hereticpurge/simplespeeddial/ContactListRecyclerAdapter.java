@@ -1,6 +1,7 @@
 package com.hereticpurge.simplespeeddial;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,9 @@ import android.widget.TextView;
 
 import com.hereticpurge.simplespeeddial.contacts.Contact;
 import com.hereticpurge.simplespeeddial.contacts.ContactsViewer;
+import com.hereticpurge.simplespeeddial.database.QuickContact;
+import com.hereticpurge.simplespeeddial.database.QuickContactDao;
+import com.hereticpurge.simplespeeddial.database.QuickContactDatabase;
 
 import java.util.List;
 
@@ -104,7 +108,8 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         }
     }
 
-    // Recyclerview Adapter and View Holder for the sublist containing phone numbers.
+    // Recyclerview Adapter and View Holder for the sublist containing phone numbers.  This whole
+    // adapter only covers the phone numbers of a single contact from the constructor.
 
     public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ViewHolder> {
 
@@ -134,7 +139,23 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Timber.d("Number selected for: %s with type: %s and number: %s", mContact.getName(), numberType, number);
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            QuickContact quickContact = new QuickContact(mContact.getName());
+
+                            quickContact.setNumber(number);
+                            quickContact.setNumberType(numberType);
+
+                            QuickContactDao quickContactDao = QuickContactDatabase.getQuickContactDatabase(mContext).quickContactDao();
+                            quickContactDao.insertContact(quickContact);
+
+                            Timber.d("Number selected for: %s with type: %s and number: %s ... Adding to database",
+                                    mContact.getName(),
+                                    numberType,
+                                    number);
+                        }
+                    });
                 }
             });
         }
