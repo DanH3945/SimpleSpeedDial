@@ -26,6 +26,6 @@
         android:background="@drawable/primary_display_btn_background"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
-        android:textColor="@color/contact_list_btn_text_color"/>
+        android:textColor="@color/contactListBtnTextColor"/>
 
 </android.support.constraint.ConstraintLayout>

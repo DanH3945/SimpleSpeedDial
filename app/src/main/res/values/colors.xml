@@ -4,5 +4,10 @@
     <color name="colorPrimaryLight">#689a92</color>
     <color name="colorPrimaryDark">#345953</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="contact_list_btn_text_color">#252525</color>
+
+    <color name="contactListBtnTextColor">#252525</color>
+
+    <color name="dividerColor">#202020</color>
+
+    <color name="widgetBackgroundColor">#FFFEFE</color>
 </resources>

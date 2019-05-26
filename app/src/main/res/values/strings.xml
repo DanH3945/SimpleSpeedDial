@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">SimpleSpeedDial</string>
+    <string name="app_name_pretty">Simple Speed Dial</string>
     <string name="default_string">Default</string>
     <string name="primary_display_contact_list_button">Contacts</string>
     <string name="widget_empty_text">empty</string>

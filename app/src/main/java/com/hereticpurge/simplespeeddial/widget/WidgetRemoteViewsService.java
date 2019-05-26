@@ -63,6 +63,7 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
             baseView.setTextViewText(R.id.widget_item_name_text, quickContact.getName());
             baseView.setTextViewText(R.id.widget_item_number_text, quickContact.getNumber());
+            baseView.setTextViewText(R.id.widget_item_number_type_text, quickContact.getNumberType());
 
             String callUri = "tel:" + quickContact.getNumber();
             Intent intent = new Intent(Intent.ACTION_DIAL);
