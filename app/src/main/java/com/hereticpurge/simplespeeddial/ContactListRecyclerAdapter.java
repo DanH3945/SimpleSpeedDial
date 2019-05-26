@@ -2,6 +2,8 @@ package com.hereticpurge.simplespeeddial;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -85,13 +87,35 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
     @Override
     public int getItemCount() {
-        return mContactList.size() > 0 ? mContactList.size() : 0;
+        if (mContactList != null) {
+            return mContactList.size() > 0 ? mContactList.size() : 0;
+        } else {
+            return 0;
+        }
     }
 
     void setContactList(List<Contact> contactList) {
         mContactList = contactList;
         Timber.d("Setting Contact List with %s items", contactList.size());
+
+        // This method could be called from another thread.  The call to notifyDatasetChanged
+        // must run on the UI thread.  So we'll make sure it does.
+        if (Looper.myLooper() != mContext.getMainLooper()) {
+            // Get the main looper and send the runnable to the UI thread.
+            Handler handler = new Handler(mContext.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    ContactListRecyclerAdapter.this.notifyDataSetChanged();
+                }
+            });
+            // return so we don't notify twice
+            return;
+        }
+        // Skipped the if because we're already on the UI thread.
+        // So we just notify and move on.
         this.notifyDataSetChanged();
+
     }
 
     class ContactViewHolder extends RecyclerView.ViewHolder {
