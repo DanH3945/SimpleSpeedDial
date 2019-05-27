@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hereticpurge.simplespeeddial.contacts.ContactsViewer;
-
 import timber.log.Timber;
 
 public class ContactListFragment extends Fragment {
@@ -32,7 +30,7 @@ public class ContactListFragment extends Fragment {
         Timber.d("Creating View for %s", TAG);
 
         mRecyclerView = view.findViewById(R.id.contact_recycler_view);
-        mContactListRecyclerAdapter = new ContactListRecyclerAdapter(getContext());
+        mContactListRecyclerAdapter = new ContactListRecyclerAdapter(getContext(), mRecyclerView);
 
         mRecyclerView.setAdapter(mContactListRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

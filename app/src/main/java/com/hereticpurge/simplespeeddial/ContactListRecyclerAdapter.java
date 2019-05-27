@@ -1,5 +1,6 @@
 package com.hereticpurge.simplespeeddial;
 
+import android.animation.LayoutTransition;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
@@ -34,10 +35,15 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
     private List<Contact> mContactList;
     private Context mContext;
+
+    // Live data for managing the state of the view holder's dropdown menus.
     private MutableLiveData<ContactViewHolder> mActiveViewHolder;
 
-    public ContactListRecyclerAdapter(Context context) {
+    private RecyclerView mOwner;
+
+    public ContactListRecyclerAdapter(Context context, RecyclerView owner) {
         mContext = context;
+        mOwner = owner;
 
         mActiveViewHolder = new MutableLiveData<>();
 
@@ -155,6 +161,15 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         }
 
         private void setGone() {
+            mOwner.setLayoutFrozen(true);
+            Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.slide_up_anim);
+            mListView.startAnimation(anim);
+            mListView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mOwner.setLayoutFrozen(false);
+                }
+            }, 350);
             mListView.setVisibility(View.GONE);
         }
 
@@ -177,7 +192,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
     // Recyclerview Adapter and View Holder for the sublist containing phone numbers.  This whole
     // adapter only covers the phone numbers of a single contact from the constructor.
 
-    public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ViewHolder> {
+    class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ViewHolder> {
 
         private Boolean isVisisble;
 
