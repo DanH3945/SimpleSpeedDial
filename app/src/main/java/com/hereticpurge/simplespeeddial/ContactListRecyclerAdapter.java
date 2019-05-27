@@ -65,7 +65,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
     @Override
     public void onViewAttachedToWindow(@NonNull ContactViewHolder holder) {
-        holder.observer();
+        holder.observe();
         super.onViewAttachedToWindow(holder);
     }
 
@@ -158,7 +158,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             mListView.setVisibility(View.GONE);
         }
 
-        void observer() {
+        void observe() {
             mActiveViewHolder.observeForever(this);
         }
 
