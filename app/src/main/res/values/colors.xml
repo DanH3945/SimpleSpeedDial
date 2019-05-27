@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    // Base Colors
     <color name="colorPrimary">#437469</color>
     <color name="colorPrimaryLight">#689a92</color>
     <color name="colorPrimaryDark">#345953</color>
     <color name="colorAccent">#D81B60</color>
-
-    <color name="contactListBtnTextColor">#252525</color>
-
     <color name="dividerColor">#202020</color>
 
+    // Primary Display Fragment Colors
+    <color name="contactListBtnTextColor">#252525</color>
+
+    // Widget Colors
     <color name="widgetBackgroundColor">#FFFEFE</color>
+
+    // Dialog Colors
+    <color name="httpLinkBlue">#0000EE</color>
 </resources>

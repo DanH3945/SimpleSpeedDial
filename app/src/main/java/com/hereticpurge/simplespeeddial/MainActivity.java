@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.hereticpurge.simplespeeddial.logging.TimberDebugTree;
 import com.hereticpurge.simplespeeddial.logging.TimberReleaseTree;
@@ -53,5 +55,29 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.overflow_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.overflow_menu_about:
+                new AboutDialogFragment().show(getSupportFragmentManager(), null);
+                break;
+
+            case R.id.overflow_menu_preferences:
+                // No preferences yet
+                // Todo implement me
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

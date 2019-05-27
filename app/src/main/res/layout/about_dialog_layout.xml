@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/about_version_tv"
+        android:gravity="center"
+        android:layout_margin="8dp"/>
+
+    <View style="@style/DividerStyle"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+
+    <TextView
+        android:id="@+id/about_third_party_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/about_item_margin"
+        android:contentDescription="@string/about_third_party_licenses"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/about_third_party_licenses" />
+
+
+    <TextView
+        android:id="@+id/about_license_dialog_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/about_item_height"
+        android:layout_margin="@dimen/about_item_margin"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/about_license_dialog_title"
+        android:textColor="@color/httpLinkBlue" />
+
+    <TextView
+        android:id="@+id/about_picasso_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/about_item_height"
+        android:layout_margin="@dimen/about_item_margin"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/about_picasso_license_title"
+        android:textColor="@color/httpLinkBlue" />
+
+    <TextView
+        android:id="@+id/about_timber_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/about_item_height"
+        android:layout_margin="@dimen/about_item_margin"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/about_timber_license_title"
+        android:textColor="@color/httpLinkBlue" />
+
+    <View style="@style/DividerStyle"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"/>
+
+</LinearLayout>

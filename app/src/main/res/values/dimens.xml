@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    // About Fragment Dimensions
+    <dimen name="about_item_height">32dp</dimen>
+    <dimen name="about_item_margin">8dp</dimen>
+
+</resources>
