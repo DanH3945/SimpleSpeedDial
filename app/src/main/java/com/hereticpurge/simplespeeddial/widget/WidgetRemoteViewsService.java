@@ -3,6 +3,8 @@ package com.hereticpurge.simplespeeddial.widget;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -10,7 +12,9 @@ import android.widget.RemoteViewsService;
 import com.hereticpurge.simplespeeddial.R;
 import com.hereticpurge.simplespeeddial.database.QuickContact;
 import com.hereticpurge.simplespeeddial.database.QuickContactDatabase;
+import com.hereticpurge.simplespeeddial.image.ImageHelper;
 
+import java.io.File;
 import java.util.List;
 
 import timber.log.Timber;
@@ -61,9 +65,14 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
             QuickContact quickContact = mQuickContactList.get(position);
 
+            Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_background);
+            image = ImageHelper.getRoundedCornerBitmap(image, 24);
+
+            baseView.setImageViewBitmap(R.id.widget_image_view, image);
+
             baseView.setTextViewText(R.id.widget_item_name_text, quickContact.getName());
-            baseView.setTextViewText(R.id.widget_item_number_text, quickContact.getNumber());
             baseView.setTextViewText(R.id.widget_item_number_type_text, quickContact.getNumberType());
+//            baseView.setTextViewText(R.id.widget_item_number_text, quickContact.getNumber());
 
             String callUri = "tel:" + quickContact.getNumber();
             Intent intent = new Intent(Intent.ACTION_DIAL);
