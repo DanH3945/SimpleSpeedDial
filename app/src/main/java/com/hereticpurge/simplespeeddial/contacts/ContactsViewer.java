@@ -1,7 +1,9 @@
 package com.hereticpurge.simplespeeddial.contacts;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 
@@ -84,6 +86,8 @@ public class ContactsViewer {
                 Contact contact = new Contact();
                 contact.setName(contactName);
 
+                // Todo use the ID to get the PhotoURI and add it to the quickcontact
+
                 if (contactList.contains(contact)) {
                     contactList.get(contactList.indexOf(contact)).addPhoneNumber(numberType, phoneNumber);
 
@@ -99,5 +103,30 @@ public class ContactsViewer {
         }
 
         return contactList;
+    }
+
+    public Uri getPhotoUri(Context context, String id) {
+        try (Cursor cur = context.getContentResolver().query(
+                ContactsContract.Data.CONTENT_URI,
+                null,
+                ContactsContract.Data.CONTACT_ID + "=" + id + " AND "
+                        + ContactsContract.Data.MIMETYPE + "='"
+                        + ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE + "'", null,
+                null)) {
+            // Actual try block starts here
+            if (cur != null) {
+                if (!cur.moveToFirst()) {
+                    return null; // no photo
+                }
+            } else {
+                return null; // error in cursor process
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        Uri person = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long
+                .parseLong(id));
+        return Uri.withAppendedPath(person, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
     }
 }
