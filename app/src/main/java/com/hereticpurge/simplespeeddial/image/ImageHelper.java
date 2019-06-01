@@ -17,6 +17,8 @@ import com.hereticpurge.simplespeeddial.R;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 
+import timber.log.Timber;
+
 public class ImageHelper {
 
     private static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
@@ -51,6 +53,12 @@ public class ImageHelper {
                     .openContactPhotoInputStream(context.getContentResolver(), lookupUri);
             BufferedInputStream bufferedInputStream = new BufferedInputStream(photoStream);
             photoBitmap = BitmapFactory.decodeStream(bufferedInputStream);
+
+        }
+
+        if (photoBitmap == null) {
+            Timber.d("Tried to load Null thumbnail: Loading default icon");
+            photoBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.default_contact_icon);
         }
 
         return photoBitmap;
