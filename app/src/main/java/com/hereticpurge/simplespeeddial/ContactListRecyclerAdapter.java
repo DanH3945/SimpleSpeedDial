@@ -1,6 +1,5 @@
 package com.hereticpurge.simplespeeddial;
 
-import android.animation.LayoutTransition;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
@@ -8,7 +7,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -28,6 +26,7 @@ import com.hereticpurge.simplespeeddial.contacts.ContactsViewer;
 import com.hereticpurge.simplespeeddial.database.QuickContact;
 import com.hereticpurge.simplespeeddial.database.QuickContactDao;
 import com.hereticpurge.simplespeeddial.database.QuickContactDatabase;
+import com.hereticpurge.simplespeeddial.image.ImageHelper;
 import com.hereticpurge.simplespeeddial.widget.WidgetProvider;
 
 import java.util.List;
@@ -83,11 +82,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
         viewHolder.mTextView.setText(mContactList.get(i).getName());
         viewHolder.mImageView.setImageBitmap(
-                ContactsViewer
-                        .getInstance()
-                        .getContactPhoto(mContext,
-                                mContactList.get(i).getLookupUri()
-                        )
+                ImageHelper.getContactPhoto(mContext, mContactList.get(i).getLookupUri())
         );
 
         viewHolder.mListView.setAdapter(new SubListAdapter(mContactList.get(i)));
@@ -105,7 +100,6 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
         Timber.d("Binding ViewHolder with %s on item # %s", mContactList.get(i).getName(), i);
     }
-
 
 
     @Override
