@@ -55,6 +55,13 @@ public class ImageHelper {
             if (photoStream != null) {
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(photoStream);
                 photoBitmap = BitmapFactory.decodeStream(bufferedInputStream);
+
+                try {
+                    photoStream.close();
+                    bufferedInputStream.close();
+                } catch (IOException e) {
+                    Timber.d(e);
+                }
             }
         }
 
