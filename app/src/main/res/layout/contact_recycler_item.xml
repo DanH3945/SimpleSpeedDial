@@ -11,6 +11,14 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp">
 
+    <ImageView
+        android:layout_width="@dimen/recycler_fragment_image_dimensions"
+        android:layout_height="@dimen/recycler_fragment_image_dimensions"
+        android:layout_gravity="start|center_vertical"
+        android:src="@drawable/ic_launcher_background"
+        android:id="@+id/contact_recycler_card_image_view"
+        android:scaleType="centerCrop"/>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

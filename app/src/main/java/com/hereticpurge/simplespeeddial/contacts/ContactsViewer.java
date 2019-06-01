@@ -124,6 +124,13 @@ public class ContactsViewer {
             photoBitmap = BitmapFactory.decodeStream(bufferedInputStream);
         }
 
+        return photoBitmap;
+    }
+
+    public Bitmap getContactPhotoRounded(Context context, Uri lookupUri) {
+
+        Bitmap photoBitmap = getContactPhoto(context, lookupUri);
+
         if (photoBitmap != null) {
             int pixels = context.getResources().getDimensionPixelSize(R.dimen.widget_photo_rounding_pixels);
             photoBitmap = ImageHelper.getRoundedCornerBitmap(photoBitmap, pixels);

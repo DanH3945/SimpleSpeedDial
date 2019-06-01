@@ -5,6 +5,9 @@
     <dimen name="about_item_height">32dp</dimen>
     <dimen name="about_item_margin">8dp</dimen>
 
+    // Recycler Fragment Dimensions
+    <dimen name="recycler_fragment_image_dimensions">56dp</dimen>
+
     // Widget Dimensions
     <dimen name="widget_text_size">12sp</dimen>
     <dimen name="widget_photo_rounding_pixels">20dp</dimen>

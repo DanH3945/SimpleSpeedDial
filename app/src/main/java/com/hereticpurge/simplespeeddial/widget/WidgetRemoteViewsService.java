@@ -66,7 +66,7 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
             Bitmap thumbnail = ContactsViewer
                     .getInstance()
-                    .getContactPhoto(getApplicationContext(), mQuickContactList.get(position).getLookup_uri());
+                    .getContactPhotoRounded(getApplicationContext(), mQuickContactList.get(position).getLookup_uri());
 
             baseView.setImageViewBitmap(R.id.widget_image_view, thumbnail);
             baseView.setTextViewText(R.id.widget_item_name_text, quickContact.getName());

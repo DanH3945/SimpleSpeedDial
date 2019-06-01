@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -81,6 +82,13 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
     public void onBindViewHolder(@NonNull final ContactViewHolder viewHolder, int i) {
 
         viewHolder.mTextView.setText(mContactList.get(i).getName());
+        viewHolder.mImageView.setImageBitmap(
+                ContactsViewer
+                        .getInstance()
+                        .getContactPhoto(mContext,
+                                mContactList.get(i).getLookupUri()
+                        )
+        );
 
         viewHolder.mListView.setAdapter(new SubListAdapter(mContactList.get(i)));
         viewHolder.mListView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -138,6 +146,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         CardView mRecyclerCard;
         TextView mTextView;
         RecyclerView mListView;
+        ImageView mImageView;
 
         ContactViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -145,6 +154,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             mRecyclerCard = itemView.findViewById(R.id.contact_recycler_card);
             mTextView = itemView.findViewById(R.id.contact_recycler_card_name_text);
             mListView = itemView.findViewById(R.id.contact_recycler_card_list);
+            mImageView = itemView.findViewById(R.id.contact_recycler_card_image_view);
         }
 
         private void switchVisibility() {
