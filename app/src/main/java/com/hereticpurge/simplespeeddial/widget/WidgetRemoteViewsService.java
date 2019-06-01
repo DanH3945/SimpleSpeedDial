@@ -9,6 +9,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.hereticpurge.simplespeeddial.R;
+import com.hereticpurge.simplespeeddial.contacts.ContactsViewer;
 import com.hereticpurge.simplespeeddial.database.QuickContact;
 import com.hereticpurge.simplespeeddial.database.QuickContactDatabase;
 import com.hereticpurge.simplespeeddial.image.ImageHelper;
@@ -63,6 +64,11 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
             QuickContact quickContact = mQuickContactList.get(position);
 
+            Bitmap thumbnail = ContactsViewer
+                    .getInstance()
+                    .getContactPhoto(getApplicationContext(), mQuickContactList.get(position).getLookup_uri());
+
+            baseView.setImageViewBitmap(R.id.widget_image_view, thumbnail);
             baseView.setTextViewText(R.id.widget_item_name_text, quickContact.getName());
             baseView.setTextViewText(R.id.widget_item_number_type_text, quickContact.getNumberType());
 //            baseView.setTextViewText(R.id.widget_item_number_text, quickContact.getNumber());

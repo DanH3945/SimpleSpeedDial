@@ -4,9 +4,11 @@ import android.animation.LayoutTransition;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -219,6 +221,8 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             final String number = mContact.getPhoneNumbers().get(mKeyArray[i]);
             viewHolder.mNumberTextView.setText(number);
 
+            final Uri lookupUri = mContact.getLookupUri();
+
             viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -229,6 +233,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
                             quickContact.setNumber(number);
                             quickContact.setNumberType(numberType);
+                            quickContact.setLookup_uri(lookupUri);
 
                             QuickContactDao quickContactDao = QuickContactDatabase.getQuickContactDatabase(mContext).quickContactDao();
                             quickContactDao.insertContact(quickContact);

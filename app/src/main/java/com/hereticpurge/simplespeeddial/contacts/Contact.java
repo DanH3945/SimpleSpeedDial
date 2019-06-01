@@ -1,5 +1,7 @@
 package com.hereticpurge.simplespeeddial.contacts;
 
+import android.net.Uri;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -7,7 +9,7 @@ public class Contact {
 
     private String id;
     private String name;
-    private String lookupKey;
+    private Uri lookupUri;
     private Map<String, String> numbers;
 
     public String getName() {
@@ -32,12 +34,12 @@ public class Contact {
         return numbers;
     }
 
-    public String getLookupKey() {
-        return lookupKey;
+    public Uri getLookupUri() {
+        return lookupUri;
     }
 
-    public void setLookupKey(String lookupKey) {
-        this.lookupKey = lookupKey;
+    public void setLookupUri(Uri lookupUri) {
+        this.lookupUri = lookupUri;
     }
 
     public String getId() {

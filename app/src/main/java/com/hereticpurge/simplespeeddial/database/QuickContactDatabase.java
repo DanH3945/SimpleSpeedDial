@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {QuickContact.class}, version = 1)
+@Database(entities = {QuickContact.class}, version = 2)
 public abstract class QuickContactDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "speed_dial_quick_contact_database";
