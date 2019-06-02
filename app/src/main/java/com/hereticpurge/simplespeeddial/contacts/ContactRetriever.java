@@ -11,7 +11,7 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class ContactsViewer {
+public class ContactRetriever {
 
     public interface ContactsCallback {
         void onResponse(List<Contact> contactList);
@@ -19,12 +19,12 @@ public class ContactsViewer {
 
     private static List<Contact> contactList;
 
-    public ContactsViewer() {
+    public ContactRetriever() {
         contactList = new ArrayList<>();
     }
 
-    public static ContactsViewer getInstance() {
-        return new ContactsViewer();
+    public static ContactRetriever getInstance() {
+        return new ContactRetriever();
     }
 
     private Cursor getContactsCursor(Context context) {
@@ -61,23 +61,23 @@ public class ContactsViewer {
                     Timber.d("Column Name: %s -- Column Data: %s", cursor.getColumnName(i), cursor.getString(i));
 
                     switch (cursor.getColumnName(i)) {
-                        case "_id":
+                        case Phone._ID:
                             id = cursor.getString(i);
                             continue;
 
-                        case "display_name":
+                        case Phone.DISPLAY_NAME:
                             contactName = cursor.getString(i);
                             break;
 
-                        case "data1":
+                        case Phone.NUMBER:
                             phoneNumber = cursor.getString(i);
                             break;
 
-                        case "data2":
+                        case Phone.TYPE:
                             int typeLabelResource = Phone.getTypeLabelResource(cursor.getInt(i));
                             numberType = context.getString(typeLabelResource);
 
-                        case "lookup":
+                        case Phone.LOOKUP_KEY:
                             if (id != null) {
                                 lookupUri = ContactsContract.Contacts.getLookupUri(Long.parseLong(id), cursor.getString(i));
                             }

@@ -4,6 +4,9 @@ import timber.log.Timber;
 
 public class TimberDebugTree extends Timber.DebugTree {
 
+    private final String FILLER = " ---------- ";
+    private final String TIMBER = "TIMBER";
+
     @Override
     protected void log(int priority, String tag, String message, Throwable t) {
 
@@ -11,12 +14,10 @@ public class TimberDebugTree extends Timber.DebugTree {
 
         StringBuilder sb = new StringBuilder();
 
-        String filler = " ---------- ";
-
-        sb.append("TIMBER");
-        sb.append(filler);
+        sb.append(TIMBER);
+        sb.append(FILLER);
         sb.append(message);
-        sb.append(filler);
+        sb.append(FILLER);
 
         String newMessage = sb.toString();
 

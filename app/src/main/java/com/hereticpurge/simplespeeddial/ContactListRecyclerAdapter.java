@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hereticpurge.simplespeeddial.contacts.Contact;
-import com.hereticpurge.simplespeeddial.contacts.ContactsViewer;
+import com.hereticpurge.simplespeeddial.contacts.ContactRetriever;
 import com.hereticpurge.simplespeeddial.database.QuickContact;
 import com.hereticpurge.simplespeeddial.database.QuickContactDao;
 import com.hereticpurge.simplespeeddial.database.QuickContactDatabase;
@@ -49,7 +49,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
         mActiveViewHolder = new MutableLiveData<>();
 
-        ContactsViewer.getInstance().getContacts(context, new ContactsViewer.ContactsCallback() {
+        ContactRetriever.getInstance().getContacts(context, new ContactRetriever.ContactsCallback() {
             @Override
             public void onResponse(List<Contact> contactList) {
                 setContactList(contactList);
@@ -91,7 +91,6 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         viewHolder.mRecyclerCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Todo this could look better by animating the card sliding out with the numbers.
                 Timber.d("Clicked");
                 viewHolder.switchVisibility();
             }
@@ -175,7 +174,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
                 public void run() {
                     mOwner.setLayoutFrozen(false);
                 }
-            }, 350);
+            }, 300);
             mListView.setVisibility(View.GONE);
         }
 
@@ -199,8 +198,6 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
     // adapter only covers the phone numbers of a single contact from the constructor.
 
     class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ViewHolder> {
-
-        private Boolean isVisisble;
 
         private Contact mContact;
         private Object[] mKeyArray;
