@@ -233,8 +233,9 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
                     AsyncTask.execute(new Runnable() {
                         @Override
                         public void run() {
-                            QuickContact quickContact = new QuickContact(mContact.getId());
+                            QuickContact quickContact = new QuickContact();
 
+                            quickContact.setContactId(mContact.getId());
                             quickContact.setName(name);
                             quickContact.setNumber(number);
                             quickContact.setNumberType(numberType);

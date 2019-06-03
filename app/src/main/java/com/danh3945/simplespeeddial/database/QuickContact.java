@@ -10,24 +10,30 @@ import android.support.annotation.NonNull;
 @TypeConverters(LocalTypeConverters.class)
 public class QuickContact {
 
-    @PrimaryKey @NonNull
-    private String id;
+    @PrimaryKey(autoGenerate = true)
+    private long databaseId;
+    private String contactId;
     private String name;
     private String number;
     private String numberType;
     private Uri lookup_uri;
 
-    public QuickContact(String id) {
-        this.id = id;
+    public QuickContact() {}
+
+    public long getDatabaseId() {
+        return databaseId;
     }
 
-    @NonNull
-    public String getId() {
-        return id;
+    public void setDatabaseId(long databaseId) {
+        this.databaseId = databaseId;
     }
 
-    public void setId(@NonNull String id) {
-        this.id = id;
+    public String getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
     }
 
     public String getName() {
