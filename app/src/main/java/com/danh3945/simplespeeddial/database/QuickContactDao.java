@@ -15,4 +15,7 @@ public interface QuickContactDao {
 
     @Query("SELECT * FROM QuickContact")
     List<QuickContact> getQuickContactList();
+
+    @Query("SELECT * FROM QuickContact WHERE name = :name")
+    QuickContact getSingleContact(String name);
 }

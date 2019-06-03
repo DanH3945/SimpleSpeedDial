@@ -20,6 +20,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.danh3945.simplespeeddial.contacts.Contact;
 import com.danh3945.simplespeeddial.contacts.ContactRetriever;
@@ -216,6 +217,8 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
+            final String name = mContact.getName();
+
             final String numberType = (String) mKeyArray[i];
             viewHolder.mTypeTextView.setText(numberType);
 
@@ -230,8 +233,9 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
                     AsyncTask.execute(new Runnable() {
                         @Override
                         public void run() {
-                            QuickContact quickContact = new QuickContact(mContact.getName());
+                            QuickContact quickContact = new QuickContact(mContact.getId());
 
+                            quickContact.setName(name);
                             quickContact.setNumber(number);
                             quickContact.setNumberType(numberType);
                             quickContact.setLookup_uri(lookupUri);
@@ -247,8 +251,11 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
                             WidgetProvider.notifyWidgets(mContext);
                         }
                     });
+
+                    Toast.makeText(mContext, "Added to speed dial list", Toast.LENGTH_LONG).show();
                 }
             });
+
         }
 
         @Override

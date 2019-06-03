@@ -11,20 +11,30 @@ import android.support.annotation.NonNull;
 public class QuickContact {
 
     @PrimaryKey @NonNull
+    private String id;
     private String name;
     private String number;
     private String numberType;
     private Uri lookup_uri;
 
-    public QuickContact(String name) {
-        this.name = name;
+    public QuickContact(String id) {
+        this.id = id;
     }
 
-    public @NonNull String getName() {
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
+
+    public String getName() {
         return name;
     }
 
-    public void setName(@NonNull String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
