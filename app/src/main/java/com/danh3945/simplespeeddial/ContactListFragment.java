@@ -1,4 +1,4 @@
-package com.hereticpurge.simplespeeddial;
+package com.danh3945.simplespeeddial;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

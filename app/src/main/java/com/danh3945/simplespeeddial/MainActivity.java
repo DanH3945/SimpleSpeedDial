@@ -1,4 +1,4 @@
-package com.hereticpurge.simplespeeddial;
+package com.danh3945.simplespeeddial;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.hereticpurge.simplespeeddial.logging.TimberDebugTree;
-import com.hereticpurge.simplespeeddial.logging.TimberReleaseTree;
+import com.danh3945.simplespeeddial.logging.TimberDebugTree;
+import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
 
 import timber.log.Timber;
 

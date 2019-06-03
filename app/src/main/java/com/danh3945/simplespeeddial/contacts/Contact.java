@@ -1,4 +1,4 @@
-package com.hereticpurge.simplespeeddial.contacts;
+package com.danh3945.simplespeeddial.contacts;
 
 import android.net.Uri;
 

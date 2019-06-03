@@ -1,4 +1,4 @@
-package com.hereticpurge.simplespeeddial.widget;
+package com.danh3945.simplespeeddial.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.hereticpurge.simplespeeddial.R;
+import com.danh3945.simplespeeddial.R;
 
 public class WidgetProvider extends AppWidgetProvider {
 

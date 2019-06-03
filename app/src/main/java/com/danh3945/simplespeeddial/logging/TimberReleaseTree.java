@@ -1,4 +1,4 @@
-package com.hereticpurge.simplespeeddial.logging;
+package com.danh3945.simplespeeddial.logging;
 
 import android.support.annotation.NonNull;
 import android.util.Log;

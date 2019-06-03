@@ -1,4 +1,4 @@
-package com.hereticpurge.simplespeeddial.widget;
+package com.danh3945.simplespeeddial.widget;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,10 +7,10 @@ import android.net.Uri;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.hereticpurge.simplespeeddial.R;
-import com.hereticpurge.simplespeeddial.database.QuickContact;
-import com.hereticpurge.simplespeeddial.database.QuickContactDatabase;
-import com.hereticpurge.simplespeeddial.image.ImageHelper;
+import com.danh3945.simplespeeddial.R;
+import com.danh3945.simplespeeddial.database.QuickContact;
+import com.danh3945.simplespeeddial.database.QuickContactDatabase;
+import com.danh3945.simplespeeddial.image.ImageHelper;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.hereticpurge.simplespeeddial.database;
+package com.danh3945.simplespeeddial.database;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;

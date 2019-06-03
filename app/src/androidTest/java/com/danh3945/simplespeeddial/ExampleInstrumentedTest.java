@@ -1,4 +1,4 @@
-package com.hereticpurge.simplespeeddial;
+package com.danh3945.simplespeeddial;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

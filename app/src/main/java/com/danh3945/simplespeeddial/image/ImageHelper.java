@@ -1,4 +1,4 @@
-package com.hereticpurge.simplespeeddial.image;
+package com.danh3945.simplespeeddial.image;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,7 +12,7 @@ import android.graphics.RectF;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
-import com.hereticpurge.simplespeeddial.R;
+import com.danh3945.simplespeeddial.R;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -67,7 +67,7 @@ public class ImageHelper {
 
         if (photoBitmap == null) {
             Timber.d("Tried to load Null thumbnail: Loading default icon");
-            photoBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.default_contact_icon);
+//            photoBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.default_contact_icon);
         }
 
         return photoBitmap;

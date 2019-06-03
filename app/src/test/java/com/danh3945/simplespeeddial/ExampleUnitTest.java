@@ -1,4 +1,4 @@
-package com.hereticpurge.simplespeeddial;
+package com.danh3945.simplespeeddial;
 
 import org.junit.Test;
 

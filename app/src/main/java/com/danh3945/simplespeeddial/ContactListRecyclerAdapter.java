@@ -1,4 +1,4 @@
-package com.hereticpurge.simplespeeddial;
+package com.danh3945.simplespeeddial;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
@@ -21,13 +21,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hereticpurge.simplespeeddial.contacts.Contact;
-import com.hereticpurge.simplespeeddial.contacts.ContactRetriever;
-import com.hereticpurge.simplespeeddial.database.QuickContact;
-import com.hereticpurge.simplespeeddial.database.QuickContactDao;
-import com.hereticpurge.simplespeeddial.database.QuickContactDatabase;
-import com.hereticpurge.simplespeeddial.image.ImageHelper;
-import com.hereticpurge.simplespeeddial.widget.WidgetProvider;
+import com.danh3945.simplespeeddial.contacts.Contact;
+import com.danh3945.simplespeeddial.contacts.ContactRetriever;
+import com.danh3945.simplespeeddial.database.QuickContact;
+import com.danh3945.simplespeeddial.database.QuickContactDao;
+import com.danh3945.simplespeeddial.database.QuickContactDatabase;
+import com.danh3945.simplespeeddial.image.ImageHelper;
+import com.danh3945.simplespeeddial.widget.WidgetProvider;
 
 import java.util.List;
 
