@@ -4,7 +4,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 
 @Entity
 @TypeConverters(LocalTypeConverters.class)
@@ -18,7 +17,8 @@ public class QuickContact {
     private String numberType;
     private Uri lookup_uri;
 
-    public QuickContact() {}
+    public QuickContact() {
+    }
 
     public long getDatabaseId() {
         return databaseId;

@@ -90,7 +90,7 @@ public class PrimaryDisplayFragment extends Fragment {
     private void loadCurrentSpeedListFragment() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.main_fragment_container,CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
+        ft.replace(R.id.main_fragment_container, CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
         ft.addToBackStack(CurrentSpeedDialFragment.TAG);
         ft.commit();
         fm.executePendingTransactions();
