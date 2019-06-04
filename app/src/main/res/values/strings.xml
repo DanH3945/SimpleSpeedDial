@@ -8,6 +8,7 @@
 
     // Primary Display Fragment Strings
     <string name="primary_display_contact_list_button">Contacts</string>
+    <string name="primary_display_current_speed_list_button">Current Speed Dial Buttons</string>
 
     // Widget Strings
     <string name="widget_empty_text">empty</string>

@@ -15,6 +15,20 @@
         android:text="@string/default_string"/>
 
     <Button
+        android:id="@+id/primary_display_contact_current_speed_list_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/primary_display_contact_list_btn"
+        android:layout_marginBottom="24dp"
+        android:text="@string/primary_display_current_speed_list_button"
+        android:background="@drawable/primary_display_btn_background"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:textColor="@color/contactListBtnTextColor"/>
+
+    <Button
         android:id="@+id/primary_display_contact_list_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

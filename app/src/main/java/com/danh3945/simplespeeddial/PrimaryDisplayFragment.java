@@ -53,6 +53,14 @@ public class PrimaryDisplayFragment extends Fragment {
             }
         });
 
+        Button currentSpeedListBtn = view.findViewById(R.id.primary_display_contact_current_speed_list_btn);
+        currentSpeedListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadCurrentSpeedListFragment();
+            }
+        });
+
         return view;
     }
 
@@ -73,8 +81,17 @@ public class PrimaryDisplayFragment extends Fragment {
     private void loadContactListFragment() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.main_fragment_container, ContactListFragment.createInstance(), ContactListFragment.TAG);
+        ft.replace(R.id.main_fragment_container, ContactListFragment.getInstance(), ContactListFragment.TAG);
         ft.addToBackStack(ContactListFragment.TAG);
+        ft.commit();
+        fm.executePendingTransactions();
+    }
+
+    private void loadCurrentSpeedListFragment() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.main_fragment_container,CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
+        ft.addToBackStack(CurrentSpeedDialFragment.TAG);
         ft.commit();
         fm.executePendingTransactions();
     }

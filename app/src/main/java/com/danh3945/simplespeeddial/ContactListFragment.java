@@ -19,7 +19,7 @@ public class ContactListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ContactListRecyclerAdapter mContactListRecyclerAdapter;
 
-    public static Fragment createInstance() {
+    public static Fragment getInstance() {
         return new ContactListFragment();
     }
 

@@ -98,7 +98,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         });
 
 
-        Timber.d("Binding ViewHolder with %s on item # %s", mContactList.get(i).getName(), i);
+        Timber.d("Binding CurrentSpeedDialRecyclerViewHolder with %s on item # %s", mContactList.get(i).getName(), i);
     }
 
 
