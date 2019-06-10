@@ -41,7 +41,7 @@ public class CurrentSpeedDialFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 int position = viewHolder.getAdapterPosition();
                 adapter.removeEntry(position);
-                Timber.d("Swiped Position, %s", i);
+                Timber.d("Swiped Position, %s", position);
             }
         };
 
