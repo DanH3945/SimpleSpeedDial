@@ -55,23 +55,33 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
         viewHolder.mNumberText.setText(quickContact.getNumber());
         viewHolder.mNumberTypeText.setText(quickContact.getNumberType());
 
-        viewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        mDatabase.quickContactDao().removeSpeedDialEntry(quickContact);
-                        WidgetProvider.notifyWidgets(mContext);
-                    }
-                });
-            }
-        });
+//        viewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AsyncTask.execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mDatabase.quickContactDao().removeSpeedDialEntry(quickContact);
+//                        WidgetProvider.notifyWidgets(mContext);
+//                    }
+//                });
+//            }
+//        });
     }
 
     @Override
     public int getItemCount() {
         return mCurrentSpeedDialList.size() > 0 ? mCurrentSpeedDialList.size() : 0;
+    }
+
+    void removeEntry(int position) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDatabase.quickContactDao().removeSpeedDialEntry(mCurrentSpeedDialList.get(position));
+                WidgetProvider.notifyWidgets(mContext);
+            }
+        });
     }
 
     @Override

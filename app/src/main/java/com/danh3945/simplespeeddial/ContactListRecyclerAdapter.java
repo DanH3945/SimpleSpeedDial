@@ -82,7 +82,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
     public void onBindViewHolder(@NonNull final ContactViewHolder viewHolder, int i) {
 
         viewHolder.mTextView.setText(mContactList.get(i).getName());
-        viewHolder.mImageView.setImageBitmap(
+        viewHolder.mContactImageView.setImageBitmap(
                 ImageHelper.getContactPhoto(mContext, mContactList.get(i).getLookupUri())
         );
 
@@ -93,10 +93,9 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             @Override
             public void onClick(View v) {
                 Timber.d("Clicked");
-                viewHolder.switchVisibility();
+                viewHolder.switchSubListVisibility();
             }
         });
-
 
         Timber.d("Binding CurrentSpeedDialRecyclerViewHolder with %s on item # %s", mContactList.get(i).getName(), i);
     }
@@ -140,7 +139,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         CardView mRecyclerCard;
         TextView mTextView;
         RecyclerView mListView;
-        ImageView mImageView;
+        ImageView mContactImageView;
 
         ContactViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -148,25 +147,25 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             mRecyclerCard = itemView.findViewById(R.id.contact_recycler_card);
             mTextView = itemView.findViewById(R.id.contact_recycler_card_name_text);
             mListView = itemView.findViewById(R.id.contact_recycler_card_list);
-            mImageView = itemView.findViewById(R.id.contact_recycler_card_image_view);
+            mContactImageView = itemView.findViewById(R.id.contact_recycler_card_image_view);
         }
 
-        private void switchVisibility() {
+        private void switchSubListVisibility() {
             if (mListView.getVisibility() == View.GONE) {
                 mActiveViewHolder.postValue(this);
-                setVisible();
+                showSubList();
             } else {
-                setGone();
+                hideSubList();
             }
         }
 
-        private void setVisible() {
+        private void showSubList() {
             mListView.setVisibility(View.VISIBLE);
             Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.slide_down_anim);
             mListView.startAnimation(anim);
         }
 
-        private void setGone() {
+        private void hideSubList() {
             mOwner.setLayoutFrozen(true);
             Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.slide_up_anim);
             mListView.startAnimation(anim);
@@ -190,7 +189,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         @Override
         public void onChanged(@Nullable ContactViewHolder contactViewHolder) {
             if (contactViewHolder != this) {
-                setGone();
+                hideSubList();
             }
         }
     }
