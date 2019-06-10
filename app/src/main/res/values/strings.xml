@@ -7,11 +7,16 @@
     <string name="default_string_name">Name</string>
 
     // Primary Display Fragment Strings
-    <string name="primary_display_contact_list_button">Contacts</string>
-    <string name="primary_display_current_speed_list_button">Current Speed Dial Buttons</string>
+    <string name="primary_display_contact_list_button">Add From Contacts</string>
+    <string name="primary_display_current_speed_list_button">@string/current_speed_dial_title</string>
 
     // Widget Strings
     <string name="widget_empty_text">empty</string>
+
+    // Current Speed Dial Fragment Strings
+    <string name="current_speed_dial_title">Current Speed Dial Buttons</string>
+    <string name="current_speed_dial_swipe_delete">Swipe to remove from speed dial</string>
+
 
     // About Dialog Strings
     <string name="about_title">@string/app_name_pretty</string>

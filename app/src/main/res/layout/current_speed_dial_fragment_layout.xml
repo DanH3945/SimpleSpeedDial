@@ -4,13 +4,48 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:id="@+id/current_speed_dial_fragment_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/current_speed_dial_title"
+        app:layout_constraintBottom_toTopOf="@id/current_speed_dial_swipe_delete_info_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal"
+        android:layout_margin="4dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/current_speed_dial_swipe_delete"
+        android:id="@+id/current_speed_dial_swipe_delete_info_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/current_speed_dial_divider"
+        app:layout_constraintTop_toBottomOf="@id/current_speed_dial_fragment_title_tv"
+        android:gravity="center_horizontal"
+        android:layout_margin="4dp"/>
+
+    <FrameLayout
+        android:id="@+id/current_speed_dial_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        style="@style/DividerStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/current_speed_dial_swipe_delete_info_tv"
+        app:layout_constraintBottom_toTopOf="@id/current_speed_dial_fragment_recycler"
+        android:layout_marginTop="4dp"/>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/current_speed_dial_fragment_recycler"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/current_speed_dial_divider" />
 
 </android.support.constraint.ConstraintLayout>

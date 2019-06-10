@@ -10,7 +10,7 @@
     <color name="white">#ffff</color>
 
     // Primary Display Fragment Colors
-    <color name="contactListBtnTextColor">#252525</color>
+    <color name="primaryDisplayBtnTextColor">#252525</color>
 
     // Widget Colors
     <color name="widgetBackgroundColor">#FFFEFE</color>
