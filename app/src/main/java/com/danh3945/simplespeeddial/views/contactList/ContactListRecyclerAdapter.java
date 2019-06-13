@@ -115,7 +115,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
         mContactList = contactList;
         Timber.d("Setting Contact List with %s items", contactList.size());
 
-        // This method could be called from another thread.  The call to notifyDatasetChanged
+        // This method could be called from another thread.  The call to notifyDataSetChanged
         // must run on the UI thread.  So we'll make sure it does.
         if (Looper.myLooper() != mContext.getMainLooper()) {
             // Get the main looper and send the runnable to the UI thread.
@@ -198,7 +198,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
     // Recyclerview Adapter and View Holder for the sublist containing phone numbers.  This whole
     // adapter only covers the phone numbers of a single contact from the constructor.
 
-    class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.ViewHolder> {
+    class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SublistViewHolder> {
 
         private Contact mContact;
         private Object[] mKeyArray;
@@ -210,13 +210,13 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
         @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        public SublistViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.contact_recycler_sub_list_item, viewGroup, false);
-            return new ViewHolder(view);
+            return new SublistViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
+        public void onBindViewHolder(@NonNull final SublistViewHolder viewHolder, final int i) {
             final String name = mContact.getName();
 
             final String numberType = (String) mKeyArray[i];
@@ -265,13 +265,13 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             return numbersSize > 0 ? numbersSize : 0;
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+        class SublistViewHolder extends RecyclerView.ViewHolder {
 
             LinearLayout mLayout;
             TextView mTypeTextView;
             TextView mNumberTextView;
 
-            ViewHolder(@NonNull View itemView) {
+            SublistViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 mLayout = itemView.findViewById(R.id.contact_recycler_sublist_linear_layout);
