@@ -12,11 +12,13 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
-import com.danh3945.simplespeeddial.views.currentSpeedDial.CurrentSpeedDialFragment;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.views.contactList.ContactListFragment;
+import com.danh3945.simplespeeddial.views.currentSpeedDial.CurrentSpeedDialFragment;
 
 import timber.log.Timber;
 
@@ -64,6 +66,12 @@ public class PrimaryDisplayFragment extends Fragment {
                 loadCurrentSpeedListFragment();
             }
         });
+
+        String[] numberTypes = getResources().getStringArray(R.array.number_types);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_singlechoice, numberTypes);
+
+        AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.primary_display_quick_add_number_type);
+        autoCompleteTextView.setAdapter(adapter);
 
         return view;
     }

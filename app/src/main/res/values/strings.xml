@@ -5,10 +5,19 @@
     <string name="app_name_pretty">Simple Speed Dial</string>
     <string name="default_string">Default</string>
     <string name="default_string_name">Name</string>
+    <string name="default_string_number">Number</string>
+    <string name="default_string_number_type">Number Type</string>
 
     // Primary Display Fragment Strings
     <string name="primary_display_contact_list_button">Add From Contacts</string>
     <string name="primary_display_current_speed_list_button">@string/current_speed_dial_title</string>
+    <string name="primary_display_quick_add_tv_text">Quickly Add a Speed Dial Button</string>
+    
+    <string-array name="number_types">
+        <item>Home</item>
+        <item>Mobile</item>
+        <item>Work</item>
+    </string-array>
 
     // Widget Strings
     <string name="widget_empty_text">empty</string>
@@ -33,7 +42,5 @@
     <string name="about_timber_copyright">Copyright 2013 Jake Wharton</string>
     <string name="menu_preferences_title">Preferences</string>
     <string name="menu_about_title">About</string>
-    <string name="default_string_number">Number</string>
-    <string name="default_string_number_type">Number Type</string>
 
 </resources>
