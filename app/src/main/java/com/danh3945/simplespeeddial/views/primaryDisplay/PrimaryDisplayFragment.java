@@ -15,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.danh3945.simplespeeddial.R;
+import com.danh3945.simplespeeddial.database.QuickContact;
 import com.danh3945.simplespeeddial.views.contactList.ContactListFragment;
 import com.danh3945.simplespeeddial.views.currentSpeedDial.CurrentSpeedDialFragment;
 
@@ -26,6 +28,10 @@ public class PrimaryDisplayFragment extends Fragment {
 
     public static final String TAG = "SpeedDialPrimaryDisplayFragment";
     public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 11567;
+
+    AutoCompleteTextView numberTypeAutoTextview;
+    EditText nameEditText;
+    EditText numberEditText;
 
     Button mContactListBtn;
 
@@ -70,8 +76,28 @@ public class PrimaryDisplayFragment extends Fragment {
         String[] numberTypes = getResources().getStringArray(R.array.number_types);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_singlechoice, numberTypes);
 
-        AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.primary_display_quick_add_number_type);
-        autoCompleteTextView.setAdapter(adapter);
+        numberTypeAutoTextview = view.findViewById(R.id.primary_display_quick_add_number_type);
+        numberTypeAutoTextview.setAdapter(adapter);
+
+        nameEditText = view.findViewById(R.id.primary_display_quick_add_name_et);
+        numberEditText = view.findViewById(R.id.primary_display_quick_add_number_et);
+
+        Button quickAddButton = view.findViewById(R.id.primary_display_quick_add_button);
+        quickAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = nameEditText.getText().toString();
+                String number = numberEditText.getText().toString();
+                String numberType = numberTypeAutoTextview.getText().toString();
+
+                QuickContact quickContact = new QuickContact();
+                quickContact.setName(name);
+                quickContact.setNumber(number);
+                quickContact.setNumberType(numberType);
+
+                quickContact.addToSpeedDial(getContext());
+            }
+        });
 
         return view;
     }

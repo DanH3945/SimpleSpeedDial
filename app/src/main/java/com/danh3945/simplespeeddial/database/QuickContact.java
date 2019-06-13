@@ -3,7 +3,12 @@ package com.danh3945.simplespeeddial.database;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.widget.Toast;
+
+import com.danh3945.simplespeeddial.widget.WidgetProvider;
 
 @Entity
 @TypeConverters(LocalTypeConverters.class)
@@ -66,5 +71,35 @@ public class QuickContact {
 
     public void setLookup_uri(Uri lookup_uri) {
         this.lookup_uri = lookup_uri;
+    }
+
+    public void addToSpeedDial(Context context) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                QuickContactDatabase
+                        .getQuickContactDatabase(context)
+                        .quickContactDao()
+                        .insertContact(QuickContact.this);
+
+                Toast.makeText(context, "Added to speed dial list", Toast.LENGTH_LONG).show();
+
+                WidgetProvider.notifyWidgets(context);
+            }
+        });
+    }
+
+    public void removeFromSpeedDial(Context context) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                QuickContactDatabase
+                        .getQuickContactDatabase(context)
+                        .quickContactDao()
+                        .removeSpeedDialEntry(QuickContact.this);
+
+                WidgetProvider.notifyWidgets(context);
+            }
+        });
     }
 }

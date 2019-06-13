@@ -4,7 +4,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -20,16 +19,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.contacts.Contact;
 import com.danh3945.simplespeeddial.contacts.ContactRetriever;
 import com.danh3945.simplespeeddial.database.QuickContact;
-import com.danh3945.simplespeeddial.database.QuickContactDao;
-import com.danh3945.simplespeeddial.database.QuickContactDatabase;
 import com.danh3945.simplespeeddial.image.ImageHelper;
-import com.danh3945.simplespeeddial.widget.WidgetProvider;
 
 import java.util.List;
 
@@ -230,30 +225,20 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AsyncTask.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            QuickContact quickContact = new QuickContact();
+                    QuickContact quickContact = new QuickContact();
 
-                            quickContact.setContactId(mContact.getId());
-                            quickContact.setName(name);
-                            quickContact.setNumber(number);
-                            quickContact.setNumberType(numberType);
-                            quickContact.setLookup_uri(lookupUri);
+                    quickContact.setContactId(mContact.getId());
+                    quickContact.setName(name);
+                    quickContact.setNumber(number);
+                    quickContact.setNumberType(numberType);
+                    quickContact.setLookup_uri(lookupUri);
 
-                            QuickContactDao quickContactDao = QuickContactDatabase.getQuickContactDatabase(mContext).quickContactDao();
-                            quickContactDao.insertContact(quickContact);
+                    quickContact.addToSpeedDial(mContext);
 
-                            Timber.d("Number selected for: %s with type: %s and number: %s ... Adding to database",
-                                    mContact.getName(),
-                                    numberType,
-                                    number);
-
-                            WidgetProvider.notifyWidgets(mContext);
-                        }
-                    });
-
-                    Toast.makeText(mContext, "Added to speed dial list", Toast.LENGTH_LONG).show();
+                    Timber.d("Number selected for: %s with type: %s and number: %s ... Adding to database",
+                            mContact.getName(),
+                            numberType,
+                            number);
                 }
             });
 

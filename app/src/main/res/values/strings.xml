@@ -11,7 +11,8 @@
     // Primary Display Fragment Strings
     <string name="primary_display_contact_list_button">Add From Contacts</string>
     <string name="primary_display_current_speed_list_button">@string/current_speed_dial_title</string>
-    <string name="primary_display_quick_add_tv_text">Quickly Add a Speed Dial Button</string>
+    <string name="primary_display_quick_add_title_tag_text">Quickly Add a Speed Dial Button</string>
+    <string name="primary_display_quick_add_btn_text">Add to Speed Dial</string>
     
     <string-array name="number_types">
         <item>Home</item>

@@ -7,11 +7,11 @@ public class LocalTypeConverters {
 
     @TypeConverter
     public static String getStringFromUri(Uri uri) {
-        return uri.toString();
+        return uri != null ? uri.toString() : null;
     }
 
     @TypeConverter
     public static Uri getUriFromString(String string) {
-        return Uri.parse(string);
+        return string != null ? Uri.parse(string) : null;
     }
 }
