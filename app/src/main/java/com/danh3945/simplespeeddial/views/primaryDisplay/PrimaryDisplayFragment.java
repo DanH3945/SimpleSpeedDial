@@ -1,4 +1,4 @@
-package com.danh3945.simplespeeddial;
+package com.danh3945.simplespeeddial.views.primaryDisplay;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -13,6 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.danh3945.simplespeeddial.views.currentSpeedDial.CurrentSpeedDialFragment;
+import com.danh3945.simplespeeddial.R;
+import com.danh3945.simplespeeddial.views.contactList.ContactListFragment;
 
 import timber.log.Timber;
 

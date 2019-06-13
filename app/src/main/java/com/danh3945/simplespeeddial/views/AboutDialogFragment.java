@@ -1,4 +1,4 @@
-package com.danh3945.simplespeeddial;
+package com.danh3945.simplespeeddial.views;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.ContextThemeWrapper;
 import android.widget.TextView;
+
+import com.danh3945.simplespeeddial.R;
 
 import de.psdev.licensesdialog.LicensesDialog;
 import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20;

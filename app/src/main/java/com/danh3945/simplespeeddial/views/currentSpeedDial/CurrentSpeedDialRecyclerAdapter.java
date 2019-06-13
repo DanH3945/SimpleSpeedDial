@@ -1,4 +1,4 @@
-package com.danh3945.simplespeeddial;
+package com.danh3945.simplespeeddial.views.currentSpeedDial;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.database.QuickContact;
 import com.danh3945.simplespeeddial.database.QuickContactDatabase;
 import com.danh3945.simplespeeddial.image.ImageHelper;

@@ -1,4 +1,4 @@
-package com.danh3945.simplespeeddial;
+package com.danh3945.simplespeeddial.views;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.danh3945.simplespeeddial.BuildConfig;
+import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
+import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
 

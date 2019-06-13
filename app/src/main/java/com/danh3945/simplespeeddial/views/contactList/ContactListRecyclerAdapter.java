@@ -1,4 +1,4 @@
-package com.danh3945.simplespeeddial;
+package com.danh3945.simplespeeddial.views.contactList;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.contacts.Contact;
 import com.danh3945.simplespeeddial.contacts.ContactRetriever;
 import com.danh3945.simplespeeddial.database.QuickContact;
