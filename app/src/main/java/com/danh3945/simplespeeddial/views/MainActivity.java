@@ -9,10 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.danh3945.simplespeeddial.BuildConfig;
-import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
+import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
 
 import timber.log.Timber;
 

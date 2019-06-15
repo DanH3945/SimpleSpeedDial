@@ -4,10 +4,12 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.danh3945.simplespeeddial.image.ImageHelper;
 import com.danh3945.simplespeeddial.widget.WidgetProvider;
 
 @Entity
@@ -101,5 +103,13 @@ public class QuickContact {
                 WidgetProvider.notifyWidgets(context);
             }
         });
+    }
+
+    public Bitmap getContactPhoto(Context context) {
+        return ImageHelper.getContactPhoto(context, getLookup_uri());
+    }
+
+    public Bitmap getContactPhotoRounded(Context context) {
+        return ImageHelper.getContactPhotoRounded(context, getLookup_uri());
     }
 }

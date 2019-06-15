@@ -3,7 +3,6 @@ package com.danh3945.simplespeeddial.views.currentSpeedDial;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -17,8 +16,6 @@ import android.widget.TextView;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.database.QuickContact;
 import com.danh3945.simplespeeddial.database.QuickContactDatabase;
-import com.danh3945.simplespeeddial.image.ImageHelper;
-import com.danh3945.simplespeeddial.widget.WidgetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +48,7 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
     public void onBindViewHolder(@NonNull CurrentSpeedDialRecyclerViewHolder viewHolder, int i) {
         QuickContact quickContact = mCurrentSpeedDialList.get(i);
 
-        viewHolder.mImageView.setImageBitmap(ImageHelper.getContactPhoto(mContext, quickContact.getLookup_uri()));
+        viewHolder.mImageView.setImageBitmap(quickContact.getContactPhoto(mContext));
         viewHolder.mNameText.setText(quickContact.getName());
         viewHolder.mNumberText.setText(quickContact.getNumber());
         viewHolder.mNumberTypeText.setText(quickContact.getNumberType());
