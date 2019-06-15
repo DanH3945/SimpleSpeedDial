@@ -16,5 +16,6 @@
 
     // Current Speed Dial Dimensions
     <dimen name="current_speed_dial_divider_margin">12dp</dimen>
+    <dimen name="current_speed_dial_header_text_size">18sp</dimen>
 
 </resources>

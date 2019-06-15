@@ -21,7 +21,7 @@
     </string-array>
 
     // Widget Strings
-    <string name="widget_empty_text">empty</string>
+    <string name="widget_empty_text">Add some contacts!</string>
 
     // Current Speed Dial Fragment Strings
     <string name="current_speed_dial_title">Current Speed Dial Buttons</string>

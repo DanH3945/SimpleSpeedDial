@@ -15,7 +15,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center_horizontal"
-        android:layout_margin="4dp"/>
+        android:layout_margin="4dp"
+        android:textSize="@dimen/current_speed_dial_header_text_size"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -27,7 +28,8 @@
         app:layout_constraintBottom_toTopOf="@id/current_speed_dial_divider"
         app:layout_constraintTop_toBottomOf="@id/current_speed_dial_fragment_title_tv"
         android:gravity="center_horizontal"
-        android:layout_margin="4dp"/>
+        android:layout_margin="4dp"
+        android:textSize="@dimen/current_speed_dial_header_text_size"/>
 
     <FrameLayout
         android:id="@+id/current_speed_dial_divider"
