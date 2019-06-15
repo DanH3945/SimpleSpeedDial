@@ -7,6 +7,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import com.danh3945.simplespeeddial.image.ImageHelper;
@@ -84,9 +86,22 @@ public class QuickContact {
                         .quickContactDao()
                         .insertContact(QuickContact.this);
 
-                Toast.makeText(context, "Added to speed dial list", Toast.LENGTH_LONG).show();
+                notifyUserAddedSpeedDial(context);
 
                 WidgetProvider.notifyWidgets(context);
+            }
+        });
+    }
+
+    private void notifyUserAddedSpeedDial(Context context) {
+        // We want to show a toast telling the user that we have added the information to the speed
+        // dial widget but we have to do toast on the main thread.  So we create a handler linked to
+        // the main looper and post a runnable so it gets run on the UI thread.
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, "Added to speed dial list", Toast.LENGTH_LONG).show();
             }
         });
     }

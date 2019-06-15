@@ -1,10 +1,12 @@
 package com.danh3945.simplespeeddial.views.primaryDisplay;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -86,20 +88,48 @@ public class PrimaryDisplayFragment extends Fragment {
         quickAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = nameEditText.getText().toString();
-                String number = numberEditText.getText().toString();
-                String numberType = numberTypeAutoTextview.getText().toString();
-
-                QuickContact quickContact = new QuickContact();
-                quickContact.setName(name);
-                quickContact.setNumber(number);
-                quickContact.setNumberType(numberType);
-
-                quickContact.addToSpeedDial(getContext());
+                addSpeedDial();
             }
         });
 
         return view;
+    }
+
+    private void addSpeedDial() {
+        String name = nameEditText.getText().toString();
+        String number = numberEditText.getText().toString();
+        String numberType = numberTypeAutoTextview.getText().toString();
+
+        AlertDialog.Builder responseDialog = new AlertDialog.Builder(getContext());
+
+        if (name.equals("")) {
+            responseDialog.setMessage("Please enter a valid name");
+            responseDialog.show();
+            return;
+        }
+
+        if (number.equals("")) {
+            responseDialog.setMessage("Please enter a valid number");
+            responseDialog.show();
+            return;
+        }
+
+        if (numberType.equals("")) {
+            responseDialog.setMessage("Please enter a valid number type");
+            responseDialog.show();
+            return;
+        }
+
+        QuickContact quickContact = new QuickContact();
+        quickContact.setName(name);
+        quickContact.setNumber(number);
+        quickContact.setNumberType(numberType);
+
+        quickContact.addToSpeedDial(getContext());
+
+        nameEditText.getText().clear();
+        numberEditText.getText().clear();
+        numberTypeAutoTextview.getText().clear();
     }
 
     @Override
