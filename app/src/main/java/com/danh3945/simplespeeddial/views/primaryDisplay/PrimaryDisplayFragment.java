@@ -103,19 +103,19 @@ public class PrimaryDisplayFragment extends Fragment {
         AlertDialog.Builder responseDialog = new AlertDialog.Builder(getContext());
 
         if (name.equals("")) {
-            responseDialog.setMessage("Please enter a valid name");
+            responseDialog.setMessage(getResources().getString(R.string.primary_display_invalid_name));
             responseDialog.show();
             return;
         }
 
         if (number.equals("")) {
-            responseDialog.setMessage("Please enter a valid number");
+            responseDialog.setMessage(getResources().getString(R.string.primary_display_invalid_number));
             responseDialog.show();
             return;
         }
 
         if (numberType.equals("")) {
-            responseDialog.setMessage("Please enter a valid number type");
+            responseDialog.setMessage(getResources().getString(R.string.primary_display_invalid_number_type));
             responseDialog.show();
             return;
         }

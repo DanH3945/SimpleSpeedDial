@@ -9,11 +9,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/about_version_tv"
         android:gravity="center"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp" />
 
-    <View style="@style/DividerStyle"
+    <View
+        style="@style/DividerStyle"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="16dp" />
 
     <TextView
         android:id="@+id/about_third_party_tv"
@@ -56,9 +57,10 @@
         android:text="@string/about_timber_license_title"
         android:textColor="@color/httpLinkBlue" />
 
-    <View style="@style/DividerStyle"
+    <View
+        style="@style/DividerStyle"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp" />
 
 </LinearLayout>

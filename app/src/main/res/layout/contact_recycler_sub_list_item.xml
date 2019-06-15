@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/contact_recycler_sublist_type_text"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal" />
 
     <TextView
         android:layout_width="match_parent"

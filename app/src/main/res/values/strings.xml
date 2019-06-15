@@ -13,7 +13,10 @@
     <string name="primary_display_current_speed_list_button">@string/current_speed_dial_title</string>
     <string name="primary_display_quick_add_title_tag_text">Quickly Add a Speed Dial Button</string>
     <string name="primary_display_quick_add_btn_text">Add to Speed Dial</string>
-    
+    <string name="primary_display_invalid_name">Please enter a name</string>
+    <string name="primary_display_invalid_number">Please enter a number</string>
+    <string name="primary_display_invalid_number_type">Please enter a number type</string>
+
     <string-array name="number_types">
         <item>Home</item>
         <item>Mobile</item>

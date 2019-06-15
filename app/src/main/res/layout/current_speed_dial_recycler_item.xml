@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:minHeight="@dimen/recycler_fragment_image_dimensions"
         android:minWidth="@dimen/recycler_fragment_image_dimensions"
-        android:layout_gravity="start"/>
+        android:layout_gravity="start" />
 
     <LinearLayout
         android:layout_width="match_parent"
