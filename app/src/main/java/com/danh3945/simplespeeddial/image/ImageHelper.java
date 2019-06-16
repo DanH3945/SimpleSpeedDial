@@ -67,7 +67,8 @@ public class ImageHelper {
 
         if (photoBitmap == null) {
             Timber.d("Tried to load Null thumbnail: Loading default icon");
-//            photoBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.default_contact_icon);
+            photoBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.default_contact_icon);
+            System.out.println("NULLITY CHECK - " + Boolean.toString(photoBitmap == null));
         }
 
         return photoBitmap;
