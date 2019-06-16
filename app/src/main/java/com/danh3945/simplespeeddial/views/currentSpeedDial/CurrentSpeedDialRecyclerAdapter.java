@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import com.danh3945.simplespeeddial.database.QuickContactDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<CurrentSpeedDialRecyclerAdapter.CurrentSpeedDialRecyclerViewHolder> implements Observer<List<QuickContact>> {
 
     List<QuickContact> mCurrentSpeedDialList;
@@ -27,13 +30,36 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
 
     QuickContactDatabase mDatabase;
 
-    CurrentSpeedDialRecyclerAdapter(Context context, LifecycleOwner lifecycleOwner) {
+    CurrentSpeedDialRecyclerAdapter(Context context, LifecycleOwner lifecycleOwner, RecyclerView recyclerView) {
         this.mContext = context;
         this.mCurrentSpeedDialList = new ArrayList<>();
         mDatabase = QuickContactDatabase.getQuickContactDatabase(context);
         mDatabase.quickContactDao()
                 .getQuickContactObservableList()
                 .observe(lifecycleOwner, this);
+
+        attachSwipeListener(recyclerView);
+    }
+
+    void attachSwipeListener(RecyclerView recyclerView) {
+
+        ItemTouchHelper.SimpleCallback simpleCallback =
+                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+                    @Override
+                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                        int position = viewHolder.getAdapterPosition();
+                        CurrentSpeedDialRecyclerAdapter.this.removeEntry(position);
+                        Timber.d("Swiped Position, %s", position);
+                    }
+                };
+
+        new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
     }
 
     @NonNull
