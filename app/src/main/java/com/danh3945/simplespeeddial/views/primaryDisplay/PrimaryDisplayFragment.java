@@ -61,7 +61,7 @@ public class PrimaryDisplayFragment extends Fragment {
                             PERMISSIONS_REQUEST_READ_CONTACTS);
                 } else {
                     // We do have permission so load the contacts display fragment
-                    loadContactListFragment();
+                    loadFragment(ContactListFragment.getInstance(), ContactListFragment.TAG);
                 }
 
             }
@@ -71,7 +71,7 @@ public class PrimaryDisplayFragment extends Fragment {
         currentSpeedListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadCurrentSpeedListFragment();
+                loadFragment(CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
             }
         });
 
@@ -140,29 +140,23 @@ public class PrimaryDisplayFragment extends Fragment {
             case PERMISSIONS_REQUEST_READ_CONTACTS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // We got permission from the user so load the contacts display fragment
-                    loadContactListFragment();
+                    loadFragment(ContactListFragment.getInstance(), ContactListFragment.TAG);
                 }
                 // We didn't get permission so stay where we are and don't load the contact fragment.
         }
     }
 
-    private void loadContactListFragment() {
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.main_fragment_container, ContactListFragment.getInstance(), ContactListFragment.TAG);
-        ft.addToBackStack(ContactListFragment.TAG);
-        ft.commit();
-        fm.executePendingTransactions();
+    private void loadFragment(Fragment fragment, String tag) {
+        try {
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.main_fragment_container, fragment, tag);
+            ft.addToBackStack(tag);
+            ft.commit();
+            fm.executePendingTransactions();
+        } catch (NullPointerException e) {
+            Timber.e(e);
+        }
     }
-
-    private void loadCurrentSpeedListFragment() {
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.main_fragment_container, CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
-        ft.addToBackStack(CurrentSpeedDialFragment.TAG);
-        ft.commit();
-        fm.executePendingTransactions();
-    }
-
 
 }

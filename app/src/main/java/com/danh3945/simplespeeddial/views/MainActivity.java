@@ -31,11 +31,6 @@ public class MainActivity extends AppCompatActivity {
         }
         // Nothing new above this line
 
-        // Request Permissions above SDK 23
-        if (BuildConfig.VERSION_CODE < 23) {
-
-        }
-
         if (savedInstanceState == null) {
             loadFragment(PrimaryDisplayFragment.createInstance(), true, PrimaryDisplayFragment.TAG);
         }
