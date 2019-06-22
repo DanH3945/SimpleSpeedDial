@@ -23,7 +23,7 @@ import android.widget.TextView;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.contacts.Contact;
 import com.danh3945.simplespeeddial.contacts.ContactRetriever;
-import com.danh3945.simplespeeddial.database.QuickContact;
+import com.danh3945.simplespeeddial.database.SpeedDialBtn;
 import com.danh3945.simplespeeddial.image.ImageHelper;
 
 import java.util.List;
@@ -225,15 +225,15 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    QuickContact quickContact = new QuickContact();
+                    SpeedDialBtn speedDialBtn = new SpeedDialBtn();
 
-                    quickContact.setContactId(mContact.getId());
-                    quickContact.setName(name);
-                    quickContact.setNumber(number);
-                    quickContact.setNumberType(numberType);
-                    quickContact.setLookup_uri(lookupUri);
+                    speedDialBtn.setContactId(mContact.getId());
+                    speedDialBtn.setName(name);
+                    speedDialBtn.setNumber(number);
+                    speedDialBtn.setNumberType(numberType);
+                    speedDialBtn.setLookup_uri(lookupUri);
 
-                    quickContact.addToSpeedDial(mContext);
+                    speedDialBtn.addToSpeedDial(mContext);
 
                     Timber.d("Number selected for: %s with type: %s and number: %s ... Adding to database",
                             mContact.getName(),

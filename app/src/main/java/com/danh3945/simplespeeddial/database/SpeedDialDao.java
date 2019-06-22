@@ -1,0 +1,26 @@
+package com.danh3945.simplespeeddial.database;
+
+import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
+import android.arch.persistence.room.Query;
+
+import java.util.List;
+
+@Dao
+public interface SpeedDialDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertSpeedDialButton(SpeedDialBtn speedDialBtn);
+
+    @Query("SELECT * FROM SpeedDialBtn")
+    List<SpeedDialBtn> getSpeedDialButtonsList();
+
+    @Query("SELECT * FROM SpeedDialBtn")
+    LiveData<List<SpeedDialBtn>> getSpeedDialButtonsListLiveData();
+
+    @Delete
+    void removeSpeedDialEntry(SpeedDialBtn speedDialBtn);
+}

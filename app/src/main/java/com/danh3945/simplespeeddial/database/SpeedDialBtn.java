@@ -16,7 +16,7 @@ import com.danh3945.simplespeeddial.widget.WidgetProvider;
 
 @Entity
 @TypeConverters(LocalTypeConverters.class)
-public class QuickContact {
+public class SpeedDialBtn {
 
     @PrimaryKey(autoGenerate = true)
     private long databaseId;
@@ -26,7 +26,7 @@ public class QuickContact {
     private String numberType;
     private Uri lookup_uri;
 
-    public QuickContact() {
+    public SpeedDialBtn() {
     }
 
     public long getDatabaseId() {
@@ -81,10 +81,10 @@ public class QuickContact {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                QuickContactDatabase
-                        .getQuickContactDatabase(context)
-                        .quickContactDao()
-                        .insertContact(QuickContact.this);
+                SpeedDialDatabase
+                        .getSpeedDialDatabase(context)
+                        .speedDialDao()
+                        .insertSpeedDialButton(SpeedDialBtn.this);
 
                 notifyUserAddedSpeedDial(context);
 
@@ -110,10 +110,10 @@ public class QuickContact {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                QuickContactDatabase
-                        .getQuickContactDatabase(context)
-                        .quickContactDao()
-                        .removeSpeedDialEntry(QuickContact.this);
+                SpeedDialDatabase
+                        .getSpeedDialDatabase(context)
+                        .speedDialDao()
+                        .removeSpeedDialEntry(SpeedDialBtn.this);
 
                 WidgetProvider.notifyWidgets(context);
             }

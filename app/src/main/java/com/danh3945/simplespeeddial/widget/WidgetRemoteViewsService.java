@@ -8,8 +8,8 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.database.QuickContact;
-import com.danh3945.simplespeeddial.database.QuickContactDatabase;
+import com.danh3945.simplespeeddial.database.SpeedDialBtn;
+import com.danh3945.simplespeeddial.database.SpeedDialDatabase;
 
 import java.util.List;
 
@@ -25,12 +25,12 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
     class WidgetRemoteViewsFactory implements RemoteViewsFactory {
 
         private Context mContext;
-        private List<QuickContact> mQuickContactList;
-        private QuickContactDatabase mDatabase;
+        private List<SpeedDialBtn> mSpeedDialBtnList;
+        private SpeedDialDatabase mDatabase;
 
         WidgetRemoteViewsFactory(Context context) {
             this.mContext = context;
-            mDatabase = QuickContactDatabase.getQuickContactDatabase(context);
+            mDatabase = SpeedDialDatabase.getSpeedDialDatabase(context);
         }
 
         @Override
@@ -39,7 +39,7 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
-            mQuickContactList = mDatabase.quickContactDao().getQuickContactList();
+            mSpeedDialBtnList = mDatabase.speedDialDao().getSpeedDialButtonsList();
         }
 
         @Override
@@ -48,8 +48,8 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            Timber.d("Getting app widget count with value: %s", mQuickContactList.size() > 0 ? mQuickContactList.size() : 0);
-            return mQuickContactList.size() > 0 ? mQuickContactList.size() : 0;
+            Timber.d("Getting app widget count with value: %s", mSpeedDialBtnList.size() > 0 ? mSpeedDialBtnList.size() : 0);
+            return mSpeedDialBtnList.size() > 0 ? mSpeedDialBtnList.size() : 0;
         }
 
         @Override
@@ -59,16 +59,16 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
             RemoteViews baseView =
                     new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
 
-            QuickContact quickContact = mQuickContactList.get(position);
+            SpeedDialBtn speedDialBtn = mSpeedDialBtnList.get(position);
 
-            Bitmap thumbnail = mQuickContactList
+            Bitmap thumbnail = mSpeedDialBtnList
                     .get(position)
                     .getContactPhotoRounded(mContext);
 
             baseView.setImageViewBitmap(R.id.widget_image_view, thumbnail);
-            baseView.setTextViewText(R.id.widget_item_name_text, quickContact.getName());
-            baseView.setTextViewText(R.id.widget_item_number_type_text, quickContact.getNumberType());
-            String callUri = "tel:" + quickContact.getNumber();
+            baseView.setTextViewText(R.id.widget_item_name_text, speedDialBtn.getName());
+            baseView.setTextViewText(R.id.widget_item_number_type_text, speedDialBtn.getNumberType());
+            String callUri = "tel:" + speedDialBtn.getNumber();
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse(callUri));
 

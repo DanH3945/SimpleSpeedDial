@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.database.QuickContact;
-import com.danh3945.simplespeeddial.database.QuickContactDatabase;
+import com.danh3945.simplespeeddial.database.SpeedDialBtn;
+import com.danh3945.simplespeeddial.database.SpeedDialDatabase;
 import com.danh3945.simplespeeddial.widget.WidgetProvider;
 
 import java.util.ArrayList;
@@ -24,19 +24,19 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<CurrentSpeedDialRecyclerAdapter.CurrentSpeedDialRecyclerViewHolder> implements Observer<List<QuickContact>> {
+public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<CurrentSpeedDialRecyclerAdapter.CurrentSpeedDialRecyclerViewHolder> implements Observer<List<SpeedDialBtn>> {
 
-    List<QuickContact> mCurrentSpeedDialList;
+    List<SpeedDialBtn> mCurrentSpeedDialList;
     Context mContext;
 
-    QuickContactDatabase mDatabase;
+    SpeedDialDatabase mDatabase;
 
     CurrentSpeedDialRecyclerAdapter(Context context, LifecycleOwner lifecycleOwner, RecyclerView recyclerView) {
         this.mContext = context;
         this.mCurrentSpeedDialList = new ArrayList<>();
-        mDatabase = QuickContactDatabase.getQuickContactDatabase(context);
-        mDatabase.quickContactDao()
-                .getQuickContactObservableList()
+        mDatabase = SpeedDialDatabase.getSpeedDialDatabase(context);
+        mDatabase.speedDialDao()
+                .getSpeedDialButtonsListLiveData()
                 .observe(lifecycleOwner, this);
 
         attachSwipeListener(recyclerView);
@@ -74,12 +74,12 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
 
     @Override
     public void onBindViewHolder(@NonNull CurrentSpeedDialRecyclerViewHolder viewHolder, int i) {
-        QuickContact quickContact = mCurrentSpeedDialList.get(i);
+        SpeedDialBtn speedDialBtn = mCurrentSpeedDialList.get(i);
 
-        viewHolder.mImageView.setImageBitmap(quickContact.getContactPhoto(mContext));
-        viewHolder.mNameText.setText(quickContact.getName());
-        viewHolder.mNumberText.setText(quickContact.getNumber());
-        viewHolder.mNumberTypeText.setText(quickContact.getNumberType());
+        viewHolder.mImageView.setImageBitmap(speedDialBtn.getContactPhoto(mContext));
+        viewHolder.mNameText.setText(speedDialBtn.getName());
+        viewHolder.mNumberText.setText(speedDialBtn.getNumber());
+        viewHolder.mNumberTypeText.setText(speedDialBtn.getNumberType());
 
     }
 
@@ -93,8 +93,8 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
     }
 
     @Override
-    public void onChanged(@Nullable List<QuickContact> quickContacts) {
-        mCurrentSpeedDialList = quickContacts;
+    public void onChanged(@Nullable List<SpeedDialBtn> speedDialBtns) {
+        mCurrentSpeedDialList = speedDialBtns;
         this.notifyDataSetChanged();
     }
 

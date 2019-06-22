@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,7 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.database.QuickContact;
+import com.danh3945.simplespeeddial.database.SpeedDialBtn;
 import com.danh3945.simplespeeddial.views.contactList.ContactListFragment;
 import com.danh3945.simplespeeddial.views.currentSpeedDial.CurrentSpeedDialFragment;
 
@@ -120,12 +119,12 @@ public class PrimaryDisplayFragment extends Fragment {
             return;
         }
 
-        QuickContact quickContact = new QuickContact();
-        quickContact.setName(name);
-        quickContact.setNumber(number);
-        quickContact.setNumberType(numberType);
+        SpeedDialBtn speedDialBtn = new SpeedDialBtn();
+        speedDialBtn.setName(name);
+        speedDialBtn.setNumber(number);
+        speedDialBtn.setNumberType(numberType);
 
-        quickContact.addToSpeedDial(getContext());
+        speedDialBtn.addToSpeedDial(getContext());
 
         nameEditText.getText().clear();
         numberEditText.getText().clear();
