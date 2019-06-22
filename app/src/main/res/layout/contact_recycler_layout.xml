@@ -4,11 +4,47 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:id="@+id/contact_recycler_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/contact_recycler_title"
+        app:layout_constraintBottom_toTopOf="@id/contact_recycler_select_item_info_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal"
+        android:layout_margin="4dp"
+        android:textSize="@dimen/current_speed_dial_header_text_size" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/contact_recycler_select_item_info"
+        android:id="@+id/contact_recycler_select_item_info_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/contact_recycler_divider"
+        app:layout_constraintTop_toBottomOf="@id/contact_recycler_title_tv"
+        android:gravity="center_horizontal"
+        android:layout_margin="4dp"
+        android:textSize="@dimen/current_speed_dial_header_text_size" />
+
+    <FrameLayout
+        android:id="@+id/contact_recycler_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        style="@style/DividerStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contact_recycler_select_item_info_tv"
+        app:layout_constraintBottom_toTopOf="@id/contact_recycler_view"
+        android:layout_marginTop="4dp" />
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/contact_recycler_divider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/contact_recycler_view" />

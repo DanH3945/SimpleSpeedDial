@@ -26,6 +26,10 @@
     // Widget Strings
     <string name="widget_empty_text">Add some contacts!</string>
 
+    // Contact Fragment Strings
+    <string name="contact_recycler_title">Contact List</string>
+    <string name="contact_recycler_select_item_info">Select a Contact and a number to add it to the speed dial.</string>
+
     // Current Speed Dial Fragment Strings
     <string name="current_speed_dial_title">Current Speed Dial Buttons</string>
     <string name="current_speed_dial_swipe_delete">Swipe to remove from speed dial</string>
