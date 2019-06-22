@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.database.QuickContact;
 import com.danh3945.simplespeeddial.database.QuickContactDatabase;
+import com.danh3945.simplespeeddial.widget.WidgetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,7 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
                         int position = viewHolder.getAdapterPosition();
                         CurrentSpeedDialRecyclerAdapter.this.removeEntry(position);
                         Timber.d("Swiped Position, %s", position);
+                        WidgetProvider.notifyWidgets(mContext);
                     }
                 };
 
