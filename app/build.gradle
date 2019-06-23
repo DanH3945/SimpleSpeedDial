@@ -36,6 +36,9 @@ dependencies {
     implementation "com.android.support:exifinterface:$rootProject.supportVersion"
     implementation "com.android.support:customtabs:$rootProject.supportVersion"
 
+    // Google Play and Firebase
+    implementation "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
+
     implementation "de.psdev.licensesdialog:licensesdialog:$rootProject.licenseDialogVersion"
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
@@ -50,3 +53,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'org.jetbrains:annotations-java5:15.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
