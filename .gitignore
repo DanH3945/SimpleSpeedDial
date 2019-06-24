@@ -53,3 +53,6 @@ captures/
 
 # Firebase
 app/google-services.json
+
+# Admob
+app/src/main/res/values/admob.xml

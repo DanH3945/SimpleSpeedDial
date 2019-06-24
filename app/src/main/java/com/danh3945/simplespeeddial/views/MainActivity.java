@@ -1,10 +1,10 @@
 package com.danh3945.simplespeeddial.views;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,6 +13,7 @@ import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
 import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
+import com.google.android.gms.ads.MobileAds;
 
 import timber.log.Timber;
 
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
             Timber.plant(new TimberReleaseTree());
         }
         // Nothing new above this line
+
+        String adMobID = getResources().getString(R.string.ad_mob_app_id);
+        MobileAds.initialize(this, adMobID);
 
         if (savedInstanceState == null) {
             loadFragment(PrimaryDisplayFragment.createInstance(), true, PrimaryDisplayFragment.TAG);

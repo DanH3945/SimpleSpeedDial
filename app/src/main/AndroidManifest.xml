@@ -12,13 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.danh3945.simplespeeddial.views.MainActivity">
+        <activity android:name="com.danh3945.simplespeeddial.views.MainActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver android:name="com.danh3945.simplespeeddial.widget.WidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -29,6 +31,10 @@
 
         <service android:name="com.danh3945.simplespeeddial.widget.WidgetRemoteViewsService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/ad_mob_app_id"/>
     </application>
 
 </manifest>

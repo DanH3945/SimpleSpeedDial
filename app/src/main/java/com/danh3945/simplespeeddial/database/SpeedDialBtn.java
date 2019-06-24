@@ -1,8 +1,8 @@
 package com.danh3945.simplespeeddial.database;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;

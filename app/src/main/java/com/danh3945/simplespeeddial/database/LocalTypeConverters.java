@@ -1,6 +1,6 @@
 package com.danh3945.simplespeeddial.database;
 
-import android.arch.persistence.room.TypeConverter;
+import androidx.room.TypeConverter;
 import android.net.Uri;
 
 public class LocalTypeConverters {
