@@ -9,7 +9,8 @@ buildscript {
         picassoVersion = '2.71828'
         constraintLayoutVersion = '1.1.3'
         roomVersion = '1.1.1'
-        firebaseVersion = '16.0.9'
+        firebaseCoreVersion = '17.0.0'
+        firebaseAdVersion = '18.0.0'
     }
 
     repositories {
