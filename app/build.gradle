@@ -21,6 +21,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    flavorDimensions 'versions'
+    productFlavors {
+        free {
+            dimension = 'versions'
+        }
+        paid {
+            dimension = 'versions'
+        }
+    }
 }
 
 dependencies {
