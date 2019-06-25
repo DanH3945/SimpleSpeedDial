@@ -37,18 +37,23 @@ public class MainActivity extends AppCompatActivity {
         // Mobile Ads initialization
         String adMobID = getResources().getString(R.string.ad_mob_app_id);
         MobileAds.initialize(this, adMobID);
-        AdView bannerAd = findViewById(R.id.activity_main_banner_ad);
-        if (!BuildConfig.DEBUG) {
-            bannerAd.setAdUnitId(getResources().getString(R.string.ad_mob_id_live_banner));
+        if (BuildConfig.FLAVOR.equals("free")) {
+            initMobileAds();
         }
-        AdRequest bannerAdRequest = new AdRequest.Builder().build();
-        bannerAd.loadAd(bannerAdRequest);
-
 
         // load the main fragment to display to the user.
         if (savedInstanceState == null) {
             loadFragment(PrimaryDisplayFragment.createInstance(), true, PrimaryDisplayFragment.TAG);
         }
+    }
+
+    void initMobileAds() {
+        AdView bannerAd = findViewById(R.id.banner_ad_view);
+        if (!BuildConfig.DEBUG) {
+            bannerAd.setAdUnitId(getResources().getString(R.string.ad_mob_id_live_banner));
+        }
+        AdRequest bannerAdRequest = new AdRequest.Builder().build();
+        bannerAd.loadAd(bannerAdRequest);
     }
 
     private void loadFragment(Fragment fragment, boolean addToBackStack, String tag) {
