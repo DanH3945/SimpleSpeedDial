@@ -13,6 +13,8 @@ import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
 import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import timber.log.Timber;
@@ -32,12 +34,26 @@ public class MainActivity extends AppCompatActivity {
         }
         // Nothing new above this line
 
+        // Mobile Ads initialization
         String adMobID = getResources().getString(R.string.ad_mob_app_id);
         MobileAds.initialize(this, adMobID);
+        if (BuildConfig.FLAVOR.equals("free")) {
+            initMobileAds();
+        }
 
+        // load the main fragment to display to the user.
         if (savedInstanceState == null) {
             loadFragment(PrimaryDisplayFragment.createInstance(), true, PrimaryDisplayFragment.TAG);
         }
+    }
+
+    void initMobileAds() {
+        AdView bannerAd = findViewById(R.id.banner_ad_view);
+        if (!BuildConfig.DEBUG) {
+            bannerAd.setAdUnitId(getResources().getString(R.string.ad_mob_id_live_banner));
+        }
+        AdRequest bannerAdRequest = new AdRequest.Builder().build();
+        bannerAd.loadAd(bannerAdRequest);
     }
 
     private void loadFragment(Fragment fragment, boolean addToBackStack, String tag) {
