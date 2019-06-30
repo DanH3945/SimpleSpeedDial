@@ -3,13 +3,8 @@ package com.danh3945.simplespeeddial.views.primaryDisplay;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.database.SpeedDialBtn;
@@ -60,6 +62,10 @@ public class PrimaryDisplayFragment extends Fragment {
                             PERMISSIONS_REQUEST_READ_CONTACTS);
                 } else {
                     // We do have permission so load the contacts display fragment
+                    if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        loadChildFragment(ContactListFragment.getInstance(), ContactListFragment.TAG);
+                        return;
+                    }
                     loadFragment(ContactListFragment.getInstance(), ContactListFragment.TAG);
                 }
 
@@ -70,6 +76,10 @@ public class PrimaryDisplayFragment extends Fragment {
         currentSpeedListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    loadChildFragment(CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
+                    return;
+                }
                 loadFragment(CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
             }
         });
@@ -156,6 +166,14 @@ public class PrimaryDisplayFragment extends Fragment {
         } catch (NullPointerException e) {
             Timber.e(e);
         }
+    }
+
+    private void loadChildFragment(Fragment fragment, String tag) {
+        FragmentManager fm = getChildFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.primary_display_landscape_frame, fragment, tag);
+        ft.commit();
+        fm.executePendingTransactions();
     }
 
 }
