@@ -10,8 +10,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/main_fragment_container"
-        android:layout_marginBottom="40dp"/>
+        android:id="@+id/main_fragment_container" />
 
     <FrameLayout
         android:layout_width="wrap_content"
