@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         // load the main fragment to display to the user.
         if (savedInstanceState == null) {
-            loadFragment(PrimaryDisplayFragment.createInstance(), true, PrimaryDisplayFragment.TAG);
+            loadFragment(PrimaryDisplayFragment.createInstance(), false, PrimaryDisplayFragment.TAG);
         }
     }
 
