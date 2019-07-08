@@ -18,4 +18,10 @@
     <dimen name="current_speed_dial_divider_margin">12dp</dimen>
     <dimen name="current_speed_dial_header_text_size">18sp</dimen>
 
+    // Primary Display Dimensions
+    <dimen name="primary_display_landscape_btn_width">260dp</dimen>
+    <dimen name="primary_display_landscape_btn_text_size">12sp</dimen>
+    <dimen name="primary_display_landscape_btn_et_width">220dp</dimen>
+    <dimen name="primary_display_landscape_btn_et_height">48dp</dimen>
+
 </resources>

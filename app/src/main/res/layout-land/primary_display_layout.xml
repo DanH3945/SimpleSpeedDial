@@ -31,20 +31,20 @@
 
         <EditText
             android:id="@+id/primary_display_quick_add_name_et"
-            android:layout_width="220dp"
-            android:layout_height="56dp"
+            android:layout_width="@dimen/primary_display_landscape_btn_et_width"
+            android:layout_height="@dimen/primary_display_landscape_btn_et_height"
             app:layout_constraintTop_toTopOf="@id/primary_display_quick_add_tag"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:autofillHints="@string/default_string_name"
             android:hint="@string/default_string_name"
             android:inputType="textNoSuggestions"
-            android:layout_marginTop="24dp"/>
+            android:layout_marginTop="12dp" />
 
         <EditText
             android:id="@+id/primary_display_quick_add_number_et"
-            android:layout_width="220dp"
-            android:layout_height="56dp"
+            android:layout_width="@dimen/primary_display_landscape_btn_et_width"
+            android:layout_height="@dimen/primary_display_landscape_btn_et_height"
             app:layout_constraintTop_toBottomOf="@id/primary_display_quick_add_name_et"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,8 +54,8 @@
 
         <AutoCompleteTextView
             android:id="@+id/primary_display_quick_add_number_type"
-            android:layout_width="220dp"
-            android:layout_height="56dp"
+            android:layout_width="@dimen/primary_display_landscape_btn_et_width"
+            android:layout_height="@dimen/primary_display_landscape_btn_et_height"
             app:layout_constraintTop_toBottomOf="@id/primary_display_quick_add_number_et"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +71,7 @@
             app:layout_constraintTop_toBottomOf="@id/primary_display_quick_add_number_type"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="24dp"
+            android:layout_margin="12dp"
             android:text="@string/primary_display_quick_add_btn_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -79,7 +79,7 @@
     <Button
         style="@style/ButtonStyle"
         android:id="@+id/primary_display_contact_list_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/primary_display_landscape_btn_width"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/primary_display_contact_current_speed_list_btn"
         app:layout_constraintStart_toStartOf="@id/primary_display_quick_add_constraint_frame"
@@ -90,7 +90,7 @@
     <Button
         style="@style/ButtonStyle"
         android:id="@+id/primary_display_contact_current_speed_list_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/primary_display_landscape_btn_width"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/primary_display_quick_add_constraint_frame"

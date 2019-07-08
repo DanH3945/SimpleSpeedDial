@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/banner_ad_container">
 
         <include layout="@layout/banner_ad_view"
             android:id="@+id/banner_ad" />
