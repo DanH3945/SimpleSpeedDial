@@ -39,7 +39,8 @@
             android:autofillHints="@string/default_string_name"
             android:hint="@string/default_string_name"
             android:inputType="textNoSuggestions"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="12dp"
+            android:imeOptions="flagNoExtractUi"/>
 
         <EditText
             android:id="@+id/primary_display_quick_add_number_et"
@@ -50,7 +51,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:autofillHints="@string/default_string_number"
             android:hint="@string/default_string_number"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:imeOptions="flagNoExtractUi"/>
 
         <AutoCompleteTextView
             android:id="@+id/primary_display_quick_add_number_type"
@@ -61,7 +63,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:autofillHints="@string/default_string_number_type"
             android:hint="@string/default_string_number_type"
-            android:inputType="textNoSuggestions" />
+            android:inputType="textNoSuggestions"
+            android:imeOptions="flagNoExtractUi"/>
 
         <Button
             style="@style/ButtonStyle"

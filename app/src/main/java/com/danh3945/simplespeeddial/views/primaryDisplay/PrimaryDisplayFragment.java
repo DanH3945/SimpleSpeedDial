@@ -76,10 +76,6 @@ public class PrimaryDisplayFragment extends Fragment {
         currentSpeedListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    loadChildFragment(CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
-                    return;
-                }
                 loadFragment(CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
             }
         });
@@ -100,6 +96,10 @@ public class PrimaryDisplayFragment extends Fragment {
                 addSpeedDial();
             }
         });
+
+        if (isLandscapeOriented()) {
+            loadFragment(CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
+        }
 
         return view;
     }
@@ -156,6 +156,14 @@ public class PrimaryDisplayFragment extends Fragment {
     }
 
     private void loadFragment(Fragment fragment, String tag) {
+        if (isLandscapeOriented()) {
+            loadChildFragment(fragment, tag);
+        } else {
+            loadMainFragment(fragment, tag);
+        }
+    }
+
+    private void loadMainFragment(Fragment fragment, String tag) {
         try {
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
@@ -176,4 +184,7 @@ public class PrimaryDisplayFragment extends Fragment {
         fm.executePendingTransactions();
     }
 
+    private boolean isLandscapeOriented() {
+        return getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
 }

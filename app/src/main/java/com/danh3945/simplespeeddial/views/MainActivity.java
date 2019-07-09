@@ -47,9 +47,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // load the main fragment to display to the user.
-        if (savedInstanceState == null) {
-            loadFragment(PrimaryDisplayFragment.createInstance(), false, PrimaryDisplayFragment.TAG);
-        }
+        loadFragment(PrimaryDisplayFragment.createInstance(), false, PrimaryDisplayFragment.TAG);
+
     }
 
     void initMobileAds() {
