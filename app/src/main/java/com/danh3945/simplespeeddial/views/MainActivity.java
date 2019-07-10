@@ -2,16 +2,15 @@ package com.danh3945.simplespeeddial.views;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void initMobileAds() {
+    private void initMobileAds() {
 
         if (isLandscapeOriented()) {
             FrameLayout adContainer = findViewById(R.id.banner_ad_container);
@@ -61,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         AdView bannerAd = findViewById(R.id.banner_ad_view);
-        if (!BuildConfig.DEBUG) {
-            bannerAd.setAdUnitId(getResources().getString(R.string.ad_mob_id_live_banner));
-        }
-        AdRequest bannerAdRequest = new AdRequest.Builder().build();
+
+        AdRequest bannerAdRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
         bannerAd.loadAd(bannerAdRequest);
     }
 

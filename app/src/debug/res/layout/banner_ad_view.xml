@@ -6,5 +6,5 @@
         android:layout_height="wrap_content"
         android:layerType="software"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/ad_mob_id_live_banner" />
+        ads:adUnitId="@string/ad_mob_id_test_banner" />
 </merge>
