@@ -1,8 +1,5 @@
 package com.danh3945.simplespeeddial.database;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,6 +7,10 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import com.danh3945.simplespeeddial.image.ImageHelper;
 import com.danh3945.simplespeeddial.widget.WidgetProvider;

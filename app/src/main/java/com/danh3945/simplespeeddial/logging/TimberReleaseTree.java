@@ -1,7 +1,8 @@
 package com.danh3945.simplespeeddial.logging;
 
-import androidx.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import timber.log.Timber;
 
