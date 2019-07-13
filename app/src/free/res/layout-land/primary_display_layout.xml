@@ -10,12 +10,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
-    
-    <View android:layout_height="match_parent"
+
+    <View android:id="@+id/divider"
+        android:layout_height="match_parent"
         android:layout_width="1dp"
-        android:background="@color/dividerColor"
         app:layout_constraintStart_toStartOf="@id/guideLine"
-        app:layout_constraintEnd_toEndOf="@id/guideLine"/>
+        app:layout_constraintEnd_toEndOf="@id/guideLine"
+        android:background="@color/dividerColor"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/primary_display_quick_add_constraint_frame"
@@ -114,7 +115,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideLine"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="56dp">
 
     </androidx.core.widget.NestedScrollView>
 
