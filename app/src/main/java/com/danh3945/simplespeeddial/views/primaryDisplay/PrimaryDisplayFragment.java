@@ -62,10 +62,6 @@ public class PrimaryDisplayFragment extends Fragment {
                             PERMISSIONS_REQUEST_READ_CONTACTS);
                 } else {
                     // We do have permission so load the contacts display fragment
-                    if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        loadChildFragment(ContactListFragment.getInstance(), ContactListFragment.TAG);
-                        return;
-                    }
                     loadFragment(ContactListFragment.getInstance(), ContactListFragment.TAG);
                 }
 
