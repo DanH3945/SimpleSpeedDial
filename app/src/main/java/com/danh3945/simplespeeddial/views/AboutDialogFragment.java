@@ -2,9 +2,12 @@ package com.danh3945.simplespeeddial.views;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,6 +62,14 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
         TextView timberText = dialog.findViewById(R.id.about_timber_tv);
         timberText.setOnClickListener(v -> showTimberLicense());
 
+        TextView iconsEightText = dialog.findViewById(R.id.about_icons_eight_tv);
+        iconsEightText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openIconsEightWebpage();
+            }
+        });
+
         return dialog;
     }
 
@@ -92,5 +103,12 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
         final Notice notice = new Notice(name, url, copyright, license);
         new LicensesDialog.Builder(context).setNotices(notice).build().showAppCompat();
 
+    }
+
+    private void openIconsEightWebpage() {
+        String url = getResources().getString(R.string.about_icons_eight_url);
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }

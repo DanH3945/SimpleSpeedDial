@@ -48,6 +48,11 @@
     <string name="about_timber_license_title">Timber License</string>
     <string name="about_timber_url">https://github.com/JakeWharton/timber</string>
     <string name="about_timber_copyright">Copyright 2013 Jake Wharton</string>
+
+    <string name="about_icons_eight_title">Icons8.com</string>
+    <string name="about_icons_eight_url">https://Icons8.com</string>
+
+    // Overflow Menu Strings
     <string name="menu_preferences_title">Preferences</string>
     <string name="menu_about_title">About</string>
 
