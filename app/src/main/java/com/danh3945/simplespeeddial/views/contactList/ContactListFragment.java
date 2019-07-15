@@ -17,7 +17,7 @@ import timber.log.Timber;
 
 public class ContactListFragment extends Fragment {
 
-    public static String TAG = "ContactListFragment";
+    public static final String TAG = "ContactListFragment";
 
     private RecyclerView mRecyclerView;
     private ContactListRecyclerAdapter mContactListRecyclerAdapter;
