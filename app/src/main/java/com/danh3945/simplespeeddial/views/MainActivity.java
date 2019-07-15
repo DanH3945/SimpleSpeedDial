@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
             initMobileAds();
         }
 
+        if (isLandscapeOriented()) {
+            getSupportActionBar().hide();
+        }
         // load the main fragment to display to the user.
         loadFragment(PrimaryDisplayFragment.createInstance(), false, PrimaryDisplayFragment.TAG);
 

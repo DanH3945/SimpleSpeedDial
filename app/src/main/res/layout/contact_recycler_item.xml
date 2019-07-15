@@ -21,18 +21,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:minHeight="56dp"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="false"
+        android:layout_marginStart="@dimen/recycler_fragment_image_dimensions">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/contact_recycler_card_name_text"
             android:text="@string/default_string"
-            android:textSize="20sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/contact_recycler_card_list"
             android:layout_margin="14dp" />
