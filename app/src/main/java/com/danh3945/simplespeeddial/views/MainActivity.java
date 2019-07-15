@@ -105,10 +105,10 @@ public class MainActivity extends AppCompatActivity {
                 new AboutDialogFragment().show(getSupportFragmentManager(), null);
                 break;
 
-            case R.id.overflow_menu_preferences:
-                // No preferences yet
-                // Todo implement me
-                break;
+//            case R.id.overflow_menu_preferences:
+//                // No preferences yet
+//                // Todo implement me
+//                break;
         }
 
         return super.onOptionsItemSelected(item);
