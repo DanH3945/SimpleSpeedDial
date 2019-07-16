@@ -2,6 +2,7 @@ package com.danh3945.simplespeeddial.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.widget.RemoteViews;
@@ -17,6 +18,9 @@ import timber.log.Timber;
 
 public class WidgetRemoteViewsService extends RemoteViewsService {
 
+    private static final String CALL_PREF_KEY = "callPref";
+    private static final int REGULAR_DIAL = 2;
+
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new WidgetRemoteViewsFactory(getApplicationContext());
@@ -27,10 +31,14 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
         private Context mContext;
         private List<SpeedDialBtn> mSpeedDialBtnList;
         private SpeedDialDatabase mDatabase;
+        private SharedPreferences mPrefs;
 
         WidgetRemoteViewsFactory(Context context) {
             this.mContext = context;
             mDatabase = SpeedDialDatabase.getSpeedDialDatabase(context);
+
+            String prefKey = getResources().getString(R.string.shared_preference_key);
+            mPrefs = getSharedPreferences(prefKey, Context.MODE_PRIVATE);
         }
 
         @Override
@@ -69,7 +77,15 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
             baseView.setTextViewText(R.id.widget_item_name_text, speedDialBtn.getName());
             baseView.setTextViewText(R.id.widget_item_number_type_text, speedDialBtn.getNumberType());
             String callUri = "tel:" + speedDialBtn.getNumber();
-            Intent intent = new Intent(Intent.ACTION_DIAL);
+
+            Intent intent;
+
+            if (mPrefs.getInt(CALL_PREF_KEY, REGULAR_DIAL) == REGULAR_DIAL) {
+                intent = new Intent(Intent.ACTION_DIAL);
+            } else {
+                intent = new Intent(Intent.ACTION_DIAL);
+            }
+
             intent.setData(Uri.parse(callUri));
 
             baseView.setOnClickFillInIntent(R.id.widget_item_card, intent);

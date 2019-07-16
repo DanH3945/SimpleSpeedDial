@@ -5,8 +5,8 @@
         android:id="@+id/overflow_menu_about"
         android:title="@string/menu_about_title" />
 
-    <!--<item-->
-        <!--android:id="@+id/overflow_menu_preferences"-->
-        <!--android:title="@string/menu_preferences_title" />-->
+    <item
+        android:id="@+id/overflow_menu_preferences"
+        android:title="@string/menu_preferences_title" />
 
 </menu>

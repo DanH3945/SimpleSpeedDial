@@ -56,4 +56,7 @@
     <string name="menu_preferences_title">Preferences</string>
     <string name="menu_about_title">About</string>
 
+    // Shared Preferences Strings
+    <string name="shared_preference_key">primarySharedPrefKey</string>
+
 </resources>
