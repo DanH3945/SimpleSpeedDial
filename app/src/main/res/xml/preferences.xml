@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:id="@+id/preference_instant_call_check_box"
+        android:title="Instant Call"
+        android:defaultValue="false"
+        android:summary="When checked your speed dial calls will be made instantly instead of first opening the Call app."
+        android:key="@string/shared_pref_dial_type_key" />
+
+</PreferenceScreen>

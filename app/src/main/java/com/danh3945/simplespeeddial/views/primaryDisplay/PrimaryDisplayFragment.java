@@ -30,7 +30,7 @@ import timber.log.Timber;
 public class PrimaryDisplayFragment extends Fragment {
 
     public static final String TAG = "SpeedDialPrimaryDisplayFragment";
-    public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 11567;
+    public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 5100;
 
     AutoCompleteTextView numberTypeAutoTextview;
     EditText nameEditText;

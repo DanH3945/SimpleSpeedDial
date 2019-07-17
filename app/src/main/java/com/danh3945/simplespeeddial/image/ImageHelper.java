@@ -48,10 +48,16 @@ public class ImageHelper {
 
         Bitmap photoBitmap = null;
 
+        InputStream photoStream;
         if (lookupUri != null) {
-            InputStream photoStream = ContactsContract
-                    .Contacts
-                    .openContactPhotoInputStream(context.getContentResolver(), lookupUri);
+            try {
+                photoStream = ContactsContract
+                        .Contacts
+                        .openContactPhotoInputStream(context.getContentResolver(), lookupUri);
+            } catch (SecurityException se) {
+                Timber.i(se);
+                photoStream = null;
+            }
             if (photoStream != null) {
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(photoStream);
                 photoBitmap = BitmapFactory.decodeStream(bufferedInputStream);

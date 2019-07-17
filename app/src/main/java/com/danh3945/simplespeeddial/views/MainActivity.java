@@ -16,6 +16,7 @@ import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
+import com.danh3945.simplespeeddial.views.preferences.SpeedDialPreferenceFragment;
 import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -50,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         }
         // load the main fragment to display to the user.
         loadFragment(PrimaryDisplayFragment.createInstance(), false, PrimaryDisplayFragment.TAG);
-
     }
 
     private void initMobileAds() {
@@ -106,8 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.overflow_menu_preferences:
-                // No preferences yet
-                // Todo implement me
+                loadFragment(SpeedDialPreferenceFragment.createInstance(getApplicationContext()), true, SpeedDialPreferenceFragment.TAG);
                 break;
         }
 

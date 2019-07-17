@@ -1,12 +1,17 @@
 package com.danh3945.simplespeeddial.widget;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
+import androidx.core.content.ContextCompat;
 
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.database.SpeedDialBtn;
@@ -18,9 +23,6 @@ import timber.log.Timber;
 
 public class WidgetRemoteViewsService extends RemoteViewsService {
 
-    private static final String CALL_PREF_KEY = "callPref";
-    private static final int REGULAR_DIAL = 2;
-
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new WidgetRemoteViewsFactory(getApplicationContext());
@@ -31,14 +33,10 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
         private Context mContext;
         private List<SpeedDialBtn> mSpeedDialBtnList;
         private SpeedDialDatabase mDatabase;
-        private SharedPreferences mPrefs;
 
         WidgetRemoteViewsFactory(Context context) {
             this.mContext = context;
             mDatabase = SpeedDialDatabase.getSpeedDialDatabase(context);
-
-            String prefKey = getResources().getString(R.string.shared_preference_key);
-            mPrefs = getSharedPreferences(prefKey, Context.MODE_PRIVATE);
         }
 
         @Override
@@ -80,9 +78,11 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
 
             Intent intent;
 
-            if (mPrefs.getInt(CALL_PREF_KEY, REGULAR_DIAL) == REGULAR_DIAL) {
-                intent = new Intent(Intent.ACTION_DIAL);
+            if (shouldInstantDial()) {
+                Timber.d("Making instant call");
+                intent = new Intent(Intent.ACTION_CALL);
             } else {
+                Timber.d("Making regular call");
                 intent = new Intent(Intent.ACTION_DIAL);
             }
 
@@ -113,5 +113,15 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
         public boolean hasStableIds() {
             return true;
         }
+    }
+
+    public boolean shouldInstantDial() {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String key = getResources().getString(R.string.shared_pref_dial_type_key);
+        return prefs.getBoolean(key, false);
     }
 }
