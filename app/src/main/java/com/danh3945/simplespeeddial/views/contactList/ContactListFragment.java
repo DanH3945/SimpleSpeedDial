@@ -22,8 +22,16 @@ public class ContactListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ContactListRecyclerAdapter mContactListRecyclerAdapter;
 
-    public static Fragment getInstance() {
+    private ContactListRecyclerAdapter.ContactListResultCallback mCallback;
+
+    public static Fragment createInstance() {
         return new ContactListFragment();
+    }
+
+    public static Fragment createInstanceForResult(ContactListRecyclerAdapter.ContactListResultCallback callback) {
+        ContactListFragment fragment = new ContactListFragment();
+        fragment.mCallback = callback;
+        return fragment;
     }
 
     @Nullable
@@ -33,7 +41,12 @@ public class ContactListFragment extends Fragment {
         Timber.d("Creating View for %s", TAG);
 
         mRecyclerView = view.findViewById(R.id.contact_recycler_view);
-        mContactListRecyclerAdapter = new ContactListRecyclerAdapter(getContext(), mRecyclerView);
+
+        if (mCallback == null) {
+            mContactListRecyclerAdapter = new ContactListRecyclerAdapter(getContext(), mRecyclerView);
+        } else {
+            mContactListRecyclerAdapter = new ContactListRecyclerAdapter(getContext(), mRecyclerView, mCallback);
+        }
 
         mRecyclerView.setAdapter(mContactListRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

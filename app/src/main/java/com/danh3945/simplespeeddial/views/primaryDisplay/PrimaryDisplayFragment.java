@@ -62,7 +62,7 @@ public class PrimaryDisplayFragment extends Fragment {
                             PERMISSIONS_REQUEST_READ_CONTACTS);
                 } else {
                     // We do have permission so load the contacts display fragment
-                    loadFragment(ContactListFragment.getInstance(), ContactListFragment.TAG);
+                    loadFragment(ContactListFragment.createInstance(), ContactListFragment.TAG);
                 }
 
             }
@@ -72,7 +72,7 @@ public class PrimaryDisplayFragment extends Fragment {
         currentSpeedListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
+                loadFragment(CurrentSpeedDialFragment.createInstance(), CurrentSpeedDialFragment.TAG);
             }
         });
 
@@ -94,7 +94,7 @@ public class PrimaryDisplayFragment extends Fragment {
         });
 
         if (isLandscapeOriented()) {
-            loadFragment(CurrentSpeedDialFragment.getInstance(), CurrentSpeedDialFragment.TAG);
+            loadFragment(CurrentSpeedDialFragment.createInstance(), CurrentSpeedDialFragment.TAG);
         }
 
         return view;
@@ -145,7 +145,7 @@ public class PrimaryDisplayFragment extends Fragment {
             case PERMISSIONS_REQUEST_READ_CONTACTS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // We got permission from the user so load the contacts display fragment
-                    loadFragment(ContactListFragment.getInstance(), ContactListFragment.TAG);
+                    loadFragment(ContactListFragment.createInstance(), ContactListFragment.TAG);
                 }
                 // We didn't get permission so stay where we are and don't load the contact fragment.
         }

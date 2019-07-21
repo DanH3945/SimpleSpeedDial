@@ -17,7 +17,7 @@ public class CurrentSpeedDialFragment extends Fragment {
 
     public static final String TAG = "CurrentSpeedDialFragment";
 
-    public static Fragment getInstance() {
+    public static Fragment createInstance() {
         return new CurrentSpeedDialFragment();
     }
 

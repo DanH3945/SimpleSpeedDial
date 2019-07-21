@@ -33,6 +33,10 @@ import timber.log.Timber;
 
 public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactListRecyclerAdapter.ContactViewHolder> {
 
+    public interface ContactListResultCallback {
+        void clickResult(SpeedDialBtn result);
+    }
+
     private List<Contact> mContactList;
     private Context mContext;
 
@@ -41,7 +45,11 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
     private RecyclerView mOwner;
 
-    public ContactListRecyclerAdapter(Context context, RecyclerView owner) {
+    private ContactListResultCallback mCallback;
+
+    public ContactListRecyclerAdapter(Context context, RecyclerView owner, ContactListResultCallback callback) {
+
+        mCallback = callback;
         mContext = context;
         mOwner = owner;
 
@@ -53,6 +61,10 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
                 setContactList(contactList);
             }
         });
+    }
+
+    public ContactListRecyclerAdapter(Context context, RecyclerView owner) {
+        this(context, owner, null);
     }
 
     @NonNull
@@ -234,7 +246,11 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
                     speedDialBtn.setNumberType(numberType);
                     speedDialBtn.setLookup_uri(lookupUri);
 
-                    speedDialBtn.addToSpeedDial(mContext);
+                    if (mCallback == null) {
+                        speedDialBtn.addToSpeedDial(mContext);
+                    } else {
+                        mCallback.clickResult(speedDialBtn);
+                    }
 
                     Timber.d("Number selected for: %s with type: %s and number: %s ... Adding to database",
                             mContact.getName(),
