@@ -11,8 +11,10 @@
     // Widget Dimensions
     <dimen name="widget_text_size">12sp</dimen>
     <dimen name="widget_photo_rounding_pixels">4dp</dimen>
-    <dimen name="widget_height">110dp</dimen>
-    <dimen name="widget_width">180dp</dimen>
+    <dimen name="widget_large_height">110dp</dimen>
+    <dimen name="widget_large_width">180dp</dimen>
+    <dimen name="widget_single_height">40dp</dimen>
+    <dimen name="widget_single_width">40dp</dimen>
 
     // Current Speed Dial Dimensions
     <dimen name="current_speed_dial_divider_margin">12dp</dimen>

@@ -10,15 +10,15 @@ import android.widget.RemoteViews;
 
 import com.danh3945.simplespeeddial.R;
 
-public class WidgetProvider extends AppWidgetProvider {
+public class LargeWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
         for (int appWidgetId : appWidgetIds) {
-            Intent serviceIntent = new Intent(context, WidgetRemoteViewsService.class);
+            Intent serviceIntent = new Intent(context, LargeWidgetRemoteViewsService.class);
 
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_large_layout);
             remoteViews.setRemoteAdapter(R.id.widget_list_view, serviceIntent);
             remoteViews.setEmptyView(R.id.widget_list_view, R.id.empty_view);
 
@@ -30,12 +30,12 @@ public class WidgetProvider extends AppWidgetProvider {
         }
     }
 
-    public static void notifyWidgets(Context context) {
+    public static void notifyLargeWidgets(Context context) {
         // Notifying the app widget that some information has changed and it should update.
         AppWidgetManager appWidgetManager =
                 AppWidgetManager.getInstance(context);
 
-        ComponentName appWidget = new ComponentName(context, WidgetProvider.class.getName());
+        ComponentName appWidget = new ComponentName(context, LargeWidgetProvider.class.getName());
 
         int[] widgetIds = appWidgetManager.getAppWidgetIds(appWidget);
 

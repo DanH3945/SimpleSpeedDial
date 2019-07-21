@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.database.SpeedDialBtn;
 import com.danh3945.simplespeeddial.database.SpeedDialDatabase;
-import com.danh3945.simplespeeddial.widget.WidgetProvider;
+import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,7 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
                         int position = viewHolder.getAdapterPosition();
                         CurrentSpeedDialRecyclerAdapter.this.removeEntry(position);
                         Timber.d("Swiped Position, %s", position);
-                        WidgetProvider.notifyWidgets(mContext);
+                        LargeWidgetProvider.notifyLargeWidgets(mContext);
                     }
                 };
 

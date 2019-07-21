@@ -15,7 +15,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.widget.WidgetProvider;
+import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
 import timber.log.Timber;
 
@@ -56,7 +56,7 @@ public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
                             PERMISSION_REQUEST_INSTANT_CALL);
                     return false;
                 }
-                WidgetProvider.notifyWidgets(mContext);
+                LargeWidgetProvider.notifyLargeWidgets(mContext);
                 return true;
             }
         });
@@ -75,7 +75,7 @@ public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
                     } catch (NullPointerException npe) {
                         Timber.i(npe);
                     }
-                    WidgetProvider.notifyWidgets(mContext);
+                    LargeWidgetProvider.notifyLargeWidgets(mContext);
                 }
         }
     }

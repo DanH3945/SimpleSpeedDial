@@ -21,7 +21,7 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class WidgetRemoteViewsService extends RemoteViewsService {
+public class LargeWidgetRemoteViewsService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -63,7 +63,7 @@ public class WidgetRemoteViewsService extends RemoteViewsService {
             Timber.d("Building widget remote view at position: %s", position);
 
             RemoteViews baseView =
-                    new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
+                    new RemoteViews(mContext.getPackageName(), R.layout.widget_large_item);
 
             SpeedDialBtn speedDialBtn = mSpeedDialBtnList.get(position);
 

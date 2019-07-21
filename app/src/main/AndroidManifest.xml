@@ -21,15 +21,15 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.danh3945.simplespeeddial.widget.WidgetProvider" >
+        <receiver android:name="com.danh3945.simplespeeddial.widget.LargeWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/simple_speed_dial_widget_info" />
+                android:resource="@xml/widget_large_info" />
         </receiver>
 
-        <service android:name="com.danh3945.simplespeeddial.widget.WidgetRemoteViewsService"
+        <service android:name="com.danh3945.simplespeeddial.widget.LargeWidgetRemoteViewsService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <meta-data

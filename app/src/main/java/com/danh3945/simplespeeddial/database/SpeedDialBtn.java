@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.danh3945.simplespeeddial.image.ImageHelper;
-import com.danh3945.simplespeeddial.widget.WidgetProvider;
+import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
 @Entity
 @TypeConverters(LocalTypeConverters.class)
@@ -89,7 +89,7 @@ public class SpeedDialBtn {
 
                 notifyUserAddedSpeedDial(context);
 
-                WidgetProvider.notifyWidgets(context);
+                LargeWidgetProvider.notifyLargeWidgets(context);
             }
         });
     }
@@ -116,7 +116,7 @@ public class SpeedDialBtn {
                         .speedDialDao()
                         .removeSpeedDialEntry(SpeedDialBtn.this);
 
-                WidgetProvider.notifyWidgets(context);
+                LargeWidgetProvider.notifyLargeWidgets(context);
             }
         });
     }
