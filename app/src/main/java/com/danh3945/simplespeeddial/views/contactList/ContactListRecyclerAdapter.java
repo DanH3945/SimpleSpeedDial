@@ -248,14 +248,14 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
                     if (mCallback == null) {
                         speedDialBtn.addToSpeedDial(mContext);
+
+                        Timber.d("Number selected for: %s with type: %s and number: %s ... Adding to database",
+                                mContact.getName(),
+                                numberType,
+                                number);
                     } else {
                         mCallback.clickResult(speedDialBtn);
                     }
-
-                    Timber.d("Number selected for: %s with type: %s and number: %s ... Adding to database",
-                            mContact.getName(),
-                            numberType,
-                            number);
                 }
             });
 

@@ -1,5 +1,6 @@
 package com.danh3945.simplespeeddial.views;
 
+import android.appwidget.AppWidgetManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,8 +15,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
+import com.danh3945.simplespeeddial.database.SpeedDialBtn;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
+import com.danh3945.simplespeeddial.views.contactList.ContactListFragment;
+import com.danh3945.simplespeeddial.views.contactList.ContactListRecyclerAdapter;
 import com.danh3945.simplespeeddial.views.preferences.SpeedDialPreferenceFragment;
 import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
 import com.google.android.gms.ads.AdRequest;
@@ -49,8 +53,14 @@ public class MainActivity extends AppCompatActivity {
         if (isLandscapeOriented()) {
             getSupportActionBar().hide();
         }
-        // load the main fragment to display to the user.
-        loadFragment(PrimaryDisplayFragment.createInstance(), false, PrimaryDisplayFragment.TAG);
+
+        if (getIntent().getAction() != null &&
+                getIntent().getAction().equals(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)) {
+            loadSingleTileConfigFragment();
+        } else {
+            // load the main fragment to display to the user.
+            loadFragment(PrimaryDisplayFragment.createInstance(), false, PrimaryDisplayFragment.TAG);
+        }
     }
 
     private void initMobileAds() {
@@ -78,6 +88,20 @@ public class MainActivity extends AppCompatActivity {
         if (addToBackStack) fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commit();
         fragmentManager.executePendingTransactions();
+    }
+
+    private void loadSingleTileConfigFragment() {
+
+        ContactListRecyclerAdapter.ContactListResultCallback callback = new ContactListRecyclerAdapter.ContactListResultCallback() {
+            @Override
+            public void clickResult(SpeedDialBtn result) {
+                // Todo configure the single tile widget with the result information.
+                Timber.d("Configuring single tile widget with name: %s, number: %s, numberType: %s",
+                        result.getName(), result.getNumber(), result.getNumberType());
+            }
+        };
+
+        loadFragment(ContactListFragment.createInstanceForResult(callback), true, ContactListFragment.TAG);
     }
 
     @Override
