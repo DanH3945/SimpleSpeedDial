@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.database.SpeedDialBtn;
+import com.danh3945.simplespeeddial.database.SpeedDialObject;
 import com.danh3945.simplespeeddial.database.SpeedDialDatabase;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
@@ -25,9 +25,9 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<CurrentSpeedDialRecyclerAdapter.CurrentSpeedDialRecyclerViewHolder> implements Observer<List<SpeedDialBtn>> {
+public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<CurrentSpeedDialRecyclerAdapter.CurrentSpeedDialRecyclerViewHolder> implements Observer<List<SpeedDialObject>> {
 
-    List<SpeedDialBtn> mCurrentSpeedDialList;
+    List<SpeedDialObject> mCurrentSpeedDialList;
     Context mContext;
 
     SpeedDialDatabase mDatabase;
@@ -75,12 +75,12 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
 
     @Override
     public void onBindViewHolder(@NonNull CurrentSpeedDialRecyclerViewHolder viewHolder, int i) {
-        SpeedDialBtn speedDialBtn = mCurrentSpeedDialList.get(i);
+        SpeedDialObject speedDialObject = mCurrentSpeedDialList.get(i);
 
-        viewHolder.mImageView.setImageBitmap(speedDialBtn.getContactPhoto(mContext));
-        viewHolder.mNameText.setText(speedDialBtn.getName());
-        viewHolder.mNumberText.setText(speedDialBtn.getNumber());
-        viewHolder.mNumberTypeText.setText(speedDialBtn.getNumberType());
+        viewHolder.mImageView.setImageBitmap(speedDialObject.getContactPhoto(mContext));
+        viewHolder.mNameText.setText(speedDialObject.getName());
+        viewHolder.mNumberText.setText(speedDialObject.getNumber());
+        viewHolder.mNumberTypeText.setText(speedDialObject.getNumberType());
 
     }
 
@@ -94,8 +94,8 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
     }
 
     @Override
-    public void onChanged(@Nullable List<SpeedDialBtn> speedDialBtns) {
-        mCurrentSpeedDialList = speedDialBtns;
+    public void onChanged(@Nullable List<SpeedDialObject> speedDialObjects) {
+        mCurrentSpeedDialList = speedDialObjects;
         this.notifyDataSetChanged();
     }
 

@@ -13,14 +13,14 @@ import java.util.List;
 public interface SpeedDialDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertSpeedDialButton(SpeedDialBtn speedDialBtn);
+    void insertSpeedDialButton(SpeedDialObject speedDialObject);
 
-    @Query("SELECT * FROM SpeedDialBtn")
-    List<SpeedDialBtn> getSpeedDialButtonsList();
+    @Query("SELECT * FROM SpeedDialObject")
+    List<SpeedDialObject> getSpeedDialButtonsList();
 
-    @Query("SELECT * FROM SpeedDialBtn")
-    LiveData<List<SpeedDialBtn>> getSpeedDialButtonsListLiveData();
+    @Query("SELECT * FROM SpeedDialObject")
+    LiveData<List<SpeedDialObject>> getSpeedDialButtonsListLiveData();
 
     @Delete
-    void removeSpeedDialEntry(SpeedDialBtn speedDialBtn);
+    void removeSpeedDialEntry(SpeedDialObject speedDialObject);
 }

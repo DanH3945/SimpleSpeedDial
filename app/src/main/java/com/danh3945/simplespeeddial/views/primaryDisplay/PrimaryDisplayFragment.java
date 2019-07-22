@@ -1,8 +1,6 @@
 package com.danh3945.simplespeeddial.views.primaryDisplay;
 
-import android.Manifest;
 import android.app.AlertDialog;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,13 +13,12 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.database.SpeedDialBtn;
+import com.danh3945.simplespeeddial.database.SpeedDialObject;
 import com.danh3945.simplespeeddial.views.contactList.ContactListFragment;
 import com.danh3945.simplespeeddial.views.currentSpeedDial.CurrentSpeedDialFragment;
 
@@ -112,12 +109,12 @@ public class PrimaryDisplayFragment extends Fragment {
             return;
         }
 
-        SpeedDialBtn speedDialBtn = new SpeedDialBtn();
-        speedDialBtn.setName(name);
-        speedDialBtn.setNumber(number);
-        speedDialBtn.setNumberType(numberType);
+        SpeedDialObject speedDialObject = new SpeedDialObject();
+        speedDialObject.setName(name);
+        speedDialObject.setNumber(number);
+        speedDialObject.setNumberType(numberType);
 
-        speedDialBtn.addToSpeedDial(getContext());
+        speedDialObject.addToSpeedDial(getContext());
 
         nameEditText.getText().clear();
         numberEditText.getText().clear();

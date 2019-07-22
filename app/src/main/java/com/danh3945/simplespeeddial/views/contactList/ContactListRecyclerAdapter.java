@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.contacts.Contact;
 import com.danh3945.simplespeeddial.contacts.ContactRetriever;
-import com.danh3945.simplespeeddial.database.SpeedDialBtn;
+import com.danh3945.simplespeeddial.database.SpeedDialObject;
 import com.danh3945.simplespeeddial.image.ImageHelper;
 
 import java.util.List;
@@ -34,7 +34,7 @@ import timber.log.Timber;
 public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactListRecyclerAdapter.ContactViewHolder> {
 
     public interface ContactListResultCallback {
-        void clickResult(SpeedDialBtn result);
+        void clickResult(SpeedDialObject object);
     }
 
     private List<Contact> mContactList;
@@ -238,23 +238,23 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SpeedDialBtn speedDialBtn = new SpeedDialBtn();
+                    SpeedDialObject speedDialObject = new SpeedDialObject();
 
-                    speedDialBtn.setContactId(mContact.getId());
-                    speedDialBtn.setName(name);
-                    speedDialBtn.setNumber(number);
-                    speedDialBtn.setNumberType(numberType);
-                    speedDialBtn.setLookup_uri(lookupUri);
+                    speedDialObject.setContactId(mContact.getId());
+                    speedDialObject.setName(name);
+                    speedDialObject.setNumber(number);
+                    speedDialObject.setNumberType(numberType);
+                    speedDialObject.setLookup_uri(lookupUri);
 
                     if (mCallback == null) {
-                        speedDialBtn.addToSpeedDial(mContext);
+                        speedDialObject.addToSpeedDial(mContext);
 
                         Timber.d("Number selected for: %s with type: %s and number: %s ... Adding to database",
                                 mContact.getName(),
                                 numberType,
                                 number);
                     } else {
-                        mCallback.clickResult(speedDialBtn);
+                        mCallback.clickResult(speedDialObject);
                     }
                 }
             });

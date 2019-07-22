@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/widget_single_tile_base_layout">
 
-    <ImageButton
+    <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:id="@+id/widget_single_button"
+        android:id="@+id/widget_single_image"
         android:scaleType="fitXY"
         android:src="@mipmap/default_contact_icon"
         android:layout_gravity="center_horizontal" />

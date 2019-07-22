@@ -1,6 +1,7 @@
 package com.danh3945.simplespeeddial.views;
 
 import android.appwidget.AppWidgetManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,13 +16,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.database.SpeedDialBtn;
+import com.danh3945.simplespeeddial.database.SpeedDialObject;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
 import com.danh3945.simplespeeddial.views.contactList.ContactListFragment;
 import com.danh3945.simplespeeddial.views.contactList.ContactListRecyclerAdapter;
 import com.danh3945.simplespeeddial.views.preferences.SpeedDialPreferenceFragment;
 import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
+import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (getIntent().getAction() != null &&
                 getIntent().getAction().equals(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)) {
+            // App was started by a single tile widget for configuration.
             loadSingleTileConfigFragment();
         } else {
             // load the main fragment to display to the user.
@@ -92,12 +95,35 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadSingleTileConfigFragment() {
 
+        setResult(RESULT_CANCELED);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+        if (extras != null) {
+            appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID);
+        }
+
+        if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+            finish();
+        }
+
+        // Make the id final so it can be used below.
+        int finalAppWidgetId = appWidgetId;
         ContactListRecyclerAdapter.ContactListResultCallback callback = new ContactListRecyclerAdapter.ContactListResultCallback() {
             @Override
-            public void clickResult(SpeedDialBtn result) {
+            public void clickResult(SpeedDialObject object) {
                 // Todo configure the single tile widget with the result information.
                 Timber.d("Configuring single tile widget with name: %s, number: %s, numberType: %s",
-                        result.getName(), result.getNumber(), result.getNumberType());
+                        object.getName(), object.getNumber(), object.getNumberType());
+
+                SingleTileAppWidgetProvider.setupSingleTileWidget(MainActivity.this, finalAppWidgetId, object);
+
+                Intent resultValue = new Intent();
+                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, finalAppWidgetId);
+                MainActivity.this.setResult(RESULT_OK, resultValue);
+                finish();
             }
         };
 

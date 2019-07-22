@@ -17,7 +17,7 @@ import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
 @Entity
 @TypeConverters(LocalTypeConverters.class)
-public class SpeedDialBtn {
+public class SpeedDialObject {
 
     @PrimaryKey(autoGenerate = true)
     private long databaseId;
@@ -27,7 +27,7 @@ public class SpeedDialBtn {
     private String numberType;
     private Uri lookup_uri;
 
-    public SpeedDialBtn() {
+    public SpeedDialObject() {
     }
 
     public long getDatabaseId() {
@@ -85,7 +85,7 @@ public class SpeedDialBtn {
                 SpeedDialDatabase
                         .getSpeedDialDatabase(context)
                         .speedDialDao()
-                        .insertSpeedDialButton(SpeedDialBtn.this);
+                        .insertSpeedDialButton(SpeedDialObject.this);
 
                 notifyUserAddedSpeedDial(context);
 
@@ -114,7 +114,7 @@ public class SpeedDialBtn {
                 SpeedDialDatabase
                         .getSpeedDialDatabase(context)
                         .speedDialDao()
-                        .removeSpeedDialEntry(SpeedDialBtn.this);
+                        .removeSpeedDialEntry(SpeedDialObject.this);
 
                 LargeWidgetProvider.notifyLargeWidgets(context);
             }
