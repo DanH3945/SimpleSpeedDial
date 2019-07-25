@@ -45,19 +45,22 @@ public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
         CheckBoxPreference instantCallPref =
                 findPreference(getResources().getString(R.string.shared_pref_dial_type_key));
 
+        // Setting a preference change listener to request the permission to use this feature.
+
         instantCallPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 Timber.d("Attempting to change instant call pref to %s", (boolean) newValue);
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE)
-                        != PackageManager.PERMISSION_GRANTED && !shouldInstantDial()) {
+                        != PackageManager.PERMISSION_GRANTED && !InstantDial.shouldInstantDial(mContext)) {
                     // We do not have permission so ask for it. Get the result in the
                     // onRequestPermissionResult method.
                     requestPermissions(new String[]{Manifest.permission.CALL_PHONE},
                             PERMISSION_REQUEST_INSTANT_CALL);
                     return false;
                 }
-                notifyAllWidgets();
+
+                // Everything went fine and the preference was changed.
                 return true;
             }
         });
@@ -66,27 +69,24 @@ public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
+
+        // Callback handling for the permission request above.
+
         switch (requestCode) {
             case PERMISSION_REQUEST_INSTANT_CALL:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     String instantDialKey = getResources().getString(R.string.shared_pref_dial_type_key);
                     CheckBoxPreference instantCallPref = findPreference(instantDialKey);
                     try {
+                        // When the permission returns we have to manually check the preference if
+                        // the user gave permission.  All other circumstances the check / uncheck
+                        // are handled automatically by the android system.
                         instantCallPref.setChecked(true);
                     } catch (NullPointerException npe) {
                         Timber.i(npe);
                     }
-                    notifyAllWidgets();
                 }
         }
-    }
-
-    private boolean shouldInstantDial() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-
-        String instantDialKey = getResources().getString(R.string.shared_pref_dial_type_key);
-
-        return prefs.getBoolean(instantDialKey, false);
     }
 
     private void notifyAllWidgets() {
@@ -95,4 +95,11 @@ public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
         SingleTileAppWidgetProvider.notifySingleTileWidgets(mContext);
     }
 
+    @Override
+    public void onDetach() {
+        // When this fragment is detached all the widgets are notified that they need to update
+        // their state to reflect preference changes.
+        notifyAllWidgets();
+        super.onDetach();
+    }
 }

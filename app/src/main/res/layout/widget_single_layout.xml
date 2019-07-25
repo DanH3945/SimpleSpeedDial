@@ -15,10 +15,13 @@
 
     <TextView
         android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:id="@+id/widget_single_text"
-        android:text="@string/default_string"/>
+        android:text="@string/default_string"
+        android:background="@drawable/widget_background_drawable"
+        android:maxLines="1"/>
 
 </LinearLayout>
