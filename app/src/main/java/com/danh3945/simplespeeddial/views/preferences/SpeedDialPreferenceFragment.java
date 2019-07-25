@@ -16,6 +16,7 @@ import androidx.preference.PreferenceManager;
 
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
+import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
 
 import timber.log.Timber;
 
@@ -56,7 +57,7 @@ public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
                             PERMISSION_REQUEST_INSTANT_CALL);
                     return false;
                 }
-                LargeWidgetProvider.notifyLargeWidgets(mContext);
+                notifyAllWidgets();
                 return true;
             }
         });
@@ -64,10 +65,10 @@ public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
         switch (requestCode) {
             case PERMISSION_REQUEST_INSTANT_CALL:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
                     String instantDialKey = getResources().getString(R.string.shared_pref_dial_type_key);
                     CheckBoxPreference instantCallPref = findPreference(instantDialKey);
                     try {
@@ -75,7 +76,7 @@ public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
                     } catch (NullPointerException npe) {
                         Timber.i(npe);
                     }
-                    LargeWidgetProvider.notifyLargeWidgets(mContext);
+                    notifyAllWidgets();
                 }
         }
     }
@@ -86,6 +87,12 @@ public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
         String instantDialKey = getResources().getString(R.string.shared_pref_dial_type_key);
 
         return prefs.getBoolean(instantDialKey, false);
+    }
+
+    private void notifyAllWidgets() {
+        Timber.d("Notifying all widgets");
+        LargeWidgetProvider.notifyLargeWidgets(mContext);
+        SingleTileAppWidgetProvider.notifySingleTileWidgets(mContext);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.danh3945.simplespeeddial.prefs;
+package com.danh3945.simplespeeddial.views.preferences;
 
 import android.Manifest;
 import android.content.Context;

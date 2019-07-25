@@ -1,22 +1,16 @@
 package com.danh3945.simplespeeddial.widget;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import androidx.core.content.ContextCompat;
-
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.database.SpeedDialObject;
 import com.danh3945.simplespeeddial.database.SpeedDialDatabase;
-import com.danh3945.simplespeeddial.prefs.InstantDial;
+import com.danh3945.simplespeeddial.database.SpeedDialObject;
+import com.danh3945.simplespeeddial.views.preferences.InstantDial;
 
 import java.util.List;
 
