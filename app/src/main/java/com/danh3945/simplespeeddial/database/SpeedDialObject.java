@@ -78,7 +78,7 @@ public class SpeedDialObject {
         this.lookup_uri = lookup_uri;
     }
 
-    public void addToSpeedDial(Context context) {
+    public void addToLargeWidgetSpeedDial(Context context) {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -87,14 +87,14 @@ public class SpeedDialObject {
                         .speedDialDao()
                         .insertSpeedDialButton(SpeedDialObject.this);
 
-                notifyUserAddedSpeedDial(context);
+                notifyUserAddedToLargeWidget(context);
 
                 LargeWidgetProvider.notifyLargeWidgets(context);
             }
         });
     }
 
-    private void notifyUserAddedSpeedDial(Context context) {
+    private void notifyUserAddedToLargeWidget(Context context) {
         // We want to show a toast telling the user that we have added the information to the speed
         // dial widget but we have to do toast on the main thread.  So we create a handler linked to
         // the main looper and post a runnable so it gets run on the UI thread.
@@ -102,7 +102,7 @@ public class SpeedDialObject {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(context, "Added to speed dial list", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Added to large widget speed dial list", Toast.LENGTH_LONG).show();
             }
         });
     }

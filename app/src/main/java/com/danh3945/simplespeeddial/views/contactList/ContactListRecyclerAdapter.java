@@ -247,7 +247,7 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
                     speedDialObject.setLookup_uri(lookupUri);
 
                     if (mCallback == null) {
-                        speedDialObject.addToSpeedDial(mContext);
+                        speedDialObject.addToLargeWidgetSpeedDial(mContext);
 
                         Timber.d("Number selected for: %s with type: %s and number: %s ... Adding to database",
                                 mContact.getName(),

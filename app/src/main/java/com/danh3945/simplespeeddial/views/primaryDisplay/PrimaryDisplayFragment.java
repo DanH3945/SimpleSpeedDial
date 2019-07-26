@@ -114,7 +114,7 @@ public class PrimaryDisplayFragment extends Fragment {
         speedDialObject.setNumber(number);
         speedDialObject.setNumberType(numberType);
 
-        speedDialObject.addToSpeedDial(getContext());
+        speedDialObject.addToLargeWidgetSpeedDial(getContext());
 
         nameEditText.getText().clear();
         numberEditText.getText().clear();

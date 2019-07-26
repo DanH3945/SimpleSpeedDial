@@ -20,8 +20,11 @@ import timber.log.Timber;
 
 public class SingleTileAppWidgetProvider extends AppWidgetProvider {
 
-    private static final String NUMBER_KEY = "numberKey";
-    private static final String LOOKUP_URI_KEY = "lookupURIKey";
+    private static final String NUMBER_KEY = "speedDialNumberKey";
+    private static final String LOOKUP_URI_KEY = "speedDialLookupURIKey";
+    private static final String NAME_KEY = "speedDialNameKey";
+
+    private static final String URI_PHONE_SCHEME = "tel";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -43,19 +46,35 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
 
             // Update the pending intent for the number to reflect preferences set by the user.
             if (number != null) {
-                Timber.d("Single Tile Widget - number was NOT NULL.  Setting pending intent.");
                 PendingIntent pendingIntent = getDialPendingIntent(context, number);
 
                 views.setOnClickPendingIntent(R.id.widget_single_tile_base_layout, pendingIntent);
             } else {
-                Timber.d("Single Tile Widget - number was NULL");
+                Timber.d("Number was null for widget %s, skipping", appWidgetId);
+            }
+
+            // Get the name of the contact from the widget options.
+            String name = options.getString(NAME_KEY);
+
+            // As long as the name isn't null set the name value to the one associated with the widget.
+            // If it is null the default value of the TextView in res will remain.
+            if (name != null) {
+                views.setTextViewText(R.id.widget_single_text, name);
+            } else {
+                Timber.d("Name was null for widget %s, skipping", appWidgetId);
             }
 
             // Get the lookupUri and use it to retrieve the current user thumbnail and apply
-            // it to the widget.
-            Uri lookupUri = Uri.parse(options.getString(LOOKUP_URI_KEY));
-            Bitmap bitmap = ImageHelper.getContactPhotoRounded(context, lookupUri);
-            views.setImageViewBitmap(R.id.widget_single_image, bitmap);
+            // it to the widget.  Otherwise leave the default image specified in the res.
+            String lookupUriString = options.getString(LOOKUP_URI_KEY);
+
+            if (lookupUriString != null) {
+                Uri lookupUri = Uri.parse(lookupUriString);
+                Bitmap bitmap = ImageHelper.getContactPhotoRounded(context, lookupUri);
+                views.setImageViewBitmap(R.id.widget_single_image, bitmap);
+            } else {
+                Timber.d("Null Uri value for widget %s, skipping", appWidgetId);
+            }
 
             // Our changes to the widgets are done so we send off the updates to the widget manager
             // so it can complete its updates.
@@ -86,31 +105,18 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
         // in the SpeedDialObject.
 
         Timber.d("Setting up widget with ID: %s", appWidgetId);
-        RemoteViews views = new RemoteViews(context.getPackageName(),
-                R.layout.widget_single_layout);
 
-        // Set the display text.
-        views.setTextViewText(R.id.widget_single_text, speedDialObject.getName());
-
-        // Set the image.
-        Bitmap bitmap = ImageHelper.getContactPhotoRounded(context, speedDialObject.getLookup_uri());
-        views.setImageViewBitmap(R.id.widget_single_image, bitmap);
-
-        // Set the onClick PendingIntent to be run when the user clicks the widget.
-        PendingIntent pendingIntent = getDialPendingIntent(context, speedDialObject.getNumber());
-        views.setOnClickPendingIntent(R.id.widget_single_tile_base_layout, pendingIntent);
-
-        // Store the phone number and lookup URI to be used in future calls to onUpdate so we can
-        // make sure the loaded thumbnail is correct.
+        // Store the basic information for the widget in the widget options itself for use later.
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
         if (options != Bundle.EMPTY) {
+            options.putString(NAME_KEY, speedDialObject.getName());
             options.putString(LOOKUP_URI_KEY, speedDialObject.getLookup_uri().toString());
             options.putString(NUMBER_KEY, speedDialObject.getNumber());
             appWidgetManager.updateAppWidgetOptions(appWidgetId, options);
         }
 
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        notifySingleTileWidgets(context);
     }
 
     private static PendingIntent getDialPendingIntent(Context context, String number) {
@@ -125,8 +131,11 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
         }
 
         // Setup the URI for the call and attach it to the intent.
-        String callUri = "tel:" + number;
-        intent.setData(Uri.parse(callUri));
+
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme(URI_PHONE_SCHEME);
+        builder.appendPath(number);
+        intent.setData(builder.build());
 
         // Package the Intent in a PendingIntent and return it.
         return PendingIntent.getActivity(context, 0, intent, 0);
