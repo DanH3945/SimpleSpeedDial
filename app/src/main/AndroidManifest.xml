@@ -12,13 +12,20 @@
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.danh3945.simplespeeddial.views.MainActivity"
+        <activity android:name="com.danh3945.simplespeeddial.views.MainDisplayActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW"/>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.danh3945.simplespeeddial.views.SingleTileConfigActivity"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
 

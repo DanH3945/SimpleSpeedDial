@@ -65,7 +65,7 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
             }
 
             // Get the lookupUri and use it to retrieve the current user thumbnail and apply
-            // it to the widget.  Otherwise leave the default image specified in the res.
+            // it to the widget.  Otherwise use the ImageHelper default image.
             String lookupUriString = options.getString(LOOKUP_URI_KEY);
 
             if (lookupUriString != null) {
