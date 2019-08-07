@@ -1,14 +1,11 @@
 package com.danh3945.simplespeeddial.views;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.views.preferences.SpeedDialPreferenceFragment;
 import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
 
-public class MainDisplayActivity extends MobileAdsActivity {
+public class MainDisplayActivity extends SimpleSpeedDialActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
