@@ -24,26 +24,4 @@ public class MainDisplayActivity extends MobileAdsActivity {
         loadFragment(PrimaryDisplayFragment.createInstance(), false, PrimaryDisplayFragment.TAG);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.overflow_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-
-            case R.id.overflow_menu_about:
-                new AboutDialogFragment().show(getSupportFragmentManager(), null);
-                break;
-
-            case R.id.overflow_menu_preferences:
-                loadFragment(SpeedDialPreferenceFragment.createInstance(getApplicationContext()), true, SpeedDialPreferenceFragment.TAG);
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
