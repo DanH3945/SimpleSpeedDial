@@ -30,6 +30,14 @@ public class SpeedDialObject {
     public SpeedDialObject() {
     }
 
+    public static SpeedDialObject createObject(String name, String number, String numberType) {
+        SpeedDialObject speedDialObject = new SpeedDialObject();
+        speedDialObject.setName(name);
+        speedDialObject.setNumber(number);
+        speedDialObject.setNumberType(numberType);
+        return speedDialObject;
+    }
+
     public long getDatabaseId() {
         return databaseId;
     }

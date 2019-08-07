@@ -1,6 +1,7 @@
 package com.danh3945.simplespeeddial.views.primaryDisplay;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -61,10 +62,12 @@ public class PrimaryDisplayFragment extends Fragment {
         });
 
         String[] numberTypes = getResources().getStringArray(R.array.number_types);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_singlechoice, numberTypes);
 
         numberTypeAutoTextview = view.findViewById(R.id.primary_display_quick_add_number_type);
-        numberTypeAutoTextview.setAdapter(adapter);
+        if (getContext() != null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_singlechoice, numberTypes);
+            numberTypeAutoTextview.setAdapter(adapter);
+        }
 
         nameEditText = view.findViewById(R.id.primary_display_quick_add_name_et);
         numberEditText = view.findViewById(R.id.primary_display_quick_add_number_et);
@@ -109,10 +112,7 @@ public class PrimaryDisplayFragment extends Fragment {
             return;
         }
 
-        SpeedDialObject speedDialObject = new SpeedDialObject();
-        speedDialObject.setName(name);
-        speedDialObject.setNumber(number);
-        speedDialObject.setNumberType(numberType);
+        SpeedDialObject speedDialObject = SpeedDialObject.createObject(name, number, numberType);
 
         speedDialObject.addToLargeWidgetSpeedDial(getContext());
 
