@@ -15,14 +15,20 @@ import android.provider.ContactsContract;
 
 import com.danh3945.simplespeeddial.R;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.IntBuffer;
+import java.util.Random;
 
 import timber.log.Timber;
 
 public class ImageHelper {
+
+    public static int IGNORE_COLOR = -1;
 
     private static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
@@ -46,6 +52,7 @@ public class ImageHelper {
         return output;
     }
 
+    @Nullable
     public static Bitmap getContactPhoto(Context context, Uri lookupUri) {
 
         Bitmap photoBitmap = null;
@@ -73,15 +80,18 @@ public class ImageHelper {
             }
         }
 
-        if (photoBitmap == null) {
-            Timber.d("Tried to load Null thumbnail: Loading default icon");
-            photoBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.default_contact_icon);
-            photoBitmap = colorDefaultContactPhoto(photoBitmap);
-        }
-
         return photoBitmap;
     }
 
+    public static Bitmap getDefaultContactIcon(Context context, int color) {
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.default_contact_icon);
+        if (color <= IGNORE_COLOR) {
+            return bitmap;
+        }
+        return colorDefaultContactPhoto(color, bitmap);
+    }
+
+    @Nullable
     public static Bitmap getContactPhotoRounded(Context context, Uri lookupUri) {
 
         Bitmap photoBitmap = getContactPhoto(context, lookupUri);
@@ -94,17 +104,43 @@ public class ImageHelper {
         return photoBitmap;
     }
 
-    private static Bitmap colorDefaultContactPhoto(Bitmap bitmap) {
+    private static Bitmap colorDefaultContactPhoto(int defaultColor, Bitmap bitmap) {
+        // Todo better system to select colors for default icons.
         int[] pixels = new int[bitmap.getWidth() * bitmap.getHeight()];
         bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
 
+        int red = Color.red(defaultColor);
+        int green = Color.green(defaultColor);
+        int blue = Color.blue(defaultColor);
+
         for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = Color.argb(Color.alpha(pixels[i]), 255, 0, 0);
+            if (Color.alpha(pixels[i]) > 254) {
+                pixels[i] = Color.argb(Color.alpha(pixels[i]), red, green, blue);
+            } else {
+                pixels[i] = Color.argb(255, 255, 255, 255);
+            }
         }
 
         Bitmap resultBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         resultBitmap.copyPixelsFromBuffer(IntBuffer.wrap(pixels));
 
         return resultBitmap;
+    }
+
+    public static int getRandomContactIconColorInt(Context context) {
+
+        int[] colors = context.getResources().getIntArray(R.array.iconColors);
+
+        Random random = new Random();
+
+        int randomInt = random.nextInt(colors.length);
+
+        int colorInt = colors[randomInt];
+
+        int blue = Color.red(colorInt);
+        int green = Color.green(colorInt);
+        int red = Color.blue(colorInt);
+
+        return Color.argb(0, red, green, blue);
     }
 }

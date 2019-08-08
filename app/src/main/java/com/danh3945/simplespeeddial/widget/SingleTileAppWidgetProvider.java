@@ -23,6 +23,7 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
     private static final String NUMBER_KEY = "speedDialNumberKey";
     private static final String LOOKUP_URI_KEY = "speedDialLookupURIKey";
     private static final String NAME_KEY = "speedDialNameKey";
+    private static final String DEFAULT_COLOR = "defaultColor";
 
     private static final String URI_PHONE_SCHEME = "tel";
 
@@ -71,6 +72,10 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
             if (lookupUriString != null) {
                 Uri lookupUri = Uri.parse(lookupUriString);
                 Bitmap bitmap = ImageHelper.getContactPhotoRounded(context, lookupUri);
+                if (bitmap == null) {
+                    int defaultColor = options.getInt(DEFAULT_COLOR);
+                    bitmap = ImageHelper.getDefaultContactIcon(context, defaultColor);
+                }
                 views.setImageViewBitmap(R.id.widget_single_image, bitmap);
             } else {
                 Timber.d("Null Uri value for widget %s, skipping", appWidgetId);
@@ -113,6 +118,7 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
             options.putString(NAME_KEY, speedDialObject.getName());
             options.putString(LOOKUP_URI_KEY, speedDialObject.getLookup_uri().toString());
             options.putString(NUMBER_KEY, speedDialObject.getNumber());
+            options.putInt(DEFAULT_COLOR, ImageHelper.getRandomContactIconColorInt(context));
             appWidgetManager.updateAppWidgetOptions(appWidgetId, options);
         }
 
