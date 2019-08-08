@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -17,6 +18,7 @@ import com.danh3945.simplespeeddial.R;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.IntBuffer;
 
 import timber.log.Timber;
 
@@ -74,6 +76,7 @@ public class ImageHelper {
         if (photoBitmap == null) {
             Timber.d("Tried to load Null thumbnail: Loading default icon");
             photoBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.default_contact_icon);
+            photoBitmap = colorDefaultContactPhoto(photoBitmap);
         }
 
         return photoBitmap;
@@ -89,5 +92,19 @@ public class ImageHelper {
         }
 
         return photoBitmap;
+    }
+
+    private static Bitmap colorDefaultContactPhoto(Bitmap bitmap) {
+        int[] pixels = new int[bitmap.getWidth() * bitmap.getHeight()];
+        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        for (int i = 0; i < pixels.length; i++) {
+            pixels[i] = Color.argb(Color.alpha(pixels[i]), 255, 0, 0);
+        }
+
+        Bitmap resultBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        resultBitmap.copyPixelsFromBuffer(IntBuffer.wrap(pixels));
+
+        return resultBitmap;
     }
 }
