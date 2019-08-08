@@ -14,7 +14,7 @@ import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
 
 import timber.log.Timber;
 
-public class SingleTileConfigActivity extends MobileAdsActivity {
+public class SingleTileConfigActivity extends SimpleSpeedDialActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

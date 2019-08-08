@@ -2,6 +2,8 @@ package com.danh3945.simplespeeddial.views;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
@@ -15,13 +17,14 @@ import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
+import com.danh3945.simplespeeddial.views.preferences.SpeedDialPreferenceFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import timber.log.Timber;
 
-public abstract class MobileAdsActivity extends AppCompatActivity {
+public abstract class SimpleSpeedDialActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,5 +89,28 @@ public abstract class MobileAdsActivity extends AppCompatActivity {
         if (addToBackStack) fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commit();
         fragmentManager.executePendingTransactions();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.overflow_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.overflow_menu_about:
+                new AboutDialogFragment().show(getSupportFragmentManager(), null);
+                break;
+
+            case R.id.overflow_menu_preferences:
+                loadFragment(SpeedDialPreferenceFragment.createInstance(getApplicationContext()), true, SpeedDialPreferenceFragment.TAG);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
