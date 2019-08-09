@@ -95,7 +95,11 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
         Bitmap photoBitmap = ImageHelper.getContactPhoto(mContext, mContactList.get(i).getLookupUri());
         if (photoBitmap == null) {
-            photoBitmap = ImageHelper.getDefaultContactIcon(mContext, ImageHelper.IGNORE_COLOR);
+
+            String[] names = mContactList.get(i).getName().split(" ");
+
+            int defaultColor = ImageHelper.getRandomContactIconColorInt(mContext, names[0]);
+            photoBitmap = ImageHelper.getDefaultContactIcon(mContext, defaultColor);
         }
         viewHolder.mContactImageView.setImageBitmap(photoBitmap);
 

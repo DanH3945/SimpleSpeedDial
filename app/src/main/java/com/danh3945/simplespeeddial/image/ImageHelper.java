@@ -117,29 +117,51 @@ public class ImageHelper {
             if (Color.alpha(pixels[i]) > 254) {
                 pixels[i] = Color.argb(Color.alpha(pixels[i]), red, green, blue);
             } else {
-                pixels[i] = Color.argb(255, 255, 255, 255);
+                pixels[i] = Color.argb(0, 0, 0, 0);
             }
         }
 
         Bitmap resultBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         resultBitmap.copyPixelsFromBuffer(IntBuffer.wrap(pixels));
 
+        resultBitmap = getRoundedCornerBitmap(resultBitmap, 100);
+
         return resultBitmap;
     }
 
     public static int getRandomContactIconColorInt(Context context) {
+        return getRandomContactIconColorInt(context, null);
+    }
+
+    public static int getRandomContactIconColorInt(Context context, String firstName) {
 
         int[] colors = context.getResources().getIntArray(R.array.iconColors);
 
-        Random random = new Random();
+        int colorInt = 0;
 
-        int randomInt = random.nextInt(colors.length);
+        if (firstName == null) {
+            Random random = new Random();
+            int randomInt = random.nextInt(colors.length);
+            colorInt = colors[randomInt];
+        } else {
+            char character = firstName.toLowerCase().charAt(0);
+            int charNum = (int) character;
 
-        int colorInt = colors[randomInt];
+            Timber.d("Char num value: %s", charNum);
 
-        int blue = Color.red(colorInt);
+            while (charNum > colors.length - 1) {
+                Timber.d("colorInt was over colors length with value: %s", colorInt);
+                charNum -= colors.length;
+                Timber.d("new colorInt value is %s", colorInt);
+            }
+
+            colorInt = colors[charNum];
+
+        }
+
+        int red = Color.red(colorInt);
         int green = Color.green(colorInt);
-        int red = Color.blue(colorInt);
+        int blue = Color.blue(colorInt);
 
         return Color.argb(0, red, green, blue);
     }
