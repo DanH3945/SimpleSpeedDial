@@ -15,8 +15,6 @@ import androidx.room.TypeConverters;
 import com.danh3945.simplespeeddial.image.ImageHelper;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
-import timber.log.Timber;
-
 @Entity
 @TypeConverters(LocalTypeConverters.class)
 public class SpeedDialObject {
@@ -148,6 +146,7 @@ public class SpeedDialObject {
     }
 
     private Bitmap getDefaultIcon(Context context) {
-        return ImageHelper.getDefaultContactIcon(context, ImageHelper.IGNORE_COLOR);
+        int defaultColor = ImageHelper.getRandomContactIconColorInt(context, getName());
+        return ImageHelper.getDefaultContactIcon(context, defaultColor);
     }
 }

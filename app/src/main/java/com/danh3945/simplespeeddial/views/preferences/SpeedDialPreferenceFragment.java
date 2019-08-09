@@ -2,7 +2,6 @@ package com.danh3945.simplespeeddial.views.preferences;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -12,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;

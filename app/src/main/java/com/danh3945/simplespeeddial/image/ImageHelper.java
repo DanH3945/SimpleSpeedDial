@@ -15,7 +15,6 @@ import android.provider.ContactsContract;
 
 import com.danh3945.simplespeeddial.R;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedInputStream;
@@ -105,7 +104,6 @@ public class ImageHelper {
     }
 
     private static Bitmap colorDefaultContactPhoto(int defaultColor, Bitmap bitmap) {
-        // Todo better system to select colors for default icons.
         int[] pixels = new int[bitmap.getWidth() * bitmap.getHeight()];
         bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
 

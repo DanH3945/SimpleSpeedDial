@@ -118,6 +118,10 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
             options.putString(NAME_KEY, speedDialObject.getName());
             options.putString(LOOKUP_URI_KEY, speedDialObject.getLookup_uri().toString());
             options.putString(NUMBER_KEY, speedDialObject.getNumber());
+
+            // We save a default color here and bind it to the widget options itself so that
+            // the color is always the same for this particular widget to avoid confusing
+            // the user.
             options.putInt(DEFAULT_COLOR, ImageHelper.getRandomContactIconColorInt(context));
             appWidgetManager.updateAppWidgetOptions(appWidgetId, options);
         }
