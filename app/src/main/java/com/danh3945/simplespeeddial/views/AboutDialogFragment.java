@@ -62,13 +62,11 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
         TextView timberText = dialog.findViewById(R.id.about_timber_tv);
         timberText.setOnClickListener(v -> showTimberLicense());
 
+        TextView gsonText = dialog.findViewById(R.id.about_gson_tv);
+        gsonText.setOnClickListener(v -> showGsonLicense());
+
         TextView iconsEightText = dialog.findViewById(R.id.about_icons_eight_tv);
-        iconsEightText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openIconsEightWebpage();
-            }
-        });
+        iconsEightText.setOnClickListener(v -> openIconsEightWebpage());
 
         return dialog;
     }
@@ -103,6 +101,16 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
         final Notice notice = new Notice(name, url, copyright, license);
         new LicensesDialog.Builder(context).setNotices(notice).build().showAppCompat();
 
+    }
+
+    private void showGsonLicense() {
+        Context context = getContext();
+        final String name = context.getResources().getString(R.string.about_gson_license_title);
+        final String url = context.getResources().getString(R.string.about_gson_url);
+        final String copyright = context.getResources().getString(R.string.about_gson_copyright);
+        final License license = new ApacheSoftwareLicense20();
+        final Notice notice = new Notice(name, url, copyright, license);
+        new LicensesDialog.Builder(context).setNotices(notice).build().showAppCompat();
     }
 
     private void openIconsEightWebpage() {

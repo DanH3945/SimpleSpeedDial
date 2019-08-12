@@ -16,6 +16,7 @@ buildscript {
         lifeCycleVersion = '2.0.0'
         firebaseCoreVersion = '17.0.0'
         firebaseAdVersion = '18.0.0'
+        gsonVersion = '2.8.5'
     }
 
     repositories {

@@ -67,6 +67,16 @@
         android:text="@string/about_icons_eight_title"
         android:textColor="@color/httpLinkBlue" />
 
+    <TextView
+        android:id="@+id/about_gson_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/about_item_height"
+        android:layout_margin="@dimen/about_item_margin"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/about_gson_license_title"
+        android:textColor="@color/httpLinkBlue" />
+
     <View
         style="@style/DividerStyle"
         android:layout_marginStart="16dp"
