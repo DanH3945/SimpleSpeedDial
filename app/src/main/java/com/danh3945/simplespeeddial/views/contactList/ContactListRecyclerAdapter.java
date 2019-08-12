@@ -25,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.contacts.Contact;
 import com.danh3945.simplespeeddial.contacts.ContactRetriever;
-import com.danh3945.simplespeeddial.database.SpeedDialObject;
+import com.danh3945.simplespeeddial.database.LargeWidgetObject;
 import com.danh3945.simplespeeddial.image.ImageHelper;
 
 import java.util.List;
@@ -35,7 +35,7 @@ import timber.log.Timber;
 public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactListRecyclerAdapter.ContactViewHolder> {
 
     public interface ContactListResultCallback {
-        void clickResult(SpeedDialObject object);
+        void clickResult(LargeWidgetObject object);
     }
 
     private List<Contact> mContactList;
@@ -246,23 +246,23 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             viewHolder.mLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SpeedDialObject speedDialObject = new SpeedDialObject();
+                    LargeWidgetObject largeWidgetObject = new LargeWidgetObject();
 
-                    speedDialObject.setContactId(mContact.getId());
-                    speedDialObject.setName(name);
-                    speedDialObject.setNumber(number);
-                    speedDialObject.setNumberType(numberType);
-                    speedDialObject.setLookup_uri(lookupUri);
+                    largeWidgetObject.setContactId(mContact.getId());
+                    largeWidgetObject.setName(name);
+                    largeWidgetObject.setNumber(number);
+                    largeWidgetObject.setNumberType(numberType);
+                    largeWidgetObject.setLookupUri(lookupUri);
 
                     if (mCallback == null) {
-                        speedDialObject.addToLargeWidgetSpeedDial(mContext);
+                        largeWidgetObject.addToLargeWidgetSpeedDial(mContext);
 
                         Timber.d("Number selected for: %s with type: %s and number: %s ... Adding to database",
                                 mContact.getName(),
                                 numberType,
                                 number);
                     } else {
-                        mCallback.clickResult(speedDialObject);
+                        mCallback.clickResult(largeWidgetObject);
                     }
                 }
             });

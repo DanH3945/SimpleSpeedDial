@@ -12,9 +12,12 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.database.SpeedDialObject;
+import com.danh3945.simplespeeddial.database.LargeWidgetObject;
+import com.danh3945.simplespeeddial.database.SingleTileWidgetObject;
 import com.danh3945.simplespeeddial.image.ImageHelper;
 import com.danh3945.simplespeeddial.views.preferences.InstantDial;
+
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -26,6 +29,36 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
     private static final String DEFAULT_COLOR = "defaultColor";
 
     private static final String URI_PHONE_SCHEME = "tel";
+
+    @Override
+    public void onEnabled(Context context) {
+
+        SingleTileWidgetObject.getSingleTileWidgetList(context, new SingleTileWidgetObject.SingleTileListCallback() {
+            @Override
+            public void callback(List<SingleTileWidgetObject> list) {
+
+                for (SingleTileWidgetObject singleTileWidgetObject : list) {
+
+                    setupWidget(context, singleTileWidgetObject);
+
+                }
+            }
+        });
+
+        super.onEnabled(context);
+    }
+
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+
+        for (int appWidgetId : appWidgetIds) {
+            SingleTileWidgetObject singleTileWidgetObject = new SingleTileWidgetObject();
+            singleTileWidgetObject.setWidgetId(appWidgetId);
+            singleTileWidgetObject.removeFromDatabase(context);
+        }
+
+        super.onDeleted(context, appWidgetIds);
+    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -92,11 +125,8 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
 
         // Grab all the current Widgets associated with this Provider and tell them to update their
         // state.  Eventually calls the OnUpdate function above.
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
-        ComponentName componentName = new ComponentName(context, SingleTileAppWidgetProvider.class.getName());
-
-        int[] widgetIds = appWidgetManager.getAppWidgetIds(componentName);
+        int[] widgetIds = getActiveWidgetIds(context);
 
         Intent intent = new Intent(context, SingleTileAppWidgetProvider.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
@@ -104,29 +134,52 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
         context.sendBroadcast(intent);
     }
 
-    public static void setupSingleTileWidget(Context context, int appWidgetId, SpeedDialObject speedDialObject) {
+    public static int[] getActiveWidgetIds(Context context) {
+        ComponentName componentName = new ComponentName(context, SingleTileAppWidgetProvider.class.getName());
+        return AppWidgetManager.getInstance(context).getAppWidgetIds(componentName);
+    }
 
-        // Called by any configuration activity to setup a single tile widget with the parameters
-        // in the SpeedDialObject.
+    public static void setupWidget(Context context, SingleTileWidgetObject singleTileWidgetObject) {
 
-        Timber.d("Setting up widget with ID: %s", appWidgetId);
+        Timber.d("Setting up widget with ID: %s", singleTileWidgetObject.getWidgetId());
 
         // Store the basic information for the widget in the widget options itself for use later.
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        Bundle options = appWidgetManager.getAppWidgetOptions(singleTileWidgetObject.getWidgetId());
         if (options != Bundle.EMPTY) {
-            options.putString(NAME_KEY, speedDialObject.getName());
-            options.putString(LOOKUP_URI_KEY, speedDialObject.getLookup_uri().toString());
-            options.putString(NUMBER_KEY, speedDialObject.getNumber());
+            options.putString(NAME_KEY, singleTileWidgetObject.getName());
+            options.putString(LOOKUP_URI_KEY, singleTileWidgetObject.getLookupUri().toString());
+            options.putString(NUMBER_KEY, singleTileWidgetObject.getNumber());
 
             // We save a default color here and bind it to the widget options itself so that
             // the color is always the same for this particular widget to avoid confusing
             // the user.
-            options.putInt(DEFAULT_COLOR, ImageHelper.getRandomContactIconColorInt(context));
-            appWidgetManager.updateAppWidgetOptions(appWidgetId, options);
+            options.putInt(DEFAULT_COLOR, singleTileWidgetObject.getDefaultColor());
+
+            appWidgetManager.updateAppWidgetOptions(singleTileWidgetObject.getWidgetId(), options);
         }
 
         notifySingleTileWidgets(context);
+
+    }
+
+    public static void setupFromConfigurationActivity(Context context, int appWidgetId, LargeWidgetObject largeWidgetObject) {
+
+        // Called by any configuration activity to setup a single tile widget with the parameters
+        // in the LargeWidgetObject.
+
+        // We save a default color here and bind it to the widget options itself so that
+        // the color is always the same for this particular widget to avoid confusing
+        // the user.
+        int defaultColor = ImageHelper.getRandomContactIconColorInt(context);
+
+        SingleTileWidgetObject singleTileWidgetObject =
+                SingleTileWidgetObject.fromLargeWidgetObject(appWidgetId, defaultColor, largeWidgetObject);
+
+        singleTileWidgetObject.addToDatabase(context);
+
+        setupWidget(context, singleTileWidgetObject);
+
     }
 
     private static PendingIntent getDialPendingIntent(Context context, String number) {

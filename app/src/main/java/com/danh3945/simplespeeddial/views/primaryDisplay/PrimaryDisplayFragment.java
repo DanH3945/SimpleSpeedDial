@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.database.SpeedDialObject;
+import com.danh3945.simplespeeddial.database.LargeWidgetObject;
 import com.danh3945.simplespeeddial.views.contactList.ContactListFragment;
 import com.danh3945.simplespeeddial.views.currentSpeedDial.CurrentSpeedDialFragment;
 
@@ -111,9 +111,9 @@ public class PrimaryDisplayFragment extends Fragment {
             return;
         }
 
-        SpeedDialObject speedDialObject = SpeedDialObject.createObject(name, number, numberType);
+        LargeWidgetObject largeWidgetObject = LargeWidgetObject.createObject(name, number, numberType);
 
-        speedDialObject.addToLargeWidgetSpeedDial(getContext());
+        largeWidgetObject.addToLargeWidgetSpeedDial(getContext());
 
         nameEditText.getText().clear();
         numberEditText.getText().clear();

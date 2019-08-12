@@ -8,8 +8,8 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.danh3945.simplespeeddial.R;
+import com.danh3945.simplespeeddial.database.LargeWidgetObject;
 import com.danh3945.simplespeeddial.database.SpeedDialDatabase;
-import com.danh3945.simplespeeddial.database.SpeedDialObject;
 import com.danh3945.simplespeeddial.views.preferences.InstantDial;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class LargeWidgetRemoteViewsService extends RemoteViewsService {
     class WidgetRemoteViewsFactory implements RemoteViewsFactory {
 
         private Context mContext;
-        private List<SpeedDialObject> mSpeedDialObjectList;
+        private List<LargeWidgetObject> mLargeWidgetObjectList;
         private SpeedDialDatabase mDatabase;
 
         WidgetRemoteViewsFactory(Context context) {
@@ -40,7 +40,7 @@ public class LargeWidgetRemoteViewsService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
-            mSpeedDialObjectList = mDatabase.speedDialDao().getSpeedDialButtonsList();
+            mLargeWidgetObjectList = mDatabase.largeWidgetDao().getSpeedDialButtonsList();
         }
 
         @Override
@@ -49,8 +49,8 @@ public class LargeWidgetRemoteViewsService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            Timber.d("Getting app widget count with value: %s", mSpeedDialObjectList.size() > 0 ? mSpeedDialObjectList.size() : 0);
-            return mSpeedDialObjectList.size() > 0 ? mSpeedDialObjectList.size() : 0;
+            Timber.d("Getting app widget count with value: %s", mLargeWidgetObjectList.size() > 0 ? mLargeWidgetObjectList.size() : 0);
+            return mLargeWidgetObjectList.size() > 0 ? mLargeWidgetObjectList.size() : 0;
         }
 
         @Override
@@ -60,16 +60,16 @@ public class LargeWidgetRemoteViewsService extends RemoteViewsService {
             RemoteViews baseView =
                     new RemoteViews(mContext.getPackageName(), R.layout.widget_large_item);
 
-            SpeedDialObject speedDialObject = mSpeedDialObjectList.get(position);
+            LargeWidgetObject largeWidgetObject = mLargeWidgetObjectList.get(position);
 
-            Bitmap thumbnail = mSpeedDialObjectList
+            Bitmap thumbnail = mLargeWidgetObjectList
                     .get(position)
                     .getContactPhotoRounded(mContext);
 
             baseView.setImageViewBitmap(R.id.widget_image_view, thumbnail);
-            baseView.setTextViewText(R.id.widget_item_name_text, speedDialObject.getName());
-            baseView.setTextViewText(R.id.widget_item_number_type_text, speedDialObject.getNumberType());
-            String callUri = "tel:" + speedDialObject.getNumber();
+            baseView.setTextViewText(R.id.widget_item_name_text, largeWidgetObject.getName());
+            baseView.setTextViewText(R.id.widget_item_number_type_text, largeWidgetObject.getNumberType());
+            String callUri = "tel:" + largeWidgetObject.getNumber();
 
             Intent intent;
 

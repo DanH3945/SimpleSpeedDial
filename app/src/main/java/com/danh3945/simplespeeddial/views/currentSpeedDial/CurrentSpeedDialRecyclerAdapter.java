@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.danh3945.simplespeeddial.R;
+import com.danh3945.simplespeeddial.database.LargeWidgetObject;
 import com.danh3945.simplespeeddial.database.SpeedDialDatabase;
-import com.danh3945.simplespeeddial.database.SpeedDialObject;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
 import java.util.ArrayList;
@@ -25,9 +25,9 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<CurrentSpeedDialRecyclerAdapter.CurrentSpeedDialRecyclerViewHolder> implements Observer<List<SpeedDialObject>> {
+public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<CurrentSpeedDialRecyclerAdapter.CurrentSpeedDialRecyclerViewHolder> implements Observer<List<LargeWidgetObject>> {
 
-    List<SpeedDialObject> mCurrentSpeedDialList;
+    List<LargeWidgetObject> mCurrentSpeedDialList;
     Context mContext;
 
     SpeedDialDatabase mDatabase;
@@ -36,7 +36,7 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
         this.mContext = context;
         this.mCurrentSpeedDialList = new ArrayList<>();
         mDatabase = SpeedDialDatabase.getSpeedDialDatabase(context);
-        mDatabase.speedDialDao()
+        mDatabase.largeWidgetDao()
                 .getSpeedDialButtonsListLiveData()
                 .observe(lifecycleOwner, this);
 
@@ -75,12 +75,12 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
 
     @Override
     public void onBindViewHolder(@NonNull CurrentSpeedDialRecyclerViewHolder viewHolder, int i) {
-        SpeedDialObject speedDialObject = mCurrentSpeedDialList.get(i);
+        LargeWidgetObject largeWidgetObject = mCurrentSpeedDialList.get(i);
 
-        viewHolder.mImageView.setImageBitmap(speedDialObject.getContactPhoto(mContext));
-        viewHolder.mNameText.setText(speedDialObject.getName());
-        viewHolder.mNumberText.setText(speedDialObject.getNumber());
-        viewHolder.mNumberTypeText.setText(speedDialObject.getNumberType());
+        viewHolder.mImageView.setImageBitmap(largeWidgetObject.getContactPhoto(mContext));
+        viewHolder.mNameText.setText(largeWidgetObject.getName());
+        viewHolder.mNumberText.setText(largeWidgetObject.getNumber());
+        viewHolder.mNumberTypeText.setText(largeWidgetObject.getNumberType());
 
     }
 
@@ -94,8 +94,8 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
     }
 
     @Override
-    public void onChanged(@Nullable List<SpeedDialObject> speedDialObjects) {
-        mCurrentSpeedDialList = speedDialObjects;
+    public void onChanged(@Nullable List<LargeWidgetObject> largeWidgetObjects) {
+        mCurrentSpeedDialList = largeWidgetObjects;
         this.notifyDataSetChanged();
     }
 

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.database.SpeedDialObject;
+import com.danh3945.simplespeeddial.database.LargeWidgetObject;
 import com.danh3945.simplespeeddial.views.contactList.ContactListFragment;
 import com.danh3945.simplespeeddial.views.contactList.ContactListRecyclerAdapter;
 import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
@@ -44,12 +44,12 @@ public class SingleTileConfigActivity extends SimpleSpeedDialActivity {
         int finalAppWidgetId = appWidgetId;
         ContactListRecyclerAdapter.ContactListResultCallback callback = new ContactListRecyclerAdapter.ContactListResultCallback() {
             @Override
-            public void clickResult(SpeedDialObject object) {
+            public void clickResult(LargeWidgetObject object) {
                 // Todo configure the single tile widget with the result information.
                 Timber.d("Configuring single tile widget with name: %s, number: %s, numberType: %s",
                         object.getName(), object.getNumber(), object.getNumberType());
 
-                SingleTileAppWidgetProvider.setupSingleTileWidget(SingleTileConfigActivity.this, finalAppWidgetId, object);
+                SingleTileAppWidgetProvider.setupFromConfigurationActivity(SingleTileConfigActivity.this, finalAppWidgetId, object);
 
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, finalAppWidgetId);

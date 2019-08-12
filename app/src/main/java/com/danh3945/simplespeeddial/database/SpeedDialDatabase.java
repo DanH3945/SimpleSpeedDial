@@ -6,14 +6,16 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {SpeedDialObject.class}, version = 1)
+@Database(entities = {LargeWidgetObject.class, SingleTileWidgetObject.class}, version = 1)
 public abstract class SpeedDialDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "speed_dial_database";
 
     private static SpeedDialDatabase speedDialDatabase;
 
-    public abstract SpeedDialDao speedDialDao();
+    public abstract LargeWidgetDao largeWidgetDao();
+
+    public abstract SingleTileWidgetDao singleTileWidgetDao();
 
     public static SpeedDialDatabase getSpeedDialDatabase(Context context) {
         if (speedDialDatabase == null) {

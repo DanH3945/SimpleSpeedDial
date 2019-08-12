@@ -17,7 +17,7 @@ import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
 @Entity
 @TypeConverters(LocalTypeConverters.class)
-public class SpeedDialObject {
+public class LargeWidgetObject {
 
     @PrimaryKey(autoGenerate = true)
     private long databaseId;
@@ -25,17 +25,17 @@ public class SpeedDialObject {
     private String name;
     private String number;
     private String numberType;
-    private Uri lookup_uri;
+    private Uri lookupUri;
 
-    public SpeedDialObject() {
+    public LargeWidgetObject() {
     }
 
-    public static SpeedDialObject createObject(String name, String number, String numberType) {
-        SpeedDialObject speedDialObject = new SpeedDialObject();
-        speedDialObject.setName(name);
-        speedDialObject.setNumber(number);
-        speedDialObject.setNumberType(numberType);
-        return speedDialObject;
+    public static LargeWidgetObject createObject(String name, String number, String numberType) {
+        LargeWidgetObject largeWidgetObject = new LargeWidgetObject();
+        largeWidgetObject.setName(name);
+        largeWidgetObject.setNumber(number);
+        largeWidgetObject.setNumberType(numberType);
+        return largeWidgetObject;
     }
 
     public long getDatabaseId() {
@@ -78,12 +78,12 @@ public class SpeedDialObject {
         this.numberType = numberType;
     }
 
-    public Uri getLookup_uri() {
-        return lookup_uri;
+    public Uri getLookupUri() {
+        return lookupUri;
     }
 
-    public void setLookup_uri(Uri lookup_uri) {
-        this.lookup_uri = lookup_uri;
+    public void setLookupUri(Uri lookupUri) {
+        this.lookupUri = lookupUri;
     }
 
     public void addToLargeWidgetSpeedDial(Context context) {
@@ -92,8 +92,8 @@ public class SpeedDialObject {
             public void run() {
                 SpeedDialDatabase
                         .getSpeedDialDatabase(context)
-                        .speedDialDao()
-                        .insertSpeedDialButton(SpeedDialObject.this);
+                        .largeWidgetDao()
+                        .insertSpeedDialButton(LargeWidgetObject.this);
 
                 notifyUserAddedToLargeWidget(context);
 
@@ -121,8 +121,8 @@ public class SpeedDialObject {
             public void run() {
                 SpeedDialDatabase
                         .getSpeedDialDatabase(context)
-                        .speedDialDao()
-                        .removeSpeedDialEntry(SpeedDialObject.this);
+                        .largeWidgetDao()
+                        .removeSpeedDialEntry(LargeWidgetObject.this);
 
                 LargeWidgetProvider.notifyLargeWidgets(context);
             }
@@ -130,7 +130,7 @@ public class SpeedDialObject {
     }
 
     public Bitmap getContactPhoto(Context context) {
-        Bitmap bitmap = ImageHelper.getContactPhoto(context, getLookup_uri());
+        Bitmap bitmap = ImageHelper.getContactPhoto(context, getLookupUri());
         if (bitmap == null) {
             return getDefaultIcon(context);
         }
@@ -138,7 +138,7 @@ public class SpeedDialObject {
     }
 
     public Bitmap getContactPhotoRounded(Context context) {
-        Bitmap bitmap = ImageHelper.getContactPhotoRounded(context, getLookup_uri());
+        Bitmap bitmap = ImageHelper.getContactPhotoRounded(context, getLookupUri());
         if (bitmap == null) {
             return getDefaultIcon(context);
         }
