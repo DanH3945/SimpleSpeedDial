@@ -28,9 +28,9 @@ public class PrimaryDisplayFragment extends Fragment {
 
     public static final String TAG = "SpeedDialPrimaryDisplayFragment";
 
-    AutoCompleteTextView numberTypeAutoTextview;
-    EditText nameEditText;
-    EditText numberEditText;
+    AutoCompleteTextView mNumTypeAutoCompleteTextView;
+    EditText mNameEditText;
+    EditText mNumberEditText;
 
     Button mContactListBtn;
 
@@ -62,20 +62,23 @@ public class PrimaryDisplayFragment extends Fragment {
 
         String[] numberTypes = getResources().getStringArray(R.array.number_types);
 
-        numberTypeAutoTextview = view.findViewById(R.id.primary_display_quick_add_number_type);
+        mNumTypeAutoCompleteTextView = view.findViewById(R.id.primary_display_quick_add_number_type);
         if (getContext() != null) {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_singlechoice, numberTypes);
-            numberTypeAutoTextview.setAdapter(adapter);
+            mNumTypeAutoCompleteTextView.setAdapter(adapter);
         }
 
-        nameEditText = view.findViewById(R.id.primary_display_quick_add_name_et);
-        numberEditText = view.findViewById(R.id.primary_display_quick_add_number_et);
+        mNameEditText = view.findViewById(R.id.primary_display_quick_add_name_et);
+        mNumberEditText = view.findViewById(R.id.primary_display_quick_add_number_et);
 
         Button quickAddButton = view.findViewById(R.id.primary_display_quick_add_button);
         quickAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addSpeedDial();
+                LargeWidgetObject widgetObject = assembleQuickAddLargeWidgetObject();
+                if (widgetObject != null) {
+                    widgetObject.addToLargeWidgetSpeedDial(getContext());
+                }
             }
         });
 
@@ -86,38 +89,38 @@ public class PrimaryDisplayFragment extends Fragment {
         return view;
     }
 
-    private void addSpeedDial() {
-        String name = nameEditText.getText().toString();
-        String number = numberEditText.getText().toString();
-        String numberType = numberTypeAutoTextview.getText().toString();
+    private LargeWidgetObject assembleQuickAddLargeWidgetObject() {
+        String name = mNameEditText.getText().toString();
+        String number = mNumberEditText.getText().toString();
+        String numberType = mNumTypeAutoCompleteTextView.getText().toString();
 
         AlertDialog.Builder responseDialog = new AlertDialog.Builder(getContext());
 
         if (name.equals("")) {
             responseDialog.setMessage(getResources().getString(R.string.primary_display_invalid_name));
             responseDialog.show();
-            return;
+            return null;
         }
 
         if (number.equals("")) {
             responseDialog.setMessage(getResources().getString(R.string.primary_display_invalid_number));
             responseDialog.show();
-            return;
+            return null;
         }
 
         if (numberType.equals("")) {
             responseDialog.setMessage(getResources().getString(R.string.primary_display_invalid_number_type));
             responseDialog.show();
-            return;
+            return null;
         }
 
         LargeWidgetObject largeWidgetObject = LargeWidgetObject.createObject(name, number, numberType);
 
-        largeWidgetObject.addToLargeWidgetSpeedDial(getContext());
+        mNameEditText.getText().clear();
+        mNumberEditText.getText().clear();
+        mNumTypeAutoCompleteTextView.getText().clear();
 
-        nameEditText.getText().clear();
-        numberEditText.getText().clear();
-        numberTypeAutoTextview.getText().clear();
+        return largeWidgetObject;
     }
 
     private void loadFragment(Fragment fragment, String tag) {
