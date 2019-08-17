@@ -1,21 +1,24 @@
 package com.danh3945.simplespeeddial.database;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.util.List;
 
 @Entity
+@TypeConverters(LocalTypeConverters.class)
 public class SingleTileWidgetObject {
 
     @PrimaryKey(autoGenerate = false)
     int widgetId;
     String name;
     String number;
-    String lookupUri;
+    Uri lookupUri;
     int defaultColor;
 
     public interface SingleTileListCallback {
@@ -46,11 +49,11 @@ public class SingleTileWidgetObject {
         this.number = number;
     }
 
-    public String getLookupUri() {
+    public Uri getLookupUri() {
         return lookupUri;
     }
 
-    public void setLookupUri(String lookupUri) {
+    public void setLookupUri(Uri lookupUri) {
         this.lookupUri = lookupUri;
     }
 
@@ -68,7 +71,7 @@ public class SingleTileWidgetObject {
         singleTileWidgetObject.setWidgetId(appWidgetId);
         singleTileWidgetObject.setName(largeWidgetObject.getName());
         singleTileWidgetObject.setNumber(largeWidgetObject.getNumber());
-        singleTileWidgetObject.setLookupUri(largeWidgetObject.getLookupUri().toString());
+        singleTileWidgetObject.setLookupUri(largeWidgetObject.getLookupUri());
         singleTileWidgetObject.setDefaultColor(defaultColor);
 
         return singleTileWidgetObject;

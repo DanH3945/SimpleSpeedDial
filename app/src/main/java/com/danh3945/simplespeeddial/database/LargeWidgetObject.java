@@ -79,6 +79,9 @@ public class LargeWidgetObject {
     }
 
     public Uri getLookupUri() {
+        if (lookupUri == null) {
+            lookupUri = new Uri.Builder().build();
+        }
         return lookupUri;
     }
 

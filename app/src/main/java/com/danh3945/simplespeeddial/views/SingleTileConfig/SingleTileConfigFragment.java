@@ -73,6 +73,14 @@ public class SingleTileConfigFragment extends Fragment {
             }
         });
 
+        Button contactListButton = view.findViewById(R.id.primary_display_contact_list_btn);
+        contactListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadContactList();
+            }
+        });
+
         if (isLandscapeOriented()) {
             loadContactList();
         }
