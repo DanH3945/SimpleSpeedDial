@@ -17,11 +17,7 @@ public class ContactRetriever {
         void onResponse(List<Contact> contactList);
     }
 
-    private static List<Contact> contactList;
-
-    public ContactRetriever() {
-        contactList = new ArrayList<>();
-    }
+    private ContactRetriever() { }
 
     public static ContactRetriever getInstance() {
         return new ContactRetriever();
@@ -46,6 +42,8 @@ public class ContactRetriever {
     }
 
     private List<Contact> readContacts(Context context) {
+
+        List<Contact> contactList = new ArrayList<>();
 
         try (Cursor cursor = getContactsCursor(context)) {
 

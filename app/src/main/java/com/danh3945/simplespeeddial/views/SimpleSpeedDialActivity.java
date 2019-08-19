@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,8 @@ import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
 import com.danh3945.simplespeeddial.views.preferences.SpeedDialPreferenceFragment;
+import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
+import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -108,6 +111,12 @@ public abstract class SimpleSpeedDialActivity extends AppCompatActivity {
 
             case R.id.overflow_menu_preferences:
                 loadFragment(SpeedDialPreferenceFragment.createInstance(getApplicationContext()), true, SpeedDialPreferenceFragment.TAG);
+                break;
+
+            case R.id.overflow_menu_refresh:
+                SingleTileAppWidgetProvider.notifySingleTileWidgets(this);
+                LargeWidgetProvider.notifyLargeWidgets(this);
+                Toast.makeText(this, R.string.menu_refreshed_text, Toast.LENGTH_SHORT).show();
                 break;
         }
 

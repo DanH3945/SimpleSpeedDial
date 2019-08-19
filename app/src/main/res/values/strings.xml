@@ -58,6 +58,8 @@
     // Overflow Menu Strings
     <string name="menu_preferences_title">Preferences</string>
     <string name="menu_about_title">About</string>
+    <string name="menu_refresh_buttons">Refresh Speed Dial Buttons</string>
+    <string name="menu_refreshed_text">Refreshed</string>
 
     // Shared Preferences Strings
     <string name="shared_pref_dial_type_key">dialType</string>

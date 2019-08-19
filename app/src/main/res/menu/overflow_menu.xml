@@ -9,4 +9,8 @@
         android:id="@+id/overflow_menu_preferences"
         android:title="@string/menu_preferences_title" />
 
+    <item
+        android:id="@+id/overflow_menu_refresh"
+        android:title="@string/menu_refresh_buttons"/>
+
 </menu>
