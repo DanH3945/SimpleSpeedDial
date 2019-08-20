@@ -46,6 +46,8 @@
             app:layout_constraintTop_toBottomOf="@id/contact_recycler_select_item_info_tv" />
 
 
+        <!--THIS IS NECESSARY.  Without the nested scroll view we can't-->
+        <!--freeze the recycler layout for certain animating.-->
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -104,27 +104,27 @@ public class ImageHelper {
     }
 
     private static Bitmap colorDefaultContactPhoto(int defaultColor, Bitmap bitmap) {
-//        int[] pixels = new int[bitmap.getWidth() * bitmap.getHeight()];
-//        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
-//
-//        int red = Color.red(defaultColor);
-//        int green = Color.green(defaultColor);
-//        int blue = Color.blue(defaultColor);
-//
-//        for (int i = 0; i < pixels.length; i++) {
-//            if (Color.alpha(pixels[i]) > 254) {
-//                pixels[i] = Color.argb(Color.alpha(pixels[i]), red, green, blue);
-//            } else {
-//                pixels[i] = Color.argb(0, 0, 0, 0);
-//            }
-//        }
-//
-//        Bitmap resultBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-//        resultBitmap.copyPixelsFromBuffer(IntBuffer.wrap(pixels));
-//
-//        resultBitmap = getRoundedCornerBitmap(resultBitmap, 100);
+        int[] pixels = new int[bitmap.getWidth() * bitmap.getHeight()];
+        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
 
-        return bitmap;
+        int red = Color.red(defaultColor);
+        int green = Color.green(defaultColor);
+        int blue = Color.blue(defaultColor);
+
+        for (int i = 0; i < pixels.length; i++) {
+            if (Color.alpha(pixels[i]) > 254) {
+                pixels[i] = Color.argb(Color.alpha(pixels[i]), red, green, blue);
+            } else {
+                pixels[i] = Color.argb(0, 0, 0, 0);
+            }
+        }
+
+        Bitmap resultBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        resultBitmap.copyPixelsFromBuffer(IntBuffer.wrap(pixels));
+
+        resultBitmap = getRoundedCornerBitmap(resultBitmap, 100);
+
+        return resultBitmap;
     }
 
     public static int getRandomContactIconColorInt(Context context) {
