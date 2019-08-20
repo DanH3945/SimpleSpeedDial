@@ -74,10 +74,12 @@ public abstract class SimpleSpeedDialActivity extends AppCompatActivity {
 
         AdView bannerAd = findViewById(R.id.banner_ad_view);
 
-        AdRequest bannerAdRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        bannerAd.loadAd(bannerAdRequest);
+        AdRequest.Builder bannerAdRequestBuilder = new AdRequest.Builder();
+        if (BuildConfig.DEBUG) {
+            Timber.d("Debug build detected while initializing mobile ads.  Adding Test Device.");
+            bannerAdRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+        }
+        bannerAd.loadAd(bannerAdRequestBuilder.build());
     }
 
     private boolean isLandscapeOriented() {

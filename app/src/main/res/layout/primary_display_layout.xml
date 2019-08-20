@@ -78,6 +78,18 @@
 
     <Button
         style="@style/ButtonStyle"
+        android:id="@+id/primary_display_contact_list_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/primary_display_quick_add_constraint_frame"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/primary_display_contact_list_button"
+        app:layout_constraintVertical_bias="0.1"/>
+
+    <Button
+        style="@style/ButtonStyle"
         android:id="@+id/primary_display_contact_current_speed_list_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,17 +99,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="24dp"
         android:text="@string/primary_display_current_speed_list_button" />
-
-    <Button
-        style="@style/ButtonStyle"
-        android:id="@+id/primary_display_contact_list_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/primary_display_quick_add_constraint_frame"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/primary_display_contact_list_button"
-        app:layout_constraintVertical_bias="0.3"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

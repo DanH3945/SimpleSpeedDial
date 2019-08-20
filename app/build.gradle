@@ -30,6 +30,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
             signingConfig signingConfigs.debug
         }
     }
@@ -42,9 +45,11 @@ android {
     productFlavors {
         free {
             dimension = 'versions'
+            signingConfig signingConfigs.release
         }
         paid {
             dimension = 'versions'
+            signingConfig signingConfigs.release
         }
     }
 }
