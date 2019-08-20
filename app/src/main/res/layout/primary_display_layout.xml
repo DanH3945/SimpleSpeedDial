@@ -5,6 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="50dp">
 
+    <TextView
+        android:id="@+id/primary_display_configuring_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/guideLine"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/primary_display_configuring_large_widget"
+        android:textStyle="bold"
+        android:textSize="@dimen/header_text_size" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLine"
         android:layout_width="1dp"

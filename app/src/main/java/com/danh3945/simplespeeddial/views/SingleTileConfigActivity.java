@@ -3,6 +3,7 @@ package com.danh3945.simplespeeddial.views;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -37,6 +38,9 @@ public class SingleTileConfigActivity extends SimpleSpeedDialActivity {
 
         // Make the id final so it can be used below.
         int finalAppWidgetId = appWidgetId;
+
+        TextView configText = findViewById(R.id.primary_display_configuring_text_view);
+        configText.setText(R.string.primary_display_configuring_single_tile_widget);
 
         loadFragment(SingleTileConfigFragment.createInstance(finalAppWidgetId), false, SingleTileConfigFragment.TAG);
     }

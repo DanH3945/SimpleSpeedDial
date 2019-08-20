@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    // General Dimensions
+    <dimen name="header_text_size">18sp</dimen>
+
     // About Fragment Dimensions
     <dimen name="about_item_height">32dp</dimen>
     <dimen name="about_item_margin">8dp</dimen>
@@ -18,7 +21,6 @@
 
     // Current Speed Dial Dimensions
     <dimen name="current_speed_dial_divider_margin">12dp</dimen>
-    <dimen name="current_speed_dial_header_text_size">18sp</dimen>
 
     // Primary Display Dimensions
     <dimen name="primary_display_landscape_btn_width">260dp</dimen>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,47 +12,56 @@
             android:id="@+id/contact_recycler_title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:gravity="center_horizontal"
             android:text="@string/contact_recycler_title"
+            android:textSize="@dimen/header_text_size"
             app:layout_constraintBottom_toTopOf="@id/contact_recycler_select_item_info_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center_horizontal"
-            android:layout_margin="4dp"
-            android:textSize="@dimen/current_speed_dial_header_text_size" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/contact_recycler_select_item_info_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/contact_recycler_select_item_info"
-            android:id="@+id/contact_recycler_select_item_info_tv"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/contact_recycler_divider"
-            app:layout_constraintTop_toBottomOf="@id/contact_recycler_title_tv"
-            android:gravity="center_horizontal"
             android:layout_margin="4dp"
-            android:textSize="@dimen/current_speed_dial_header_text_size" />
+            android:gravity="center_horizontal"
+            android:text="@string/contact_recycler_select_item_info"
+            android:textSize="@dimen/header_text_size"
+            app:layout_constraintBottom_toTopOf="@id/contact_recycler_divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contact_recycler_title_tv" />
 
         <FrameLayout
             android:id="@+id/contact_recycler_divider"
+            style="@style/DividerStyle"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            style="@style/DividerStyle"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toTopOf="@id/contact_recycler_container_nested_scroll_view"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact_recycler_select_item_info_tv"
-            app:layout_constraintBottom_toTopOf="@id/contact_recycler_view"
-            android:layout_marginTop="4dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contact_recycler_select_item_info_tv" />
 
-        <androidx.recyclerview.widget.RecyclerView
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/contact_recycler_divider"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="0dp"
+            android:id="@+id/contact_recycler_container_nested_scroll_view"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/contact_recycler_view" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contact_recycler_divider"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/contact_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
+</FrameLayout>

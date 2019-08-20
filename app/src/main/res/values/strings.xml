@@ -16,6 +16,8 @@
     <string name="primary_display_invalid_name">Please enter a name</string>
     <string name="primary_display_invalid_number">Please enter a number</string>
     <string name="primary_display_invalid_number_type">Please enter a number type</string>
+    <string name="primary_display_configuring_large_widget">Configuring Large Widget</string>
+    <string name="primary_display_configuring_single_tile_widget">Configuring Single Tile Widget</string>
 
     <string-array name="number_types">
         <item>Home</item>
@@ -28,11 +30,11 @@
 
     // Contact Fragment Strings
     <string name="contact_recycler_title">Contact List</string>
-    <string name="contact_recycler_select_item_info">Select a Contact and a number to add it to the speed dial.</string>
+    <string name="contact_recycler_select_item_info">Select a Contact and a number to add it to the large widget.</string>
 
     // Current Speed Dial Fragment Strings
     <string name="current_speed_dial_title">Current Speed Dial Buttons</string>
-    <string name="current_speed_dial_swipe_delete">Swipe to remove from speed dial</string>
+    <string name="current_speed_dial_swipe_delete">Swipe to remove from large widget</string>
 
 
     // About Dialog Strings
