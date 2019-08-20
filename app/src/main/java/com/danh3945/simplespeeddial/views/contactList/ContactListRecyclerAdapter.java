@@ -23,8 +23,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.contacts.Contact;
-import com.danh3945.simplespeeddial.contacts.ContactRetriever;
+import com.danh3945.simplespeeddial.views.contactList.contacts.Contact;
+import com.danh3945.simplespeeddial.views.contactList.contacts.ContactRetriever;
 import com.danh3945.simplespeeddial.database.LargeWidgetObject;
 import com.danh3945.simplespeeddial.image.ImageHelper;
 

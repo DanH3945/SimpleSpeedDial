@@ -1,4 +1,4 @@
-package com.danh3945.simplespeeddial.contacts;
+package com.danh3945.simplespeeddial.views.contactList.contacts;
 
 import android.net.Uri;
 
