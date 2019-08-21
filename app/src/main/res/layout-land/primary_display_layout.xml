@@ -107,7 +107,7 @@
         app:layout_constraintTop_toBottomOf="@id/primary_display_contact_list_btn"
         android:text="@string/primary_display_current_speed_list_button" />
 
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
         android:id="@+id/primary_display_landscape_frame"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -116,6 +116,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-    </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
