@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.views.SingleTileConfig.SingleTileConfigFragment;
 
-public class SingleTileConfigActivity extends SimpleSpeedDialActivity {
+public class SingleTileConfigActivity extends ParentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

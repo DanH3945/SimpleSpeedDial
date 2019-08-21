@@ -27,7 +27,7 @@ import com.google.android.gms.ads.MobileAds;
 
 import timber.log.Timber;
 
-public abstract class SimpleSpeedDialActivity extends AppCompatActivity {
+public abstract class ParentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

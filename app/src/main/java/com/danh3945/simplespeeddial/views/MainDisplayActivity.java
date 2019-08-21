@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
 
-public class MainDisplayActivity extends SimpleSpeedDialActivity {
+public class MainDisplayActivity extends ParentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
