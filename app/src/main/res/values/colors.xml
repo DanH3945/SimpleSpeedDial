@@ -11,7 +11,8 @@
     <color name="white">#ffff</color>
 
     // Primary Display Fragment Colors
-    <color name="primaryDisplayBtnColor">#0988EC</color>
+    <!--<color name="primaryDisplayBtnColor">#0988EC</color>-->
+    <color name="primaryDisplayBtnColor">@color/colorPrimaryLight</color>
     <color name="primaryDisplayBtnTextColor">#ffff</color>
 
     // Widget Colors
