@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -84,6 +85,10 @@ public class SingleTileConfigFragment extends Fragment {
         if (isLandscapeOriented()) {
             loadContactList();
         }
+
+        TextView configText = view.findViewById(R.id.primary_display_configuring_text_view);
+        configText.setText(R.string.primary_display_configuring_single_tile_widget);
+
         return view;
     }
 

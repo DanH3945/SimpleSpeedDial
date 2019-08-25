@@ -48,7 +48,7 @@ public abstract class ParentActivity extends AppCompatActivity {
             initMobileAds();
         }
 
-        if (isLandscapeOriented()) {
+        if (isLandscapeOriented() && getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
     }
@@ -113,12 +113,6 @@ public abstract class ParentActivity extends AppCompatActivity {
 
             case R.id.overflow_menu_preferences:
                 loadFragment(SpeedDialPreferenceFragment.createInstance(getApplicationContext()), true, SpeedDialPreferenceFragment.TAG);
-                break;
-
-            case R.id.overflow_menu_refresh:
-                SingleTileAppWidgetProvider.notifySingleTileWidgets(this);
-                LargeWidgetProvider.notifyLargeWidgets(this);
-                Toast.makeText(this, R.string.menu_refreshed_text, Toast.LENGTH_SHORT).show();
                 break;
         }
 

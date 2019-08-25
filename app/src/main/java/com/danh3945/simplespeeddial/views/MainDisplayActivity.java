@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
+import com.danh3945.simplespeeddial.views.welcomeScreen.WelcomeFragment;
 
 public class MainDisplayActivity extends ParentActivity {
 
@@ -18,7 +19,9 @@ public class MainDisplayActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
 
         // load the main fragment to display to the user.
-        loadFragment(PrimaryDisplayFragment.createInstance(), false, PrimaryDisplayFragment.TAG);
+        if (savedInstanceState == null) {
+            loadFragment(WelcomeFragment.createInstance(), false, WelcomeFragment.TAG);
+        }
     }
 
 }

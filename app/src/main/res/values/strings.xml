@@ -65,5 +65,6 @@
 
     // Shared Preferences Strings
     <string name="shared_pref_dial_type_key">dialType</string>
+    <string name="welcome_fragment_get_started">Get Started</string>
 
 </resources>
