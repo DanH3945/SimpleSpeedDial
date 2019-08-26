@@ -17,7 +17,8 @@ public class ContactRetriever {
         void onResponse(List<Contact> contactList);
     }
 
-    private ContactRetriever() { }
+    private ContactRetriever() {
+    }
 
     public static ContactRetriever getInstance() {
         return new ContactRetriever();

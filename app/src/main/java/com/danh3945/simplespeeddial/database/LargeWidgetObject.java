@@ -1,7 +1,6 @@
 package com.danh3945.simplespeeddial.database;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -12,12 +11,11 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.danh3945.simplespeeddial.image.ImageHelper;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
 @Entity
 @TypeConverters(LocalTypeConverters.class)
-public class LargeWidgetObject {
+public class LargeWidgetObject extends WidgetObject {
 
     @PrimaryKey(autoGenerate = true)
     private long databaseId;
@@ -54,6 +52,7 @@ public class LargeWidgetObject {
         this.contactId = contactId;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -62,6 +61,7 @@ public class LargeWidgetObject {
         this.name = name;
     }
 
+    @Override
     public String getNumber() {
         return number;
     }
@@ -78,6 +78,7 @@ public class LargeWidgetObject {
         this.numberType = numberType;
     }
 
+    @Override
     public Uri getLookupUri() {
         if (lookupUri == null) {
             lookupUri = new Uri.Builder().build();
@@ -130,26 +131,5 @@ public class LargeWidgetObject {
                 LargeWidgetProvider.notifyLargeWidgets(context);
             }
         });
-    }
-
-    public Bitmap getContactPhoto(Context context) {
-        Bitmap bitmap = ImageHelper.getContactPhoto(context, getLookupUri());
-        if (bitmap == null) {
-            return getDefaultIcon(context);
-        }
-        return bitmap;
-    }
-
-    public Bitmap getContactPhotoRounded(Context context) {
-        Bitmap bitmap = ImageHelper.getContactPhotoRounded(context, getLookupUri());
-        if (bitmap == null) {
-            return getDefaultIcon(context);
-        }
-        return bitmap;
-    }
-
-    private Bitmap getDefaultIcon(Context context) {
-        int defaultColor = ImageHelper.getRandomContactIconColorInt(context, getName());
-        return ImageHelper.getDefaultContactIcon(context, defaultColor);
     }
 }

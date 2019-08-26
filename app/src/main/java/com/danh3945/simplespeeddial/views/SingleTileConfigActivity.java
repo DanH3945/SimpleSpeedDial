@@ -3,7 +3,6 @@ package com.danh3945.simplespeeddial.views;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 

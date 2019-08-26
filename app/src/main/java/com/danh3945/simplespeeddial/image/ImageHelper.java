@@ -4,15 +4,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.danh3945.simplespeeddial.R;
 
 import org.jetbrains.annotations.Nullable;
@@ -20,14 +23,10 @@ import org.jetbrains.annotations.Nullable;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.IntBuffer;
-import java.util.Random;
 
 import timber.log.Timber;
 
 public class ImageHelper {
-
-    public static int IGNORE_COLOR = -1;
 
     private static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap
@@ -82,85 +81,85 @@ public class ImageHelper {
         return photoBitmap;
     }
 
-    public static Bitmap getDefaultContactIcon(Context context, int color) {
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.default_contact_icon);
-        if (color <= IGNORE_COLOR) {
-            return bitmap;
-        }
-        return colorDefaultContactPhoto(color, bitmap);
+    public static Drawable getDefaultContactIconSquare(String name, int heightPx, int widthPx) {
+        int color = ColorGenerator.MATERIAL.getColor(name);
+
+        String firstLetter = String.valueOf(name.charAt(0));
+
+        return TextDrawable.builder()
+                .beginConfig()
+                .height(heightPx)
+                .width(widthPx)
+                .endConfig()
+                .buildRect(firstLetter, color);
+    }
+
+    public static Drawable getDefaultContactIconSquare(String name) {
+        int color = ColorGenerator.MATERIAL.getColor(name);
+
+        String firstLetter = String.valueOf(name.charAt(0));
+
+        return TextDrawable.builder().buildRect(firstLetter, color);
+    }
+
+    public static Drawable getDefaultContactIconRounded(String name, int heightPx, int widthPx) {
+        int color = ColorGenerator.MATERIAL.getColor(name);
+
+        String firstLetter = String.valueOf(name.charAt(0));
+
+        return TextDrawable.builder()
+                .beginConfig()
+                .height(heightPx)
+                .width(widthPx)
+                .endConfig()
+                .buildRound(firstLetter, color);
+    }
+
+    public static Drawable getDefaultContactIconRounded(String name) {
+        int color = ColorGenerator.MATERIAL.getColor(name);
+
+        String firstLetter = String.valueOf(name.charAt(0));
+
+        return TextDrawable.builder().buildRound(firstLetter, color);
+
     }
 
     @Nullable
-    public static Bitmap getContactPhotoRounded(Context context, Uri lookupUri) {
+    public static Drawable getContactPhotoRounded(Context context, Uri lookupUri) {
 
         Bitmap photoBitmap = getContactPhoto(context, lookupUri);
 
         if (photoBitmap != null) {
             int pixels = context.getResources().getDimensionPixelSize(R.dimen.widget_photo_rounding_pixels);
             photoBitmap = ImageHelper.getRoundedCornerBitmap(photoBitmap, pixels);
+            return new BitmapDrawable(context.getResources(), photoBitmap);
         }
 
-        return photoBitmap;
+        return null;
     }
 
-    private static Bitmap colorDefaultContactPhoto(int defaultColor, Bitmap bitmap) {
-        int[] pixels = new int[bitmap.getWidth() * bitmap.getHeight()];
-        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
 
-        int red = Color.red(defaultColor);
-        int green = Color.green(defaultColor);
-        int blue = Color.blue(defaultColor);
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = null;
 
-        for (int i = 0; i < pixels.length; i++) {
-            if (Color.alpha(pixels[i]) > 254) {
-                pixels[i] = Color.argb(Color.alpha(pixels[i]), red, green, blue);
-            } else {
-                pixels[i] = Color.argb(0, 0, 0, 0);
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if (bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
             }
         }
 
-        Bitmap resultBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        resultBitmap.copyPixelsFromBuffer(IntBuffer.wrap(pixels));
-
-        resultBitmap = getRoundedCornerBitmap(resultBitmap, 100);
-
-        return resultBitmap;
-    }
-
-    public static int getRandomContactIconColorInt(Context context) {
-        return getRandomContactIconColorInt(context, null);
-    }
-
-    public static int getRandomContactIconColorInt(Context context, String firstName) {
-
-        int[] colors = context.getResources().getIntArray(R.array.iconColors);
-
-        int colorInt = 0;
-
-        if (firstName == null) {
-            Random random = new Random();
-            int randomInt = random.nextInt(colors.length);
-            colorInt = colors[randomInt];
+        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
         } else {
-            char character = firstName.toLowerCase().charAt(0);
-            int charNum = (int) character;
-
-            Timber.d("Char num value: %s", charNum);
-
-            while (charNum > colors.length - 1) {
-                Timber.d("colorInt was over colors length with value: %s", colorInt);
-                charNum -= colors.length;
-                Timber.d("new colorInt value is %s", colorInt);
-            }
-
-            colorInt = colors[charNum];
-
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         }
 
-        int red = Color.red(colorInt);
-        int green = Color.green(colorInt);
-        int blue = Color.blue(colorInt);
-
-        return Color.argb(0, red, green, blue);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
+
+
 }

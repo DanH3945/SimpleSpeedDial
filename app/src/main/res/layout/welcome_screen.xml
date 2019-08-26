@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="The Goal of this app is to be easy to use and setup.  It has 2 types of widgets. A large widget resizable widget and a smaller single tile widget.  To begin setting up the large widget just click on &quot;get started&quot; below.  You can add some contacts to the list then just add the 3x2 (resizable) widget to your home screen. \n \n You can come right back here whenever you want to change the list!" />
+                android:text="The Goal of this app is to be easy to use and setup.  It has 2 types of widgets. A large multi-tile widget and a smaller single tile widget.  To begin setting up the large widget just click on &quot;get started&quot; below.  You can add some contacts to the list then just add the 3x2 (resizable) widget to your home screen. \n \n You can come right back here whenever you want to change the list!" />
 
             <TextView
                 android:layout_width="wrap_content"

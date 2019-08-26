@@ -8,22 +8,15 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import java.util.List;
-
 @Entity
 @TypeConverters(LocalTypeConverters.class)
-public class SingleTileWidgetObject {
+public class SingleTileWidgetObject extends WidgetObject {
 
     @PrimaryKey(autoGenerate = false)
     int widgetId;
     String name;
     String number;
     Uri lookupUri;
-    int defaultColor;
-
-    public interface SingleTileListCallback {
-        void callback(List<SingleTileWidgetObject> list);
-    }
 
     public int getWidgetId() {
         return widgetId;
@@ -33,6 +26,7 @@ public class SingleTileWidgetObject {
         this.widgetId = widgetId;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -41,6 +35,7 @@ public class SingleTileWidgetObject {
         this.name = name;
     }
 
+    @Override
     public String getNumber() {
         return number;
     }
@@ -49,6 +44,7 @@ public class SingleTileWidgetObject {
         this.number = number;
     }
 
+    @Override
     public Uri getLookupUri() {
         return lookupUri;
     }
@@ -57,22 +53,13 @@ public class SingleTileWidgetObject {
         this.lookupUri = lookupUri;
     }
 
-    public int getDefaultColor() {
-        return defaultColor;
-    }
-
-    public void setDefaultColor(int defaultColor) {
-        this.defaultColor = defaultColor;
-    }
-
-    public static SingleTileWidgetObject fromLargeWidgetObject(int appWidgetId, int defaultColor, LargeWidgetObject largeWidgetObject) {
+    public static SingleTileWidgetObject fromLargeWidgetObject(int appWidgetId, LargeWidgetObject largeWidgetObject) {
         SingleTileWidgetObject singleTileWidgetObject = new SingleTileWidgetObject();
 
         singleTileWidgetObject.setWidgetId(appWidgetId);
         singleTileWidgetObject.setName(largeWidgetObject.getName());
         singleTileWidgetObject.setNumber(largeWidgetObject.getNumber());
         singleTileWidgetObject.setLookupUri(largeWidgetObject.getLookupUri());
-        singleTileWidgetObject.setDefaultColor(defaultColor);
 
         return singleTileWidgetObject;
     }
@@ -91,16 +78,6 @@ public class SingleTileWidgetObject {
             @Override
             public void run() {
                 SpeedDialDatabase.getSpeedDialDatabase(context).singleTileWidgetDao().deleteSingleTileData(SingleTileWidgetObject.this);
-            }
-        });
-    }
-
-    public static void getSingleTileWidgetList(Context context, SingleTileListCallback singleTileListCallback) {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                List<SingleTileWidgetObject> objects = SpeedDialDatabase.getSpeedDialDatabase(context).singleTileWidgetDao().getSingleTileDataList();
-                singleTileListCallback.callback(objects);
             }
         });
     }

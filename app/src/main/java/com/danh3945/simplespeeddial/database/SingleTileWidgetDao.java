@@ -19,4 +19,7 @@ public interface SingleTileWidgetDao {
     @Query("SELECT * FROM SingleTileWidgetObject")
     List<SingleTileWidgetObject> getSingleTileDataList();
 
+    @Query("SELECT * FROM SingleTileWidgetObject WHERE widgetId = :widgetId")
+    SingleTileWidgetObject[] getSingleTileWidget(int widgetId);
+
 }

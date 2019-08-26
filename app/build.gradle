@@ -86,6 +86,9 @@ dependencies {
     // Gson
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
+    // TextDrawable library for drawing default icons in the Android style.
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

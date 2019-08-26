@@ -3,7 +3,6 @@ package com.danh3945.simplespeeddial.views;
 import android.os.Bundle;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.views.primaryDisplay.PrimaryDisplayFragment;
 import com.danh3945.simplespeeddial.views.welcomeScreen.WelcomeFragment;
 
 public class MainDisplayActivity extends ParentActivity {

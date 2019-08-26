@@ -77,7 +77,7 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
     public void onBindViewHolder(@NonNull CurrentSpeedDialRecyclerViewHolder viewHolder, int i) {
         LargeWidgetObject largeWidgetObject = mCurrentSpeedDialList.get(i);
 
-        viewHolder.mImageView.setImageBitmap(largeWidgetObject.getContactPhoto(mContext));
+        viewHolder.mImageView.setImageDrawable(largeWidgetObject.getContactPhotoSquare(mContext));
         viewHolder.mNameText.setText(largeWidgetObject.getName());
         viewHolder.mNumberText.setText(largeWidgetObject.getNumber());
         viewHolder.mNumberTypeText.setText(largeWidgetObject.getNumberType());

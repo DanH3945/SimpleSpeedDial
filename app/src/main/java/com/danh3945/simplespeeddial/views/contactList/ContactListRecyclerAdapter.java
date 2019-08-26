@@ -2,6 +2,7 @@ package com.danh3945.simplespeeddial.views.contactList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,10 +24,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.views.contactList.contacts.Contact;
-import com.danh3945.simplespeeddial.views.contactList.contacts.ContactRetriever;
 import com.danh3945.simplespeeddial.database.LargeWidgetObject;
 import com.danh3945.simplespeeddial.image.ImageHelper;
+import com.danh3945.simplespeeddial.views.contactList.contacts.Contact;
+import com.danh3945.simplespeeddial.views.contactList.contacts.ContactRetriever;
 
 import java.util.List;
 
@@ -91,17 +92,20 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
     @Override
     public void onBindViewHolder(@NonNull final ContactViewHolder viewHolder, int i) {
 
-        viewHolder.mTextView.setText(mContactList.get(i).getName());
+        Contact contact = mContactList.get(i);
 
-        Bitmap photoBitmap = ImageHelper.getContactPhoto(mContext, mContactList.get(i).getLookupUri());
-        if (photoBitmap == null) {
+        viewHolder.mTextView.setText(contact.getName());
 
-            String[] names = mContactList.get(i).getName().split(" ");
+        Bitmap bitmap = ImageHelper.getContactPhoto(mContext, contact.getLookupUri());
 
-            int defaultColor = ImageHelper.getRandomContactIconColorInt(mContext, names[0]);
-            photoBitmap = ImageHelper.getDefaultContactIcon(mContext, defaultColor);
+        if (bitmap != null) {
+            viewHolder.mContactImageView.setImageBitmap(bitmap);
+        } else {
+
+            Drawable drawable = ImageHelper.getDefaultContactIconSquare(contact.getName());
+
+            viewHolder.mContactImageView.setImageDrawable(drawable);
         }
-        viewHolder.mContactImageView.setImageBitmap(photoBitmap);
 
         viewHolder.mListView.setAdapter(new SubListAdapter(mContactList.get(i)));
         viewHolder.mListView.setLayoutManager(new LinearLayoutManager(mContext));
