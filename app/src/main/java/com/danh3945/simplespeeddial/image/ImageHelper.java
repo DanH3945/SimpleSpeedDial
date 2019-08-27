@@ -51,6 +51,20 @@ public class ImageHelper {
     }
 
     @Nullable
+    public static Drawable getContactPhotoRounded(Context context, Uri lookupUri) {
+
+        Bitmap photoBitmap = getContactPhoto(context, lookupUri);
+
+        if (photoBitmap != null) {
+            int pixels = context.getResources().getDimensionPixelSize(R.dimen.widget_photo_rounding_pixels);
+            photoBitmap = ImageHelper.getRoundedCornerBitmap(photoBitmap, pixels);
+            return new BitmapDrawable(context.getResources(), photoBitmap);
+        }
+
+        return null;
+    }
+
+    @Nullable
     public static Bitmap getContactPhoto(Context context, Uri lookupUri) {
 
         Bitmap photoBitmap = null;
@@ -123,21 +137,6 @@ public class ImageHelper {
         return TextDrawable.builder().buildRound(firstLetter, color);
 
     }
-
-    @Nullable
-    public static Drawable getContactPhotoRounded(Context context, Uri lookupUri) {
-
-        Bitmap photoBitmap = getContactPhoto(context, lookupUri);
-
-        if (photoBitmap != null) {
-            int pixels = context.getResources().getDimensionPixelSize(R.dimen.widget_photo_rounding_pixels);
-            photoBitmap = ImageHelper.getRoundedCornerBitmap(photoBitmap, pixels);
-            return new BitmapDrawable(context.getResources(), photoBitmap);
-        }
-
-        return null;
-    }
-
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
         Bitmap bitmap = null;
