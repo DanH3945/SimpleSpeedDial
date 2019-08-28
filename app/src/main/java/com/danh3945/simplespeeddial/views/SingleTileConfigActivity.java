@@ -7,7 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.views.SingleTileConfig.SingleTileConfigFragment;
+import com.danh3945.simplespeeddial.views.singleTileconfig.SingleTileConfigFragment;
 
 public class SingleTileConfigActivity extends ParentActivity {
 

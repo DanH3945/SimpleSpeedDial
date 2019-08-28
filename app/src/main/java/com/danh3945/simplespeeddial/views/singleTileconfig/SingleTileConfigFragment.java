@@ -1,4 +1,4 @@
-package com.danh3945.simplespeeddial.views.SingleTileConfig;
+package com.danh3945.simplespeeddial.views.singleTileconfig;
 
 import android.app.AlertDialog;
 import android.appwidget.AppWidgetManager;
