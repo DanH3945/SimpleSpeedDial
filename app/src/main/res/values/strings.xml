@@ -53,6 +53,9 @@
     <string name="about_gson_license_title">Gson License</string>
     <string name="about_gson_url">https://github.com/google/gson</string>
     <string name="about_gson_copyright">Copyright 2008 Google Inc.</string>
+    <string name="about_text_drawable_license_title">Text Drawable Lib</string>
+    <string name="about_text_drawable_url">https://github.com/amulyakhare/TextDrawable</string>
+    <string name="about_text_drawable_copyright">Copyright 2014 Amulya Khare</string>
 
     <string name="about_icons_eight_title">Icons8.com</string>
     <string name="about_icons_eight_url">https://Icons8.com</string>

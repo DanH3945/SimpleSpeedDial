@@ -17,6 +17,7 @@ import com.danh3945.simplespeeddial.R;
 import de.psdev.licensesdialog.LicensesDialog;
 import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20;
 import de.psdev.licensesdialog.licenses.License;
+import de.psdev.licensesdialog.licenses.MITLicense;
 import de.psdev.licensesdialog.model.Notice;
 import timber.log.Timber;
 
@@ -64,6 +65,9 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
         TextView gsonText = dialog.findViewById(R.id.about_gson_tv);
         gsonText.setOnClickListener(v -> showGsonLicense());
 
+        TextView textDrawableText = dialog.findViewById(R.id.about_text_drawable_tv);
+        textDrawableText.setOnClickListener(v -> showTextDrawableLicense());
+
         TextView iconsEightText = dialog.findViewById(R.id.about_icons_eight_tv);
         iconsEightText.setOnClickListener(v -> openIconsEightWebpage());
 
@@ -108,6 +112,16 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
         final String url = context.getResources().getString(R.string.about_gson_url);
         final String copyright = context.getResources().getString(R.string.about_gson_copyright);
         final License license = new ApacheSoftwareLicense20();
+        final Notice notice = new Notice(name, url, copyright, license);
+        new LicensesDialog.Builder(context).setNotices(notice).build().showAppCompat();
+    }
+
+    private void showTextDrawableLicense() {
+        Context context = getContext();
+        final String name = getResources().getString(R.string.about_text_drawable_license_title);
+        final String url = getResources().getString(R.string.about_text_drawable_url);
+        final String copyright = getResources().getString(R.string.about_text_drawable_copyright);
+        final License license = new MITLicense();
         final Notice notice = new Notice(name, url, copyright, license);
         new LicensesDialog.Builder(context).setNotices(notice).build().showAppCompat();
     }

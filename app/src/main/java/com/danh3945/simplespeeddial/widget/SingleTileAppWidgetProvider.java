@@ -91,7 +91,7 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
                     // it to the widget.  Otherwise use the ImageHelper default image.
 
                     if (widgetObject.getLookupUri() != null) {
-                        Drawable drawable = widgetObject.getContactPhotoRounded(context);
+                        Drawable drawable = widgetObject.getContactPhotoRounded(context, 56, 56);
                         views.setImageViewBitmap(R.id.widget_single_image, ImageHelper.drawableToBitmap(drawable));
                     } else {
                         Timber.d("Null Uri value for widget %s, skipping", appWidgetId);
