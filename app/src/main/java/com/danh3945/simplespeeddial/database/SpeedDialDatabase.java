@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {LargeWidgetObject.class, SingleTileWidgetObject.class}, version = 2)
+@Database(entities = {LargeWidgetObject.class, SingleTileWidgetObject.class}, version = 3)
 public abstract class SpeedDialDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "speed_dial_database";
@@ -28,6 +28,8 @@ public abstract class SpeedDialDatabase extends RoomDatabase {
 
         return speedDialDatabase;
     }
+
+
 
     public static void destroyInstance() {
         speedDialDatabase = null;

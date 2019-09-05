@@ -82,14 +82,20 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
                     // As long as the name isn't null set the name value to the one associated with the widget.
                     // If it is null the default value of the TextView in res will remain.
                     if (widgetObject.getName() != null) {
-                        views.setTextViewText(R.id.widget_single_text, widgetObject.getName());
+                        views.setTextViewText(R.id.widget_single_name_text, widgetObject.getName());
                     } else {
                         Timber.d("Name was null for widget %s, skipping", appWidgetId);
                     }
 
+                    // Setting the number type text
+                    if (widgetObject.getNumberType() != null && !widgetObject.getNumberType().equals("")) {
+                        views.setTextViewText(R.id.widget_single_number_type_text, widgetObject.getNumberType());
+                    } else {
+                        Timber.d("Number type was null for widget %s, skipping", appWidgetId);
+                    }
+
                     // Get the lookupUri and use it to retrieve the current user thumbnail and apply
                     // it to the widget.  Otherwise use the ImageHelper default image.
-
                     if (widgetObject.getLookupUri() != null) {
                         Drawable drawable = widgetObject.getContactPhotoRounded(context, 56, 56);
                         views.setImageViewBitmap(R.id.widget_single_image, ImageHelper.drawableToBitmap(drawable));

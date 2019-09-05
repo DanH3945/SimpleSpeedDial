@@ -16,7 +16,7 @@
     <color name="primaryDisplayBtnTextColor">#ffff</color>
 
     // Widget Colors
-    <color name="widgetBackgroundColor">#BFFFFFFF</color>
+    <color name="widgetBackgroundColor">#65FFFFFF</color>
 
     // Dialog Colors
     <color name="httpLinkBlue">#0000EE</color>

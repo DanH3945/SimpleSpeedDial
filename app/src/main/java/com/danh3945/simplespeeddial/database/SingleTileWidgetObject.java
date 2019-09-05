@@ -16,6 +16,7 @@ public class SingleTileWidgetObject extends WidgetObject {
     int widgetId;
     String name;
     String number;
+    String numberType;
     Uri lookupUri;
 
     public int getWidgetId() {
@@ -44,6 +45,14 @@ public class SingleTileWidgetObject extends WidgetObject {
         this.number = number;
     }
 
+    public String getNumberType() {
+        return numberType;
+    }
+
+    public void setNumberType(String numberType) {
+        this.numberType = numberType;
+    }
+
     @Override
     public Uri getLookupUri() {
         return lookupUri;
@@ -59,6 +68,7 @@ public class SingleTileWidgetObject extends WidgetObject {
         singleTileWidgetObject.setWidgetId(appWidgetId);
         singleTileWidgetObject.setName(largeWidgetObject.getName());
         singleTileWidgetObject.setNumber(largeWidgetObject.getNumber());
+        singleTileWidgetObject.setNumberType(largeWidgetObject.getNumberType());
         singleTileWidgetObject.setLookupUri(largeWidgetObject.getLookupUri());
 
         return singleTileWidgetObject;
