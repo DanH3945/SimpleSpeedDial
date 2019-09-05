@@ -1,16 +1,19 @@
 package com.danh3945.simplespeeddial.database;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.danh3945.simplespeeddial.freeVersionUtilities.FreeVersionCheck;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
 @Entity
@@ -91,19 +94,47 @@ public class LargeWidgetObject extends WidgetObject {
     }
 
     public void addToLargeWidgetSpeedDial(Context context) {
+
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                SpeedDialDatabase
-                        .getSpeedDialDatabase(context)
-                        .largeWidgetDao()
+                SpeedDialDatabase database = SpeedDialDatabase.getSpeedDialDatabase(context);
+
+                if (!FreeVersionCheck.canAddLargeWidgetItem(context)) {
+
+                    notifyUserFreeVersionFull(context);
+                    return;
+                }
+
+                database.largeWidgetDao()
                         .insertSpeedDialButton(LargeWidgetObject.this);
 
                 notifyUserAddedToLargeWidget(context);
 
                 LargeWidgetProvider.notifyLargeWidgets(context);
+
+                updateWidgetCount(context,1);
             }
         });
+    }
+
+    private void updateWidgetCount(Context context, int change) {
+        // We keep a running tally of the total number of items being displayed by the large widget.
+        // This is done so the free version can track how many are displayed.
+        // We store them in shared prefs so we don't have to access the database elsewhere and throw
+        // around a bunch of extra thread switches that come with DB access.
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        // Total current widgets
+        int count = prefs.getInt(FreeVersionCheck.LARGE_WIDGET_TOTAL_ITEMS_KEY, 0);
+
+        // Modify the current count by the incoming change
+        count += change;
+
+        // Store the new value
+        prefs.edit().putInt(FreeVersionCheck.LARGE_WIDGET_TOTAL_ITEMS_KEY, count).apply();
+
     }
 
     private void notifyUserAddedToLargeWidget(Context context) {
@@ -119,6 +150,17 @@ public class LargeWidgetObject extends WidgetObject {
         });
     }
 
+    private void notifyUserFreeVersionFull(Context context) {
+        // Make sure we're on the UI thread since there's lots of threading going on in this class.
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                FreeVersionCheck.getFreeVersionRefusalDialog(context, null).show();
+            }
+        });
+    }
+
     public void removeFromSpeedDial(Context context) {
         AsyncTask.execute(new Runnable() {
             @Override
@@ -129,6 +171,8 @@ public class LargeWidgetObject extends WidgetObject {
                         .removeSpeedDialEntry(LargeWidgetObject.this);
 
                 LargeWidgetProvider.notifyLargeWidgets(context);
+
+                updateWidgetCount(context, -1);
             }
         });
     }
