@@ -8,7 +8,6 @@ import android.preference.PreferenceManager;
 
 import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.views.SingleTileConfigActivity;
 import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
 
 import javax.annotation.Nullable;
@@ -49,7 +48,7 @@ public class FreeVersionCheck {
         return BuildConfig.FLAVOR.equals("free");
     }
 
-    public static AlertDialog.Builder getFreeVersionRefusalDialog(Context context, @Nullable DialogInterface.OnClickListener onClickListener) {
+    public static AlertDialog getFreeVersionRefusalDialog(Context context, @Nullable DialogInterface.OnClickListener onClickListener) {
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
 
@@ -69,7 +68,7 @@ public class FreeVersionCheck {
 
         alertBuilder.setNeutralButton(R.string.free_version_button_text, onClickListener);
 
-        return alertBuilder;
+        return alertBuilder.create();
 
     }
 }
