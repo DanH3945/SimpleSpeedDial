@@ -1,18 +1,26 @@
 package com.danh3945.simplespeeddial.views;
 
+import android.app.AlertDialog;
 import android.appwidget.AppWidgetManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
+import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.views.singleTileconfig.SingleTileConfigFragment;
+import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
+
+import timber.log.Timber;
 
 public class SingleTileConfigActivity extends ParentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        Timber.d("Starting Single Tile Configuration");
 
         // Unusually we're calling setContentView before the super call to onCreate.  This is so
         // the mobile ads in the parent class has something to bind to.  The parent class then calls
@@ -22,6 +30,19 @@ public class SingleTileConfigActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
 
         setResult(RESULT_CANCELED);
+
+        int[] singleTileIds = SingleTileAppWidgetProvider.getActiveWidgetIds(this);
+        Timber.d("Total single tile Widget IDs is: %s", singleTileIds.length);
+        if (BuildConfig.FLAVOR.equals("free") &&
+                singleTileIds.length > SINGLE_TILE_WIDGET_FREE_VERISON_LIMIT) {
+            Timber.d("Free version used up all widget slots");
+            cancelSetupFreeVersion();
+        }
+
+        continueSetup();
+    }
+
+    private void continueSetup() {
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -39,5 +60,26 @@ public class SingleTileConfigActivity extends ParentActivity {
         int finalAppWidgetId = appWidgetId;
 
         loadFragment(SingleTileConfigFragment.createInstance(finalAppWidgetId), false, SingleTileConfigFragment.TAG);
+
+    }
+
+    private void cancelSetupFreeVersion() {
+        // The user has used up all the free version widgets.
+
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+
+        alertBuilder.setTitle(R.string.free_version_alert_title);
+        alertBuilder.setMessage(R.string.free_version_too_many_single_tile_widgets);
+
+        alertBuilder.setCancelable(false);
+
+        alertBuilder.setNeutralButton(R.string.free_version_button_text, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SingleTileConfigActivity.this.finish();
+            }
+        });
+
+        alertBuilder.show();
     }
 }

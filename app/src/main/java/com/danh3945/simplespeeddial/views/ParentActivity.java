@@ -26,6 +26,13 @@ import timber.log.Timber;
 
 public abstract class ParentActivity extends AppCompatActivity {
 
+    // The widget limit for the free version of the app.
+    // Limits the total number of single tile widgets users can create.
+    protected static final int SINGLE_TILE_WIDGET_FREE_VERISON_LIMIT = 5;
+
+    // Limits the max size of the large widget list.
+    protected static final int LARGE_WIDGET_FREE_VERSION_LIMIT = 5;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +44,8 @@ public abstract class ParentActivity extends AppCompatActivity {
             Timber.plant(new TimberReleaseTree());
         }
         // Nothing new above this line
+
+        Timber.d("App starting with flavor: %s", BuildConfig.FLAVOR);
 
         // Mobile Ads initialization
         String adMobID = getResources().getString(R.string.ad_mob_app_id);

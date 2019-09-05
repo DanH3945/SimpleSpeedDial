@@ -70,4 +70,9 @@
     <string name="shared_pref_dial_type_key">dialType</string>
     <string name="welcome_fragment_get_started">Get Started</string>
 
+    // Free version usage notice
+    <string name="free_version_alert_title">Oops!! Ran out of slots!!</string>
+    <string name="free_version_button_text">Ahh Ok.  Close.</string>
+    <string name="free_version_too_many_single_tile_widgets">The free version of this app limits the number of single tile widgets that can be created.  If you really like the app please consider getting the full version!!</string>
+
 </resources>
