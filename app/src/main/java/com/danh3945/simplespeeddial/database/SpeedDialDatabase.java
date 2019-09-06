@@ -30,7 +30,6 @@ public abstract class SpeedDialDatabase extends RoomDatabase {
     }
 
 
-
     public static void destroyInstance() {
         speedDialDatabase = null;
     }

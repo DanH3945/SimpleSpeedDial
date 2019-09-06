@@ -6,8 +6,8 @@
     android:id="@+id/widget_single_tile_base_layout">
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/widget_single_text_drawable_image_dimensions"
+        android:layout_height="@dimen/widget_single_text_drawable_image_dimensions"
         android:id="@+id/widget_single_image"
         android:scaleType="fitXY"
         android:src="@mipmap/default_contact_icon"
@@ -22,7 +22,8 @@
         android:id="@+id/widget_single_name_text"
         android:text="@string/default_string"
         android:background="@drawable/widget_background_drawable"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:textColor="@color/primaryDisplayBtnTextColor"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -32,6 +33,7 @@
         android:textSize="@dimen/widget_text_size"
         android:id="@+id/widget_single_number_type_text"
         android:background="@drawable/widget_background_drawable"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:textColor="@color/primaryDisplayBtnTextColor"/>
 
 </LinearLayout>

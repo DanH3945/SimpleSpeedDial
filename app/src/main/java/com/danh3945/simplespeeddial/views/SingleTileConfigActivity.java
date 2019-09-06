@@ -1,6 +1,5 @@
 package com.danh3945.simplespeeddial.views;
 
-import android.app.AlertDialog;
 import android.appwidget.AppWidgetManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.freeVersionUtilities.FreeVersionCheck;
 import com.danh3945.simplespeeddial.views.singleTileconfig.SingleTileConfigFragment;

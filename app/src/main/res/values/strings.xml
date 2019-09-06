@@ -73,6 +73,6 @@
     // Free version usage notice
     <string name="free_version_alert_title">Oops!! Ran out of slots!!</string>
     <string name="free_version_button_text">Ahh Ok.  Close.</string>
-    <string name="free_version_too_many_single_tile_widgets">The free version of this app limits the number of single tile widgets that can be created.  If you really like the app please consider getting the full version!!</string>
+    <string name="free_version_too_many_single_tile_widgets">It seems you have used the maximum number of free speed dial buttons. If you need more you can try removing one of the buttons you already have or get the full version of Simple Speed Dial which offers unlimited buttons and is ad free!!</string>
 
 </resources>

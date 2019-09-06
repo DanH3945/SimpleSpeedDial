@@ -113,7 +113,7 @@ public class LargeWidgetObject extends WidgetObject {
 
                 LargeWidgetProvider.notifyLargeWidgets(context);
 
-                updateWidgetCount(context,1);
+                updateWidgetCount(context, 1);
             }
         });
     }

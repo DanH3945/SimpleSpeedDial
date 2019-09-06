@@ -12,12 +12,13 @@
     <dimen name="recycler_fragment_image_dimensions">56dp</dimen>
 
     // Widget Dimensions
-    <dimen name="widget_text_size">12sp</dimen>
+    <dimen name="widget_text_size">11sp</dimen>
     <dimen name="widget_photo_rounding_pixels">20dp</dimen>
     <dimen name="widget_large_height">110dp</dimen>
     <dimen name="widget_large_width">180dp</dimen>
     <dimen name="widget_single_height">40dp</dimen>
     <dimen name="widget_single_width">40dp</dimen>
+    <dimen name="widget_single_text_drawable_image_dimensions">48dp</dimen>
 
     // Current Speed Dial Dimensions
     <dimen name="current_speed_dial_divider_margin">12dp</dimen>

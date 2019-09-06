@@ -50,6 +50,10 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
             public void run() {
                 // Get and update each of the single tile widgets associated with this provider.
 
+                // Getting the color the user has defined for the color of the widget text.  Or the
+                // default if the user hasn't defined a text color.
+                int color = WidgetColorController.getSingleTileWidgetTextColor(context);
+
                 Timber.d("Single Tile Widget - Called onUpdate");
                 for (int appWidgetId : appWidgetIds) {
                     Timber.d("Updating app widget with ID: %s", appWidgetId);
@@ -83,6 +87,7 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
                     // If it is null the default value of the TextView in res will remain.
                     if (widgetObject.getName() != null) {
                         views.setTextViewText(R.id.widget_single_name_text, widgetObject.getName());
+//                        views.setTextColor(R.id.widget_single_name_text, color);
                     } else {
                         Timber.d("Name was null for widget %s, skipping", appWidgetId);
                     }
@@ -90,6 +95,7 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
                     // Setting the number type text
                     if (widgetObject.getNumberType() != null && !widgetObject.getNumberType().equals("")) {
                         views.setTextViewText(R.id.widget_single_number_type_text, widgetObject.getNumberType());
+//                        views.setTextColor(R.id.widget_single_number_type_text, color);
                     } else {
                         Timber.d("Number type was null for widget %s, skipping", appWidgetId);
                     }
@@ -97,7 +103,8 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
                     // Get the lookupUri and use it to retrieve the current user thumbnail and apply
                     // it to the widget.  Otherwise use the ImageHelper default image.
                     if (widgetObject.getLookupUri() != null) {
-                        Drawable drawable = widgetObject.getContactPhotoRounded(context, 56, 56);
+                        int dimension = (int) context.getResources().getDimension(R.dimen.widget_single_text_drawable_image_dimensions);
+                        Drawable drawable = widgetObject.getContactPhotoRounded(context, dimension, dimension);
                         views.setImageViewBitmap(R.id.widget_single_image, ImageHelper.drawableToBitmap(drawable));
                     } else {
                         Timber.d("Null Uri value for widget %s, skipping", appWidgetId);
