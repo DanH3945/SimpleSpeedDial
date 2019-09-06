@@ -6,9 +6,12 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 
 import com.danh3945.simplespeeddial.R;
@@ -23,6 +26,7 @@ import timber.log.Timber;
 public class SingleTileAppWidgetProvider extends AppWidgetProvider {
 
     private static final String URI_PHONE_SCHEME = "tel";
+    public static final String SINGLE_TILE_TEXT_COLOR_KEY = "singleTileTextColorKey";
 
     @Override
     public void onEnabled(Context context) {
@@ -52,7 +56,7 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
 
                 // Getting the color the user has defined for the color of the widget text.  Or the
                 // default if the user hasn't defined a text color.
-                int color = WidgetColorController.getSingleTileWidgetTextColor(context);
+                int color = getWidgetTextColor(context);
 
                 Timber.d("Single Tile Widget - Called onUpdate");
                 for (int appWidgetId : appWidgetIds) {
@@ -176,6 +180,17 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
 
         // Package the Intent in a PendingIntent and return it.
         return PendingIntent.getActivity(context, 0, intent, 0);
+    }
+
+    public static void setWidgetTextColor(Context context, int color) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences.edit().putInt(SINGLE_TILE_TEXT_COLOR_KEY, color).apply();
+        notifySingleTileWidgets(context);
+    }
+
+    private int getWidgetTextColor(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getInt(SINGLE_TILE_TEXT_COLOR_KEY, Color.WHITE);
     }
 
 }
