@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/default_string_name"
         android:textSize="@dimen/widget_text_size"
+        android:textColor="@color/primaryDisplayBtnTextColor"
         android:maxLines="1"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"/>
@@ -39,6 +40,7 @@
             android:id="@+id/widget_item_number_type_text"
             android:text="@string/default_string_number_type"
             android:textSize="@dimen/widget_text_size"
+            android:textColor="@color/primaryDisplayBtnTextColor"
             android:maxLines="1"/>
 
         <!--<TextView-->
