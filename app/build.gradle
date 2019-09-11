@@ -74,6 +74,9 @@ dependencies {
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseCoreVersion"
     implementation "com.google.firebase:firebase-ads:$rootProject.firebaseAdVersion"
 
+    // Google Play Billing
+    implementation "com.android.billingclient:billing:$rootProject.googlePlayBillingVersion"
+
     // Third Party Libraries
     implementation "de.psdev.licensesdialog:licensesdialog:$rootProject.licenseDialogVersion"
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"

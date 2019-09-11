@@ -16,6 +16,7 @@ buildscript {
         lifeCycleVersion = '2.0.0'
         firebaseCoreVersion = '17.1.0'
         firebaseAdVersion = '18.1.1'
+        googlePlayBillingVersion = '2.0.3'
         gsonVersion = '2.8.5'
     }
 
