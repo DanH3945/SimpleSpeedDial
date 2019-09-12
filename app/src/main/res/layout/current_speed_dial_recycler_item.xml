@@ -14,9 +14,10 @@
         android:id="@+id/current_speed_dial_recycler_item_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/recycler_fragment_image_dimensions"
-        android:minWidth="@dimen/recycler_fragment_image_dimensions"
-        android:layout_gravity="start" />
+        android:minHeight="@dimen/contact_recycler_fragment_image_dimensions"
+        android:minWidth="@dimen/contact_recycler_fragment_image_dimensions"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="4dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

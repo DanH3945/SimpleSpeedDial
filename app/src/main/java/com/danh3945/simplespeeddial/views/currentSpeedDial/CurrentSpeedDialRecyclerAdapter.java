@@ -1,6 +1,8 @@
 package com.danh3945.simplespeeddial.views.currentSpeedDial;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.database.LargeWidgetObject;
 import com.danh3945.simplespeeddial.database.SpeedDialDatabase;
+import com.danh3945.simplespeeddial.image.ImageHelper;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
 import java.util.ArrayList;
@@ -77,7 +80,18 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
     public void onBindViewHolder(@NonNull CurrentSpeedDialRecyclerViewHolder viewHolder, int i) {
         LargeWidgetObject largeWidgetObject = mCurrentSpeedDialList.get(i);
 
-        viewHolder.mImageView.setImageDrawable(largeWidgetObject.getContactPhotoSquare(mContext));
+        Bitmap bitmap = ImageHelper.getContactPhoto(mContext, largeWidgetObject.getLookupUri());
+
+        if (bitmap != null) {
+            viewHolder.mImageView.setImageBitmap(bitmap);
+        } else {
+
+
+            Drawable drawable = ImageHelper.getDefaultContactIconRounded(largeWidgetObject.getName());
+
+            viewHolder.mImageView.setImageDrawable(drawable);
+        }
+
         viewHolder.mNameText.setText(largeWidgetObject.getName());
         viewHolder.mNumberText.setText(largeWidgetObject.getNumber());
         viewHolder.mNumberTypeText.setText(largeWidgetObject.getNumberType());

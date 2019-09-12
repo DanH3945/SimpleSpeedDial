@@ -11,19 +11,19 @@
     app:cardElevation="8dp">
 
     <ImageView
-        android:layout_width="@dimen/recycler_fragment_image_dimensions"
-        android:layout_height="@dimen/recycler_fragment_image_dimensions"
+        android:layout_width="@dimen/contact_recycler_fragment_image_dimensions"
+        android:layout_height="@dimen/contact_recycler_fragment_image_dimensions"
         android:layout_gravity="start|center_vertical"
-        android:src="@drawable/ic_launcher_background"
         android:id="@+id/contact_recycler_card_image_view"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:layout_marginStart="4dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minHeight="56dp"
         android:animateLayoutChanges="false"
-        android:layout_marginStart="@dimen/recycler_fragment_image_dimensions">
+        android:layout_marginStart="@dimen/contact_recycler_fragment_image_dimensions">
 
         <TextView
             android:layout_width="wrap_content"

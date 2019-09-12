@@ -102,7 +102,8 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
             viewHolder.mContactImageView.setImageBitmap(bitmap);
         } else {
 
-            Drawable drawable = ImageHelper.getDefaultContactIconSquare(contact.getName());
+
+            Drawable drawable = ImageHelper.getDefaultContactIconRounded(contact.getName());
 
             viewHolder.mContactImageView.setImageDrawable(drawable);
         }
