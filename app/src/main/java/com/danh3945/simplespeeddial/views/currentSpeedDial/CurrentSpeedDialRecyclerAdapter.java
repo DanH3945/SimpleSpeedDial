@@ -80,15 +80,12 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
     public void onBindViewHolder(@NonNull CurrentSpeedDialRecyclerViewHolder viewHolder, int i) {
         LargeWidgetObject largeWidgetObject = mCurrentSpeedDialList.get(i);
 
-        Bitmap bitmap = ImageHelper.getContactPhoto(mContext, largeWidgetObject.getLookupUri());
+        Drawable drawable = ImageHelper.getContactPhotoRounded(mContext, largeWidgetObject.getLookupUri());
 
-        if (bitmap != null) {
-            viewHolder.mImageView.setImageBitmap(bitmap);
+        if (drawable != null) {
+            viewHolder.mImageView.setImageBitmap(ImageHelper.drawableToBitmap(drawable));
         } else {
-
-
-            Drawable drawable = ImageHelper.getDefaultContactIconRounded(largeWidgetObject.getName());
-
+            drawable = ImageHelper.getDefaultContactIconRounded(largeWidgetObject.getName());
             viewHolder.mImageView.setImageDrawable(drawable);
         }
 
