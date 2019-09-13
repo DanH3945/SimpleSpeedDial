@@ -3,6 +3,7 @@ package com.danh3945.simplespeeddial.views.contactList.contacts;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 
@@ -34,12 +35,12 @@ public class ContactRetriever {
     }
 
     public void getContacts(final Context context, final ContactsCallback contactsCallback) {
-        new Thread(new Runnable() {
+        AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 contactsCallback.onResponse(readContacts(context));
             }
-        }).start();
+        });
     }
 
     private List<Contact> readContacts(Context context) {
