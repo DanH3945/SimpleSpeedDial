@@ -18,6 +18,7 @@ buildscript {
         firebaseAdVersion = '18.1.1'
         googlePlayBillingVersion = '2.0.3'
         gsonVersion = '2.8.5'
+        daggerVersion = '2.15'
     }
 
     repositories {

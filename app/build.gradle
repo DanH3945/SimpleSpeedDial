@@ -92,6 +92,13 @@ dependencies {
     // TextDrawable library for drawing default icons in the Android style.
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 
+    // Dagger Dependencies
+    api "com.google.dagger:dagger:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    api "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    api "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
