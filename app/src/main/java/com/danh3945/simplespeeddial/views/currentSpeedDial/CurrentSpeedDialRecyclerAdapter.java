@@ -2,7 +2,6 @@ package com.danh3945.simplespeeddial.views.currentSpeedDial;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,15 +79,9 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
     public void onBindViewHolder(@NonNull CurrentSpeedDialRecyclerViewHolder viewHolder, int i) {
         LargeWidgetObject largeWidgetObject = mCurrentSpeedDialList.get(i);
 
-        Drawable drawable = ImageHelper.getContactPhotoRounded(mContext, largeWidgetObject.getLookupUri());
-
-        if (drawable != null) {
-            viewHolder.mImageView.setImageBitmap(ImageHelper.drawableToBitmap(drawable));
-        } else {
-            drawable = ImageHelper.getDefaultContactIconRounded(largeWidgetObject.getName());
-            viewHolder.mImageView.setImageDrawable(drawable);
-        }
-
+        int dimen = (int) mContext.getResources().getDimension(R.dimen.contact_recycler_fragment_image_dimensions);
+        Bitmap bitmap = ImageHelper.getContactPhoto(mContext, largeWidgetObject.getLookupUri(), largeWidgetObject.getName(), dimen, dimen);
+        viewHolder.mImageView.setImageBitmap(bitmap);
         viewHolder.mNameText.setText(largeWidgetObject.getName());
         viewHolder.mNumberText.setText(largeWidgetObject.getNumber());
         viewHolder.mNumberTypeText.setText(largeWidgetObject.getNumberType());

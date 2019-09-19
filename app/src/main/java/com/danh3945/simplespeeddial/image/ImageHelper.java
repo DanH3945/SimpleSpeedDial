@@ -14,11 +14,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
+import androidx.annotation.NonNull;
+
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.danh3945.simplespeeddial.R;
-
-import org.jetbrains.annotations.Nullable;
+import com.danh3945.simplespeeddial.views.preferences.UseContactPhoto;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -49,32 +49,32 @@ public class ImageHelper {
 
         return output;
     }
+//
+//    @Nullable
+//    public static Drawable getContactPhotoRounded(Context context, Uri lookupUri) {
+//
+//        Bitmap photoBitmap = getContactPhoto(context, lookupUri);
+//
+//        if (photoBitmap != null) {
+//            int pixels = context.getResources().getDimensionPixelSize(R.dimen.widget_photo_rounding_pixels);
+//            photoBitmap = ImageHelper.getRoundedCornerBitmap(photoBitmap, pixels);
+//            return new BitmapDrawable(context.getResources(), photoBitmap);
+//        }
+//
+//        return null;
+//    }
 
-    @Nullable
-    public static Drawable getContactPhotoRounded(Context context, Uri lookupUri) {
-
-        Bitmap photoBitmap = getContactPhoto(context, lookupUri);
-
-        if (photoBitmap != null) {
-            int pixels = context.getResources().getDimensionPixelSize(R.dimen.widget_photo_rounding_pixels);
-            photoBitmap = ImageHelper.getRoundedCornerBitmap(photoBitmap, pixels);
-            return new BitmapDrawable(context.getResources(), photoBitmap);
-        }
-
-        return null;
-    }
-
-    @Nullable
-    public static Bitmap getContactPhoto(Context context, Uri lookupUri) {
+    @NonNull
+    public static Bitmap getContactPhoto(@NonNull Context applicationContext, Uri lookupUri, @NonNull String name, int heightPx, int widthPx) {
 
         Bitmap photoBitmap = null;
 
         InputStream photoStream;
-        if (lookupUri != null) {
+        if (lookupUri != null && UseContactPhoto.shouldUseContactPhoto(applicationContext)) {
             try {
                 photoStream = ContactsContract
                         .Contacts
-                        .openContactPhotoInputStream(context.getContentResolver(), lookupUri);
+                        .openContactPhotoInputStream(applicationContext.getContentResolver(), lookupUri);
             } catch (SecurityException se) {
                 Timber.i(se);
                 photoStream = null;
@@ -90,31 +90,40 @@ public class ImageHelper {
                     Timber.d(e);
                 }
             }
+
+            if (photoBitmap != null) {
+                photoBitmap = getRoundedCornerBitmap(photoBitmap, 12);
+            }
+        }
+
+        if (photoBitmap == null) {
+            Drawable drawable = getDefaultContactIconRounded(name, heightPx, widthPx);
+            photoBitmap = drawableToBitmap(drawable);
         }
 
         return photoBitmap;
     }
 
-    public static Drawable getDefaultContactIconSquare(String name, int heightPx, int widthPx) {
-        int color = ColorGenerator.MATERIAL.getColor(name);
-
-        String firstLetter = String.valueOf(name.charAt(0));
-
-        return TextDrawable.builder()
-                .beginConfig()
-                .height(heightPx)
-                .width(widthPx)
-                .endConfig()
-                .buildRect(firstLetter, color);
-    }
-
-    public static Drawable getDefaultContactIconSquare(String name) {
-        int color = ColorGenerator.MATERIAL.getColor(name);
-
-        String firstLetter = String.valueOf(name.charAt(0));
-
-        return TextDrawable.builder().buildRect(firstLetter, color);
-    }
+//    public static Drawable getDefaultContactIconSquare(String name, int heightPx, int widthPx) {
+//        int color = ColorGenerator.MATERIAL.getColor(name);
+//
+//        String firstLetter = String.valueOf(name.charAt(0));
+//
+//        return TextDrawable.builder()
+//                .beginConfig()
+//                .height(heightPx)
+//                .width(widthPx)
+//                .endConfig()
+//                .buildRect(firstLetter, color);
+//    }
+//
+//    public static Drawable getDefaultContactIconSquare(String name) {
+//        int color = ColorGenerator.MATERIAL.getColor(name);
+//
+//        String firstLetter = String.valueOf(name.charAt(0));
+//
+//        return TextDrawable.builder().buildRect(firstLetter, color);
+//    }
 
     public static Drawable getDefaultContactIconRounded(String name, int heightPx, int widthPx) {
         int color = ColorGenerator.MATERIAL.getColor(name);
@@ -129,34 +138,22 @@ public class ImageHelper {
                 .buildRound(firstLetter, color);
     }
 
-    public static Drawable getDefaultContactIconRounded(String name) {
-        int color = ColorGenerator.MATERIAL.getColor(name);
-
-        String firstLetter = String.valueOf(name.charAt(0));
-
-        return TextDrawable.builder().buildRound(firstLetter, color);
-
-    }
-
     public static Bitmap drawableToBitmap(Drawable drawable) {
-        Bitmap bitmap = null;
 
         if (drawable instanceof BitmapDrawable) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            if (bitmapDrawable.getBitmap() != null) {
-                return bitmapDrawable.getBitmap();
-            }
+            return ((BitmapDrawable) drawable).getBitmap();
         }
 
-        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
-            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
-        } else {
-            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        }
+        int width = drawable.getIntrinsicWidth();
+        width = width > 0 ? width : 1;
+        int height = drawable.getIntrinsicHeight();
+        height = height > 0 ? height : 1;
 
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
+
         return bitmap;
     }
 

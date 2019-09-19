@@ -2,7 +2,6 @@ package com.danh3945.simplespeeddial.views.contactList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -96,17 +95,10 @@ public class ContactListRecyclerAdapter extends RecyclerView.Adapter<ContactList
 
         viewHolder.mTextView.setText(contact.getName());
 
-        Bitmap bitmap = ImageHelper.getContactPhoto(mContext, contact.getLookupUri());
+        int dimen = (int) mContext.getResources().getDimension(R.dimen.contact_recycler_fragment_image_dimensions);
+        Bitmap bitmap = ImageHelper.getContactPhoto(mContext, contact.getLookupUri(), contact.getName(), dimen, dimen);
 
-        if (bitmap != null) {
-            viewHolder.mContactImageView.setImageBitmap(bitmap);
-        } else {
-
-
-            Drawable drawable = ImageHelper.getDefaultContactIconRounded(contact.getName());
-
-            viewHolder.mContactImageView.setImageDrawable(drawable);
-        }
+        viewHolder.mContactImageView.setImageBitmap(bitmap);
 
         viewHolder.mListView.setAdapter(new SubListAdapter(mContactList.get(i)));
         viewHolder.mListView.setLayoutManager(new LinearLayoutManager(mContext));

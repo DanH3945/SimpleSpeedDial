@@ -2,7 +2,7 @@ package com.danh3945.simplespeeddial.widget;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -63,11 +63,15 @@ public class LargeWidgetRemoteViewsService extends RemoteViewsService {
 
             LargeWidgetObject largeWidgetObject = mLargeWidgetObjectList.get(position);
 
-            Drawable drawable = mLargeWidgetObjectList
-                    .get(position)
-                    .getContactPhotoRounded(mContext, 56, 56);
+            int dimen = (int) mContext.getResources().getDimension(R.dimen.widget_large_text_drawable_image_dimensions);
+            Bitmap bitmap = ImageHelper.getContactPhoto(mContext,
+                    largeWidgetObject.getLookupUri(),
+                    largeWidgetObject.getName(),
+                    dimen,
+                    dimen);
 
-            baseView.setImageViewBitmap(R.id.widget_image_view, ImageHelper.drawableToBitmap(drawable));
+            baseView.setImageViewBitmap(R.id.widget_image_view, bitmap);
+
             baseView.setTextViewText(R.id.widget_item_name_text, largeWidgetObject.getName());
             baseView.setTextViewText(R.id.widget_item_number_type_text, largeWidgetObject.getNumberType());
             String callUri = "tel:" + largeWidgetObject.getNumber();

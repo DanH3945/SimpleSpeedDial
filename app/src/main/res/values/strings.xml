@@ -68,6 +68,7 @@
 
     // Shared Preferences Strings
     <string name="shared_pref_dial_type_key">dialType</string>
+    <string name="shared_pref_use_contact_photo_key">useContactPhoto</string>
     <string name="welcome_fragment_get_started">Get Started</string>
 
     // Free version usage notice

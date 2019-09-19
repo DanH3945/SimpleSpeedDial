@@ -7,8 +7,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -106,13 +106,13 @@ public class SingleTileAppWidgetProvider extends AppWidgetProvider {
 
                     // Get the lookupUri and use it to retrieve the current user thumbnail and apply
                     // it to the widget.  Otherwise use the ImageHelper default image.
-                    if (widgetObject.getLookupUri() != null) {
-                        int dimension = (int) context.getResources().getDimension(R.dimen.widget_single_text_drawable_image_dimensions);
-                        Drawable drawable = widgetObject.getContactPhotoRounded(context, dimension, dimension);
-                        views.setImageViewBitmap(R.id.widget_single_image, ImageHelper.drawableToBitmap(drawable));
-                    } else {
-                        Timber.d("Null Uri value for widget %s, skipping", appWidgetId);
-                    }
+                    int dimen = (int) context.getResources().getDimension(R.dimen.widget_large_text_drawable_image_dimensions);
+                    Bitmap bitmap = ImageHelper.getContactPhoto(context,
+                            widgetObject.getLookupUri(),
+                            widgetObject.getName(),
+                            dimen,
+                            dimen);
+                    views.setImageViewBitmap(R.id.widget_single_image, bitmap);
 
                     // Our changes to the widgets are done so we send off the updates to the widget manager
                     // so it can complete its updates.
