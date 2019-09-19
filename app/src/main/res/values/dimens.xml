@@ -10,6 +10,7 @@
 
     // Recycler Fragment Dimensions
     <dimen name="contact_recycler_fragment_image_dimensions">48dp</dimen>
+    <dimen name="current_recycler_fragment_image_dimensions">@dimen/contact_recycler_fragment_image_dimensions</dimen>
 
     // Widget Dimensions
     <dimen name="widget_text_size">11sp</dimen>

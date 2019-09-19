@@ -79,7 +79,7 @@ public class CurrentSpeedDialRecyclerAdapter extends RecyclerView.Adapter<Curren
     public void onBindViewHolder(@NonNull CurrentSpeedDialRecyclerViewHolder viewHolder, int i) {
         LargeWidgetObject largeWidgetObject = mCurrentSpeedDialList.get(i);
 
-        int dimen = (int) mContext.getResources().getDimension(R.dimen.contact_recycler_fragment_image_dimensions);
+        int dimen = (int) mContext.getResources().getDimension(R.dimen.current_recycler_fragment_image_dimensions);
         Bitmap bitmap = ImageHelper.getContactPhoto(mContext, largeWidgetObject.getLookupUri(), largeWidgetObject.getName(), dimen, dimen);
         viewHolder.mImageView.setImageBitmap(bitmap);
         viewHolder.mNameText.setText(largeWidgetObject.getName());
