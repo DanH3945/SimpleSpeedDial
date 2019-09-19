@@ -8,4 +8,11 @@
         android:summary="When checked your speed dial calls will be made instantly instead of first opening the Call app."
         android:key="@string/shared_pref_dial_type_key" />
 
+    <CheckBoxPreference
+        android:id="@+id/preference_use_contact_photo"
+        android:title="Use Contact Photos"
+        android:defaultValue="true"
+        android:summary="When checked the app will use your assigned contact photos instead of default icons when a photo is available"
+        android:key="@string/shared_pref_use_contact_photo_key"/>
+
 </PreferenceScreen>

@@ -132,4 +132,6 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
         i.setData(Uri.parse(url));
         startActivity(i);
     }
+
+    // Todo add Dagger2 about Fragment
 }
