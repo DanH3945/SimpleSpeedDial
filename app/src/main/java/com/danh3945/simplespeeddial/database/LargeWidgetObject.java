@@ -13,7 +13,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.danh3945.simplespeeddial.freeVersionUtilities.FreeVersionCheck;
+import com.danh3945.simplespeeddial.billing.BillingManager;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
 @Entity
@@ -100,7 +100,7 @@ public class LargeWidgetObject extends WidgetObject {
             public void run() {
                 SpeedDialDatabase database = SpeedDialDatabase.getSpeedDialDatabase(context);
 
-                if (!FreeVersionCheck.canAddLargeWidgetItem(context)) {
+                if (!BillingManager.getManager().canAddLargeWidgetItem(context)) {
 
                     notifyUserFreeVersionFull(context);
                     return;
@@ -127,13 +127,13 @@ public class LargeWidgetObject extends WidgetObject {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         // Total current widgets
-        int count = prefs.getInt(FreeVersionCheck.LARGE_WIDGET_TOTAL_ITEMS_KEY, 0);
+        int count = prefs.getInt(BillingManager.LARGE_WIDGET_TOTAL_ITEMS_KEY, 0);
 
         // Modify the current count by the incoming change
         count += change;
 
         // Store the new value
-        prefs.edit().putInt(FreeVersionCheck.LARGE_WIDGET_TOTAL_ITEMS_KEY, count).apply();
+        prefs.edit().putInt(BillingManager.LARGE_WIDGET_TOTAL_ITEMS_KEY, count).apply();
 
     }
 
@@ -156,7 +156,7 @@ public class LargeWidgetObject extends WidgetObject {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                FreeVersionCheck.getFreeVersionRefusalDialog(context, null).show();
+                BillingManager.getManager().getFreeVersionRefusalDialog(context, null).show();
             }
         });
     }

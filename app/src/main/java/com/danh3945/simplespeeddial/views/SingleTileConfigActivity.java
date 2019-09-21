@@ -8,7 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.freeVersionUtilities.FreeVersionCheck;
+import com.danh3945.simplespeeddial.billing.BillingManager;
 import com.danh3945.simplespeeddial.views.singleTileconfig.SingleTileConfigFragment;
 import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
 
@@ -30,10 +30,11 @@ public class SingleTileConfigActivity extends ParentActivity {
 
         setResult(RESULT_CANCELED);
 
+        BillingManager billingManager = BillingManager.getManager();
         int[] singleTileIds = SingleTileAppWidgetProvider.getActiveWidgetIds(this);
         Timber.d("Total single tile Widget IDs is: %s", singleTileIds.length);
-        if (!FreeVersionCheck.canAddSingleTileWidget(this)) {
-            FreeVersionCheck.getFreeVersionRefusalDialog(this, new DialogInterface.OnClickListener() {
+        if (!billingManager.canAddSingleTileWidget(this)) {
+            billingManager.getFreeVersionRefusalDialog(this, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     SingleTileConfigActivity.this.finish();

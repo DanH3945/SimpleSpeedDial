@@ -1,4 +1,4 @@
-package com.danh3945.simplespeeddial.freeVersionUtilities;
+package com.danh3945.simplespeeddial.billing;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -6,13 +6,14 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
 
 import javax.annotation.Nullable;
 
-public class FreeVersionCheck {
+public class BillingManager {
+
+    private static BillingManager mBillingManager;
 
     public static final String LARGE_WIDGET_TOTAL_ITEMS_KEY = "totalLargeWidgetItems";
 
@@ -20,10 +21,22 @@ public class FreeVersionCheck {
     public static final int MAX_FREE_SINGLE_TILE_SLOTS = 5;
     public static final int MAX_FREE_LARGE_SLOTS = 5;
 
+    public static BillingManager getManager() {
+        if (mBillingManager == null) {
+            mBillingManager = new BillingManager();
+        }
 
-    public static boolean canAddSingleTileWidget(Context context) {
+        return mBillingManager;
+    }
 
-        if (!isFreeFlavor()) {
+    public boolean isPremium() {
+        return false;
+    }
+
+
+    public boolean canAddSingleTileWidget(Context context) {
+
+        if (isPremium()) {
             return true;
         }
 
@@ -32,9 +45,9 @@ public class FreeVersionCheck {
         return widgetIds.length <= MAX_FREE_SINGLE_TILE_SLOTS;
     }
 
-    public static boolean canAddLargeWidgetItem(Context context) {
+    public boolean canAddLargeWidgetItem(Context context) {
 
-        if (!isFreeFlavor()) {
+        if (isPremium()) {
             return true;
         }
 
@@ -44,11 +57,7 @@ public class FreeVersionCheck {
         return largeItemsCount < MAX_FREE_LARGE_SLOTS;
     }
 
-    public static boolean isFreeFlavor() {
-        return BuildConfig.FLAVOR.equals("free");
-    }
-
-    public static AlertDialog getFreeVersionRefusalDialog(Context context, @Nullable DialogInterface.OnClickListener onClickListener) {
+    public AlertDialog getFreeVersionRefusalDialog(Context context, @Nullable DialogInterface.OnClickListener onClickListener) {
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
 
@@ -71,4 +80,5 @@ public class FreeVersionCheck {
         return alertBuilder.create();
 
     }
+
 }

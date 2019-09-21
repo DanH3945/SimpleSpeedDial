@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
+import com.danh3945.simplespeeddial.billing.BillingManager;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
 import com.danh3945.simplespeeddial.views.preferences.SpeedDialPreferenceFragment;
@@ -43,7 +44,7 @@ public abstract class ParentActivity extends AppCompatActivity {
         // Mobile Ads initialization
         String adMobID = getResources().getString(R.string.ad_mob_app_id);
         MobileAds.initialize(this, adMobID);
-        if (BuildConfig.FLAVOR.equals("free")) {
+        if (!BillingManager.getManager().isPremium()) {
             initMobileAds();
         }
 

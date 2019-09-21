@@ -75,9 +75,9 @@ public class PrimaryDisplayFragment extends Fragment {
         quickAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LargeWidgetObject widgetObject = assembleQuickAddLargeWidgetObject();
-                if (widgetObject != null) {
-                    widgetObject.addToLargeWidgetSpeedDial(getContext());
+                LargeWidgetObject largeWidgetObject = assembleQuickAddLargeWidgetObject();
+                if (largeWidgetObject != null) {
+                    largeWidgetObject.addToLargeWidgetSpeedDial(getContext());
                 }
             }
         });
