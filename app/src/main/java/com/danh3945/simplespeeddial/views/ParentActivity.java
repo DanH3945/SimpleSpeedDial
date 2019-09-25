@@ -44,7 +44,7 @@ public abstract class ParentActivity extends AppCompatActivity {
         // Mobile Ads initialization
         String adMobID = getResources().getString(R.string.ad_mob_app_id);
         MobileAds.initialize(this, adMobID);
-        if (!BillingManager.getManager().isPremium()) {
+        if (!BillingManager.getBillingManager(this).isPremium()) {
             initMobileAds();
         }
 

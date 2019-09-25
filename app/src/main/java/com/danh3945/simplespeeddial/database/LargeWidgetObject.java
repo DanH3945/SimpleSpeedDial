@@ -100,7 +100,7 @@ public class LargeWidgetObject extends WidgetObject {
             public void run() {
                 SpeedDialDatabase database = SpeedDialDatabase.getSpeedDialDatabase(context);
 
-                if (!BillingManager.getManager().canAddLargeWidgetItem(context)) {
+                if (!BillingManager.getBillingManager(context).canAddLargeWidgetItem(context)) {
 
                     notifyUserFreeVersionFull(context);
                     return;
@@ -156,7 +156,7 @@ public class LargeWidgetObject extends WidgetObject {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                BillingManager.getManager().getFreeVersionRefusalDialog(context, null).show();
+                BillingManager.getBillingManager(context).getFreeVersionRefusalDialog(context, null).show();
             }
         });
     }

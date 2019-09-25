@@ -21,7 +21,7 @@ public class BillingManager {
     public static final int MAX_FREE_SINGLE_TILE_SLOTS = 5;
     public static final int MAX_FREE_LARGE_SLOTS = 5;
 
-    public static BillingManager getManager() {
+    public static BillingManager getBillingManager(Context context) {
         if (sBillingManager == null) {
             sBillingManager = new BillingManager();
         }

@@ -30,7 +30,7 @@ public class SingleTileConfigActivity extends ParentActivity {
 
         setResult(RESULT_CANCELED);
 
-        BillingManager billingManager = BillingManager.getManager();
+        BillingManager billingManager = BillingManager.getBillingManager(this);
         int[] singleTileIds = SingleTileAppWidgetProvider.getActiveWidgetIds(this);
         Timber.d("Total single tile Widget IDs is: %s", singleTileIds.length);
         if (!billingManager.canAddSingleTileWidget(this)) {
