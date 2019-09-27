@@ -1,12 +1,10 @@
 package com.danh3945.simplespeeddial.database;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import androidx.room.Entity;
@@ -95,49 +93,36 @@ public class LargeWidgetObject extends WidgetObject {
 
     public void addToLargeWidgetSpeedDial(Context context) {
 
-        AsyncTask.execute(new Runnable() {
+        BillingManager billingManager = BillingManager.getBillingManager(context);
+        billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
             @Override
-            public void run() {
-                SpeedDialDatabase database = SpeedDialDatabase.getSpeedDialDatabase(context);
-
-                if (!BillingManager.getBillingManager(context).canAddLargeWidgetItem(context)) {
-
+            public void isPremium(Boolean isPremium) {
+                if (isPremium) {
+                    addToDatabase(context);
+                } else {
                     notifyUserFreeVersionFull(context);
-                    return;
                 }
-
-                database.largeWidgetDao()
-                        .insertSpeedDialButton(LargeWidgetObject.this);
-
-                notifyUserAddedToLargeWidget(context);
-
-                LargeWidgetProvider.notifyLargeWidgets(context);
-
-                updateWidgetCount(context, 1);
             }
         });
     }
 
-    private void updateWidgetCount(Context context, int change) {
-        // We keep a running tally of the total number of items being displayed by the large widget.
-        // This is done so the free version can track how many are displayed.
-        // We store them in shared prefs so we don't have to access the database elsewhere and throw
-        // around a bunch of extra thread switches that come with DB access.
+    private void addToDatabase(Context context) {
+        SpeedDialDatabase database = SpeedDialDatabase.getSpeedDialDatabase(context);
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                database.largeWidgetDao()
+                        .insertSpeedDialButton(LargeWidgetObject.this);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                notifyUserWidgetWasAdded(context);
 
-        // Total current widgets
-        int count = prefs.getInt(BillingManager.LARGE_WIDGET_TOTAL_ITEMS_KEY, 0);
-
-        // Modify the current count by the incoming change
-        count += change;
-
-        // Store the new value
-        prefs.edit().putInt(BillingManager.LARGE_WIDGET_TOTAL_ITEMS_KEY, count).apply();
+                LargeWidgetProvider.notifyLargeWidgets(context);
+            }
+        });
 
     }
 
-    private void notifyUserAddedToLargeWidget(Context context) {
+    private void notifyUserWidgetWasAdded(Context context) {
         // We want to show a toast telling the user that we have added the information to the speed
         // dial widget but we have to do toast on the main thread.  So we create a handler linked to
         // the main looper and post a runnable so it gets run on the UI thread.
@@ -171,8 +156,6 @@ public class LargeWidgetObject extends WidgetObject {
                         .removeSpeedDialEntry(LargeWidgetObject.this);
 
                 LargeWidgetProvider.notifyLargeWidgets(context);
-
-                updateWidgetCount(context, -1);
             }
         });
     }

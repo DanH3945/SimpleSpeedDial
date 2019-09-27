@@ -33,16 +33,23 @@ public class SingleTileConfigActivity extends ParentActivity {
         BillingManager billingManager = BillingManager.getBillingManager(this);
         int[] singleTileIds = SingleTileAppWidgetProvider.getActiveWidgetIds(this);
         Timber.d("Total single tile Widget IDs is: %s", singleTileIds.length);
-        if (!billingManager.canAddSingleTileWidget(this)) {
-            billingManager.getFreeVersionRefusalDialog(this, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    SingleTileConfigActivity.this.finish();
-                }
-            }).show();
-        }
 
-        continueSetup();
+        billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
+            @Override
+            public void isPremium(Boolean isPremium) {
+                if (isPremium) {
+                    continueSetup();
+                } else {
+                    billingManager.getFreeVersionRefusalDialog(
+                            SingleTileConfigActivity.this, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    SingleTileConfigActivity.this.finish();
+                                }
+                            }).show();
+                }
+            }
+        });
     }
 
     private void continueSetup() {
