@@ -48,7 +48,7 @@ public abstract class ParentActivity extends AppCompatActivity {
         BillingManager.getBillingManager(this).checkPremium(new BillingManager.PremiumConfirmation() {
             @Override
             public void isPremium(Boolean isPremium) {
-                if (isPremium) {
+                if (!isPremium) {
                     initMobileAds();
                 }
             }
