@@ -39,7 +39,7 @@ public class SingleTileConfigActivity extends ParentActivity {
             public void isPremium(Boolean isPremium, int resultCode) {
                 if (isPremium) {
                     continueSetup();
-                } else if (resultCode == BillingManager.RESULT_NOT_SUBBED) {
+                } else if (resultCode == BillingManager.RESULT_NOT_PREMIUM) {
                     billingManager.getFreeVersionRefusalDialog(
                             SingleTileConfigActivity.this, new DialogInterface.OnClickListener() {
                                 @Override
