@@ -36,10 +36,10 @@ public class SingleTileConfigActivity extends ParentActivity {
 
         billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
             @Override
-            public void isPremium(Boolean isPremium) {
+            public void isPremium(Boolean isPremium, int resultCode) {
                 if (isPremium) {
                     continueSetup();
-                } else {
+                } else if (resultCode == BillingManager.RESULT_NOT_SUBBED) {
                     billingManager.getFreeVersionRefusalDialog(
                             SingleTileConfigActivity.this, new DialogInterface.OnClickListener() {
                                 @Override
@@ -47,6 +47,8 @@ public class SingleTileConfigActivity extends ParentActivity {
                                     SingleTileConfigActivity.this.finish();
                                 }
                             }).show();
+                } else if (resultCode == BillingManager.RESULT_NETWORK_ERROR) {
+                    // todo error network error handling
                 }
             }
         });
