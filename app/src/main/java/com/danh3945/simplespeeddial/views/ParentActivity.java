@@ -42,17 +42,17 @@ public abstract class ParentActivity extends AppCompatActivity {
         Timber.d("App starting with flavor: %s", BuildConfig.FLAVOR);
 
         // Mobile Ads initialization
-        String adMobID = getResources().getString(R.string.ad_mob_app_id);
-        MobileAds.initialize(this, adMobID);
-
-        BillingManager.getBillingManager(this).checkPremium(new BillingManager.PremiumConfirmation() {
-            @Override
-            public void isPremium(Boolean isPremium, int resultCode) {
-                if (!isPremium) {
-                    initMobileAds();
-                }
-            }
-        });
+//        String adMobID = getResources().getString(R.string.ad_mob_app_id);
+//        MobileAds.initialize(this, adMobID);
+//
+//        BillingManager.getBillingManager(this).checkPremium(new BillingManager.PremiumConfirmation() {
+//            @Override
+//            public void isPremium(Boolean isPremium, int resultCode) {
+//                if (!isPremium) {
+//                    initMobileAds();
+//                }
+//            }
+//        });
 
         if (isLandscapeOriented() && getSupportActionBar() != null) {
             getSupportActionBar().hide();
