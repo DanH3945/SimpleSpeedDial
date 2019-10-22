@@ -96,12 +96,12 @@ public class LargeWidgetObject extends WidgetObject {
         BillingManager billingManager = BillingManager.getBillingManager(context);
         billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
             @Override
-            public void isPremium(Boolean isPremium, int resultCode) {
+            public void isPremium(Boolean isPremium, BillingManager.Result resultCode) {
                 if (isPremium) {
                     addToDatabase(context);
-                } else if (resultCode == BillingManager.RESULT_NOT_PREMIUM) {
+                } else if (resultCode == BillingManager.Result.PREMIUM) {
                     notifyUserFreeVersionFull(context);
-                } else if (resultCode == BillingManager.RESULT_NETWORK_ERROR) {
+                } else if (resultCode == BillingManager.Result.NET_ERROR) {
                     // todo network error handling
                 }
             }

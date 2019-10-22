@@ -10,12 +10,10 @@ import javax.annotation.Nullable;
 
 public class BillingManager {
 
-    public static final int RESULT_PREMIUM = 1;
-    public static final int RESULT_NOT_PREMIUM = 2;
-    public static final int RESULT_NETWORK_ERROR = 3;
+    public enum Result {PREMIUM, NOT_PREMIUM, NET_ERROR}
 
     public interface PremiumConfirmation {
-        void isPremium(Boolean isPremium, int resultCode);
+        void isPremium(Boolean isPremium, Result result);
     }
 
     private static BillingManager sBillingManager;
@@ -29,7 +27,7 @@ public class BillingManager {
     }
 
     public void checkPremium(PremiumConfirmation premiumConfirmation) {
-        premiumConfirmation.isPremium(true, RESULT_PREMIUM);
+        premiumConfirmation.isPremium(true, Result.PREMIUM);
     }
 
     public AlertDialog getFreeVersionRefusalDialog(Context context, @Nullable DialogInterface.OnClickListener onClickListener) {
