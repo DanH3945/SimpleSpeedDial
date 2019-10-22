@@ -15,13 +15,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
-import com.danh3945.simplespeeddial.billing.BillingManager;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
 import com.danh3945.simplespeeddial.views.preferences.SpeedDialPreferenceFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import timber.log.Timber;
 
