@@ -99,7 +99,7 @@ public class LargeWidgetObject extends WidgetObject {
             public void isPremium(Boolean isPremium, BillingManager.Result resultCode) {
                 if (isPremium) {
                     addToDatabase(context);
-                } else if (resultCode == BillingManager.Result.PREMIUM) {
+                } else if (resultCode == BillingManager.Result.NOT_PREMIUM) {
                     notifyUserFreeVersionFull(context);
                 } else if (resultCode == BillingManager.Result.NET_ERROR) {
                     // todo network error handling
