@@ -1,5 +1,6 @@
 package com.danh3945.simplespeeddial.database;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -14,6 +15,8 @@ import androidx.room.TypeConverters;
 import com.danh3945.simplespeeddial.billing.BillingManager;
 import com.danh3945.simplespeeddial.billing.FreeWidgetConstants;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
+
+import timber.log.Timber;
 
 @Entity
 @TypeConverters(LocalTypeConverters.class)
@@ -109,8 +112,15 @@ public class LargeWidgetObject extends WidgetObject {
     private void setupLargeWidget(Context context) {
         // This method should really only be called from the method directly above since it needs
         // to run Async to work with the database.
+        Activity callingActivity;
+        try {
+            callingActivity = (Activity) context;
+        } catch (ClassCastException cce) {
+            Timber.d("Failed to cast context into Activity");
+            return;
+        }
 
-        BillingManager billingManager = BillingManager.getBillingManager(context);
+        BillingManager billingManager = BillingManager.getBillingManager(callingActivity);
         billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
             @Override
             public void isPremium(Boolean isPremium, BillingManager.Result resultCode) {
@@ -128,7 +138,7 @@ public class LargeWidgetObject extends WidgetObject {
                         }
 
                         // If the free version attempt above fails we notify the user
-                        notifyUserFreeVersionFull(context);
+                        notifyUserFreeVersionFull(context, billingManager);
                         break;
 
                     case NET_ERROR:
@@ -179,13 +189,13 @@ public class LargeWidgetObject extends WidgetObject {
         });
     }
 
-    private void notifyUserFreeVersionFull(Context context) {
+    private void notifyUserFreeVersionFull(Context context, BillingManager billingManager) {
         // Make sure we're on the UI thread since there's lots of threading going on in this class.
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
             public void run() {
-                BillingManager.getBillingManager(context).getFreeVersionRefusalDialog(context, null).show();
+                billingManager.getFreeVersionRefusalDialog(context, null).show();
             }
         });
     }

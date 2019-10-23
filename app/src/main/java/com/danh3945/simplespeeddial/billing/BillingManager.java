@@ -1,5 +1,6 @@
 package com.danh3945.simplespeeddial.billing;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,14 +17,12 @@ public class BillingManager {
         void isPremium(Boolean isPremium, Result result);
     }
 
-    private static BillingManager sBillingManager;
+    private Activity mHostActivity;
 
-    public static BillingManager getBillingManager(Context context) {
-        if (sBillingManager == null) {
-            sBillingManager = new BillingManager();
-        }
-
-        return sBillingManager;
+    public static BillingManager getBillingManager(Activity activity) {
+        BillingManager billingManager = new BillingManager();
+        billingManager.mHostActivity = activity;
+        return billingManager;
     }
 
     public void checkPremium(PremiumConfirmation premiumConfirmation) {
