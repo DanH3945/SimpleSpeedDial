@@ -19,10 +19,9 @@ public class BillingManager {
 
     private Activity mHostActivity;
 
-    public static BillingManager getBillingManager(Activity activity) {
-        BillingManager billingManager = new BillingManager();
-        billingManager.mHostActivity = activity;
-        return billingManager;
+
+    public BillingManager(Activity activity) {
+        mHostActivity = activity;
     }
 
     public void checkPremium(PremiumConfirmation premiumConfirmation) {

@@ -1,6 +1,5 @@
 package com.danh3945.simplespeeddial.database;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,10 +12,9 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.danh3945.simplespeeddial.billing.BillingManager;
-import com.danh3945.simplespeeddial.billing.FreeWidgetConstants;
+import com.danh3945.simplespeeddial.billing.FreeVersionConstants;
+import com.danh3945.simplespeeddial.views.ParentActivity;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
-
-import timber.log.Timber;
 
 @Entity
 @TypeConverters(LocalTypeConverters.class)
@@ -112,15 +110,9 @@ public class LargeWidgetObject extends WidgetObject {
     private void setupLargeWidget(Context context) {
         // This method should really only be called from the method directly above since it needs
         // to run Async to work with the database.
-        Activity callingActivity;
-        try {
-            callingActivity = (Activity) context;
-        } catch (ClassCastException cce) {
-            Timber.d("Failed to cast context into Activity");
-            return;
-        }
 
-        BillingManager billingManager = BillingManager.getBillingManager(callingActivity);
+        BillingManager billingManager = ParentActivity.getsBillingComponent().getBillingManager();
+
         billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
             @Override
             public void isPremium(Boolean isPremium, BillingManager.Result resultCode) {
@@ -162,7 +154,7 @@ public class LargeWidgetObject extends WidgetObject {
                 .getSpeedDialButtonsList()
                 .size();
 
-        return widgetCount < FreeWidgetConstants.MAX_LARGE_WIDGET_BUTTONS;
+        return widgetCount < FreeVersionConstants.MAX_LARGE_WIDGET_BUTTONS;
     }
 
     private void addToDatabase(Context context) {

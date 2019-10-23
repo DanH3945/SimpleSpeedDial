@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.billing.BillingManager;
-import com.danh3945.simplespeeddial.billing.FreeWidgetConstants;
+import com.danh3945.simplespeeddial.billing.FreeVersionConstants;
 import com.danh3945.simplespeeddial.views.singleTileconfig.SingleTileConfigFragment;
 import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
 
@@ -31,7 +31,7 @@ public class SingleTileConfigActivity extends ParentActivity {
 
         setResult(RESULT_CANCELED);
 
-        BillingManager billingManager = BillingManager.getBillingManager(this);
+        BillingManager billingManager = ParentActivity.getsBillingComponent().getBillingManager();
 
         billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
             @Override
@@ -73,7 +73,7 @@ public class SingleTileConfigActivity extends ParentActivity {
     private boolean canAddFreeWidget() {
         int[] singleTileIds = SingleTileAppWidgetProvider.getActiveWidgetIds(this);
 
-        return singleTileIds.length < FreeWidgetConstants.MAX_SINGLE_TILE_FREE_WIDGETS;
+        return singleTileIds.length < FreeVersionConstants.MAX_SINGLE_TILE_FREE_WIDGETS;
     }
 
     private void continueSetup() {

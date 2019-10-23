@@ -15,6 +15,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.danh3945.simplespeeddial.BuildConfig;
 import com.danh3945.simplespeeddial.R;
+import com.danh3945.simplespeeddial.dagger2.BillingComponent;
+import com.danh3945.simplespeeddial.dagger2.DaggerBillingComponent;
+import com.danh3945.simplespeeddial.dagger2.modules.ActivityModule;
 import com.danh3945.simplespeeddial.logging.TimberDebugTree;
 import com.danh3945.simplespeeddial.logging.TimberReleaseTree;
 import com.danh3945.simplespeeddial.views.preferences.SpeedDialPreferenceFragment;
@@ -24,6 +27,8 @@ import com.google.android.gms.ads.AdView;
 import timber.log.Timber;
 
 public abstract class ParentActivity extends AppCompatActivity {
+
+    public static BillingComponent sBillingComponent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +57,15 @@ public abstract class ParentActivity extends AppCompatActivity {
 //            }
 //        });
 
+        sBillingComponent = DaggerBillingComponent.builder().activityModule(new ActivityModule(this)).build();
+
         if (isLandscapeOriented() && getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+    }
+
+    public static BillingComponent getsBillingComponent() {
+        return sBillingComponent;
     }
 
     @Override
