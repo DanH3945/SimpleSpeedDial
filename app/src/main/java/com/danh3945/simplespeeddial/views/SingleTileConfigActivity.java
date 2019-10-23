@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.danh3945.simplespeeddial.R;
 import com.danh3945.simplespeeddial.billing.BillingManager;
+import com.danh3945.simplespeeddial.billing.FreeWidgetConstants;
 import com.danh3945.simplespeeddial.views.singleTileconfig.SingleTileConfigFragment;
 import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
 
@@ -31,27 +32,48 @@ public class SingleTileConfigActivity extends ParentActivity {
         setResult(RESULT_CANCELED);
 
         BillingManager billingManager = BillingManager.getBillingManager(this);
-        int[] singleTileIds = SingleTileAppWidgetProvider.getActiveWidgetIds(this);
-        Timber.d("Total single tile Widget IDs is: %s", singleTileIds.length);
 
         billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
             @Override
             public void isPremium(Boolean isPremium, BillingManager.Result resultCode) {
-                if (isPremium) {
-                    continueSetup();
-                } else if (resultCode == BillingManager.Result.NOT_PREMIUM) {
-                    billingManager.getFreeVersionRefusalDialog(
-                            SingleTileConfigActivity.this, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    SingleTileConfigActivity.this.finish();
-                                }
-                            }).show();
-                } else if (resultCode == BillingManager.Result.NET_ERROR) {
-                    // todo error network error handling
+
+                switch (resultCode) {
+                    case PREMIUM:
+                        continueSetup();
+                        break;
+
+                    case NOT_PREMIUM:
+                        if (canAddFreeWidget()) {
+                            continueSetup();
+                            break;
+                        }
+
+                        // If the free version setup doesn't work (The user is over limit on the free version
+                        // we show the notification that the user is over the limit.
+                        billingManager.getFreeVersionRefusalDialog(
+                                SingleTileConfigActivity.this, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        SingleTileConfigActivity.this.finish();
+                                    }
+                                }).show();
+                        break;
+
+                    case NET_ERROR:
+                        if (canAddFreeWidget()) {
+                            continueSetup();
+                            break;
+                        }
+                        // todo network error notification
                 }
             }
         });
+    }
+
+    private boolean canAddFreeWidget() {
+        int[] singleTileIds = SingleTileAppWidgetProvider.getActiveWidgetIds(this);
+
+        return singleTileIds.length < FreeWidgetConstants.MAX_SINGLE_TILE_FREE_WIDGETS;
     }
 
     private void continueSetup() {

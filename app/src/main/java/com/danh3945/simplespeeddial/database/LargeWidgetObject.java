@@ -12,6 +12,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.danh3945.simplespeeddial.billing.BillingManager;
+import com.danh3945.simplespeeddial.billing.FreeWidgetConstants;
 import com.danh3945.simplespeeddial.widget.LargeWidgetProvider;
 
 @Entity
@@ -93,34 +94,75 @@ public class LargeWidgetObject extends WidgetObject {
 
     public void addToLargeWidgetSpeedDial(Context context) {
 
+        // Working with the database here so we'll wrap this all in an async task.
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                // calling the actual setup code for the large widget.  It's separated here
+                // to aid readability.
+                setupLargeWidget(context);
+            }
+        });
+    }
+
+    private void setupLargeWidget(Context context) {
+        // This method should really only be called from the method directly above since it needs
+        // to run Async to work with the database.
+
         BillingManager billingManager = BillingManager.getBillingManager(context);
         billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
             @Override
             public void isPremium(Boolean isPremium, BillingManager.Result resultCode) {
-                if (isPremium) {
-                    addToDatabase(context);
-                } else if (resultCode == BillingManager.Result.NOT_PREMIUM) {
-                    notifyUserFreeVersionFull(context);
-                } else if (resultCode == BillingManager.Result.NET_ERROR) {
-                    // todo network error handling
+
+                switch (resultCode) {
+
+                    case PREMIUM:
+                        addToDatabase(context);
+                        break;
+
+                    case NOT_PREMIUM:
+                        if (canAddFreeWidget(context)) {
+                            addToDatabase(context);
+                            break;
+                        }
+
+                        // If the free version attempt above fails we notify the user
+                        notifyUserFreeVersionFull(context);
+                        break;
+
+                    case NET_ERROR:
+                        if(canAddFreeWidget(context)) {
+                            addToDatabase(context);
+                            break;
+                        }
+
+                        // todo error notification and handling if we can't use the free version
+
+
                 }
             }
         });
     }
 
+    private boolean canAddFreeWidget(Context context) {
+        int widgetCount = SpeedDialDatabase
+                .getSpeedDialDatabase(context)
+                .largeWidgetDao()
+                .getSpeedDialButtonsList()
+                .size();
+
+        return widgetCount < FreeWidgetConstants.MAX_LARGE_WIDGET_BUTTONS;
+    }
+
     private void addToDatabase(Context context) {
         SpeedDialDatabase database = SpeedDialDatabase.getSpeedDialDatabase(context);
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                database.largeWidgetDao()
-                        .insertSpeedDialButton(LargeWidgetObject.this);
+        database.largeWidgetDao()
+                .insertSpeedDialButton(LargeWidgetObject.this);
 
-                notifyUserWidgetWasAdded(context);
+        notifyUserWidgetWasAdded(context);
 
-                LargeWidgetProvider.notifyLargeWidgets(context);
-            }
-        });
+        LargeWidgetProvider.notifyLargeWidgets(context);
 
     }
 
