@@ -64,7 +64,7 @@ public abstract class ParentActivity extends AppCompatActivity {
         }
     }
 
-    public static BillingComponent getsBillingComponent() {
+    public static BillingComponent getBillingComponent() {
         return sBillingComponent;
     }
 

@@ -31,7 +31,7 @@ public class SingleTileConfigActivity extends ParentActivity {
 
         setResult(RESULT_CANCELED);
 
-        BillingManager billingManager = ParentActivity.getsBillingComponent().getBillingManager();
+        BillingManager billingManager = ParentActivity.getBillingComponent().getBillingManager();
 
         billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
             @Override

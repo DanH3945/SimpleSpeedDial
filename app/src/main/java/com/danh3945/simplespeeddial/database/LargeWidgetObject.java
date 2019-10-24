@@ -111,7 +111,7 @@ public class LargeWidgetObject extends WidgetObject {
         // This method should really only be called from the method directly above since it needs
         // to run Async to work with the database.
 
-        BillingManager billingManager = ParentActivity.getsBillingComponent().getBillingManager();
+        BillingManager billingManager = ParentActivity.getBillingComponent().getBillingManager();
 
         billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
             @Override
