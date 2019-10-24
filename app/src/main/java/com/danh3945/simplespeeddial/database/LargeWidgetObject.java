@@ -94,55 +94,43 @@ public class LargeWidgetObject extends WidgetObject {
     }
 
     public void addToLargeWidgetSpeedDial(Context context) {
-
-        // Working with the database here so we'll wrap this all in an async task.
-
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                // calling the actual setup code for the large widget.  It's separated here
-                // to aid readability.
-                setupLargeWidget(context);
-            }
-        });
-    }
-
-    private void setupLargeWidget(Context context) {
-        // This method should really only be called from the method directly above since it needs
-        // to run Async to work with the database.
-
         BillingManager billingManager = ParentActivity.getBillingComponent().getBillingManager();
 
-        billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
+        billingManager.isPremiumClient(new BillingManager.PremiumConfirmation() {
             @Override
             public void isPremium(Boolean isPremium, BillingManager.Result resultCode) {
 
-                switch (resultCode) {
+                // Here there be database operations.  Yarr.
+                // DB ops must be run on their own thread.
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (resultCode) {
 
-                    case PREMIUM:
-                        addToDatabase(context);
-                        break;
+                            case PREMIUM:
+                                addToDatabase(context);
+                                break;
 
-                    case NOT_PREMIUM:
-                        if (canAddFreeWidget(context)) {
-                            addToDatabase(context);
-                            break;
+                            case NOT_PREMIUM:
+                                if (canAddFreeWidget(context)) {
+                                    addToDatabase(context);
+                                    break;
+                                }
+
+                                // If the free version attempt above fails we notify the user
+                                notifyUserFreeVersionFull(context, billingManager);
+                                break;
+
+                            case NET_ERROR:
+                                if(canAddFreeWidget(context)) {
+                                    addToDatabase(context);
+                                    break;
+                                }
+
+                                // todo error notification and handling if we can't use the free version
                         }
-
-                        // If the free version attempt above fails we notify the user
-                        notifyUserFreeVersionFull(context, billingManager);
-                        break;
-
-                    case NET_ERROR:
-                        if(canAddFreeWidget(context)) {
-                            addToDatabase(context);
-                            break;
-                        }
-
-                        // todo error notification and handling if we can't use the free version
-
-
-                }
+                    }
+                });
             }
         });
     }

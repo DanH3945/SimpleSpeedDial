@@ -33,7 +33,7 @@ public class SingleTileConfigActivity extends ParentActivity {
 
         BillingManager billingManager = ParentActivity.getBillingComponent().getBillingManager();
 
-        billingManager.checkPremium(new BillingManager.PremiumConfirmation() {
+        billingManager.isPremiumClient(new BillingManager.PremiumConfirmation() {
             @Override
             public void isPremium(Boolean isPremium, BillingManager.Result resultCode) {
 

@@ -48,7 +48,7 @@ public abstract class ParentActivity extends AppCompatActivity {
 //        String adMobID = getResources().getString(R.string.ad_mob_app_id);
 //        MobileAds.initialize(this, adMobID);
 //
-//        BillingManager.getBillingManager(this).checkPremium(new BillingManager.PremiumConfirmation() {
+//        BillingManager.getBillingManager(this).isPremiumClient(new BillingManager.PremiumConfirmation() {
 //            @Override
 //            public void isPremium(Boolean isPremium, int resultCode) {
 //                if (!isPremium) {
