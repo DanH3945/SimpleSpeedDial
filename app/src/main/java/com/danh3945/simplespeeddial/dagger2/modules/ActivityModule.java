@@ -1,6 +1,6 @@
 package com.danh3945.simplespeeddial.dagger2.modules;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import dagger.Module;
 import dagger.Provides;
@@ -8,14 +8,14 @@ import dagger.Provides;
 @Module
 public class ActivityModule {
 
-    private Activity mActivity;
+    private AppCompatActivity mActivity;
 
-    public ActivityModule(Activity activity) {
+    public ActivityModule(AppCompatActivity activity) {
         this.mActivity = activity;
     }
 
     @Provides
-    Activity provideActivity() {
+    AppCompatActivity provideActivity() {
         return mActivity;
     }
 

@@ -1,9 +1,14 @@
 package com.danh3945.simplespeeddial.billing;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
@@ -16,7 +21,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-public class BillingManager implements PurchasesUpdatedListener {
+public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedListener {
 
     @Override
     public void onPurchasesUpdated(BillingResult billingResult, @androidx.annotation.Nullable List<Purchase> purchases) {
@@ -33,11 +38,16 @@ public class BillingManager implements PurchasesUpdatedListener {
         void connectionReady();
     }
 
-    private Activity mHostActivity;
+    private AppCompatActivity mHostActivity;
     private BillingClient mBillingClient;
+    private Purchase.PurchasesResult purchasesResult;
 
-    public BillingManager(Activity activity) {
+    public BillingManager(AppCompatActivity activity) {
         mHostActivity = activity;
+        mHostActivity.getLifecycle().addObserver(this);
+
+        queryPurchases();
+
     }
 
     private void startConnection(@Nullable ConnectionReady connectionReady) {
@@ -61,17 +71,6 @@ public class BillingManager implements PurchasesUpdatedListener {
     }
 
     public void isPremiumClient(PremiumConfirmation premiumConfirmation) {
-
-        // If the billing client is already running we just use that and move forward.
-        if (mBillingClient != null && mBillingClient.isReady()) {
-            checkPremium(premiumConfirmation);
-        }
-
-        // The billing client wasn't connected so we start the connection then move forward.
-        startConnection(() -> checkPremium(premiumConfirmation));
-    }
-
-    private void checkPremium(PremiumConfirmation premiumConfirmation) {
         premiumConfirmation.isPremium(true, Result.PREMIUM);
         //premiumConfirmation.isPremium(false, Result.NOT_PREMIUM);
     }
@@ -98,6 +97,17 @@ public class BillingManager implements PurchasesUpdatedListener {
 
         return alertBuilder.create();
 
+    }
+
+    @Override
+    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
+        if (event.equals(Lifecycle.Event.ON_RESUME)) {
+            queryPurchases();
+        }
+    }
+
+    private void queryPurchases() {
+        purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.SUBS);
     }
 
 }

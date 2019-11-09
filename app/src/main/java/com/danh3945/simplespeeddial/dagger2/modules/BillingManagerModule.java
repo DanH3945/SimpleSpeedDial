@@ -1,6 +1,6 @@
 package com.danh3945.simplespeeddial.dagger2.modules;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.danh3945.simplespeeddial.billing.BillingManager;
 
@@ -11,7 +11,7 @@ import dagger.Provides;
 public class BillingManagerModule {
 
     @Provides
-    public BillingManager provideBillingManager(Activity activity) {
+    public BillingManager provideBillingManager(AppCompatActivity activity) {
         return new BillingManager(activity);
     }
 
