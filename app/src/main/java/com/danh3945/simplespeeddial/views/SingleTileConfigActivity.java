@@ -35,7 +35,7 @@ public class SingleTileConfigActivity extends ParentActivity {
 
         billingManager.isPremiumClient(new BillingManager.PremiumConfirmation() {
             @Override
-            public void isPremium(Boolean isPremium, BillingManager.Result resultCode) {
+            public void isPremium(BillingManager.Result resultCode) {
 
                 switch (resultCode) {
                     case PREMIUM:

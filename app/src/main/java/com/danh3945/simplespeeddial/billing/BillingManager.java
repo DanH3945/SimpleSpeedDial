@@ -31,7 +31,7 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
     public enum Result {PREMIUM, NOT_PREMIUM, NET_ERROR}
 
     public interface PremiumConfirmation {
-        void isPremium(Boolean isPremium, Result result);
+        void isPremium(Result result);
     }
 
     private interface ConnectionReady {
@@ -41,6 +41,8 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
     private AppCompatActivity mHostActivity;
     private BillingClient mBillingClient;
     private Purchase.PurchasesResult purchasesResult;
+
+    private static final String SUBSCRIPTION_SKU = "SimpleSpeedDialSub";
 
     public BillingManager(AppCompatActivity activity) {
         mHostActivity = activity;
@@ -71,8 +73,15 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
     }
 
     public void isPremiumClient(PremiumConfirmation premiumConfirmation) {
-        premiumConfirmation.isPremium(true, Result.PREMIUM);
-        //premiumConfirmation.isPremium(false, Result.NOT_PREMIUM);
+        for (Purchase purchase : purchasesResult.getPurchasesList()) {
+            if (purchase.getSku().equals(SUBSCRIPTION_SKU) &&
+                    purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
+                premiumConfirmation.isPremium(Result.PREMIUM);
+                return;
+            }
+
+            premiumConfirmation.isPremium(Result.NOT_PREMIUM);
+        }
     }
 
     public AlertDialog getFreeVersionRefusalDialog(Context context, @Nullable DialogInterface.OnClickListener onClickListener) {

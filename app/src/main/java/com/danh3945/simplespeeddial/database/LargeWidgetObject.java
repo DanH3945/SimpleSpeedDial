@@ -98,7 +98,7 @@ public class LargeWidgetObject extends WidgetObject {
 
         billingManager.isPremiumClient(new BillingManager.PremiumConfirmation() {
             @Override
-            public void isPremium(Boolean isPremium, BillingManager.Result resultCode) {
+            public void isPremium(BillingManager.Result resultCode) {
 
                 // Here there be database operations.  Yarr.
                 // DB ops must be run on their own thread.
