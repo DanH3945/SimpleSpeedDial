@@ -79,9 +79,10 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
                 premiumConfirmation.isPremium(Result.PREMIUM);
                 return;
             }
-
-            premiumConfirmation.isPremium(Result.NOT_PREMIUM);
         }
+
+        // The final default if nothing else returns the method.
+        premiumConfirmation.isPremium(Result.NOT_PREMIUM);
     }
 
     public AlertDialog getFreeVersionRefusalDialog(Context context, @Nullable DialogInterface.OnClickListener onClickListener) {
