@@ -39,10 +39,12 @@ public class SingleTileConfigActivity extends ParentActivity {
 
                 switch (resultCode) {
                     case PREMIUM:
+                        Timber.d("Detected PREMIUM result on premium confirmation");
                         continueSetup();
                         break;
 
                     case NOT_PREMIUM:
+                        Timber.d("Detected NOT_PREMIUM result on premium confirmation");
                         if (canAddFreeWidget()) {
                             continueSetup();
                             break;
@@ -60,6 +62,7 @@ public class SingleTileConfigActivity extends ParentActivity {
                         break;
 
                     case NET_ERROR:
+                        Timber.d("Detected NET_ERROR result on premium confirmation");
                         if (canAddFreeWidget()) {
                             continueSetup();
                             break;
