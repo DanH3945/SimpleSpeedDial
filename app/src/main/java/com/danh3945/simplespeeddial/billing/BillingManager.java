@@ -30,7 +30,7 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
 
     @Override
     public void onPurchasesUpdated(BillingResult billingResult, @androidx.annotation.Nullable List<Purchase> purchases) {
-
+        queryPurchases();
     }
 
     public enum Result {PREMIUM, NOT_PREMIUM, NET_ERROR}
