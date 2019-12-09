@@ -166,7 +166,7 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
 
     private void queryPurchases() {
 
-        if (purchasesResult == null) {
+        if (mBillingClient == null | purchasesResult == null) {
             Timber.d("Billing client was not connected.  Calling startConnection.");
             startConnection(new ConnectionReady() {
                 @Override
