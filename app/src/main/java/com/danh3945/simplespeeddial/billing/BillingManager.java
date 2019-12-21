@@ -3,7 +3,6 @@ package com.danh3945.simplespeeddial.billing;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -28,21 +27,17 @@ import timber.log.Timber;
 
 public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedListener {
 
-    @Override
-    public void onPurchasesUpdated(BillingResult billingResult, @androidx.annotation.Nullable List<Purchase> purchases) {
-
-    }
-
     public enum Result {PREMIUM, NOT_PREMIUM, NET_ERROR}
 
-    public interface PremiumConfirmation {
-        void isPremium(Result result);
+    public interface BillingListener {
+        void purchasesUpdated(Result result);
     }
 
     private interface ConnectionReady {
         void connectionReady();
     }
 
+    private List<BillingListener> mObservingListeners;
     private AppCompatActivity mHostActivity;
     private BillingClient mBillingClient;
     private Purchase.PurchasesResult purchasesResult;
@@ -53,11 +48,58 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
         mHostActivity = activity;
         mHostActivity.getLifecycle().addObserver(this);
 
-        queryPurchases();
+        queryPurchases(null);
 
     }
 
+    public void observe(BillingListener billingListener) {
+        mObservingListeners.add(billingListener);
+        isPremiumClient(new PremiumConfirmation() {
+            @Override
+            public void isPremium(Result result) {
+                billingListener.purchasesUpdated(result);
+            }
+        });
+    }
+
+    public void notifyObservers() {
+        if (mObservingListeners.size() < 1) {
+            return;
+        }
+
+        isPremiumClient(new PremiumConfirmation() {
+            @Override
+            public void isPremium(Result result) {
+                for (BillingListener billingListener : mObservingListeners) {
+                    billingListener.purchasesUpdated(result);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
+        if (event.equals(Lifecycle.Event.ON_RESUME)) {
+            queryPurchases(null);
+        }
+    }
+
+    @Override
+    public void onPurchasesUpdated(BillingResult billingResult, @androidx.annotation.Nullable List<Purchase> purchases) {
+        queryPurchases(null);
+    }
+
     private void startConnection(@Nullable ConnectionReady connectionReady) {
+
+        if (mBillingClient != null && mBillingClient.isReady()) {
+
+            if (connectionReady != null) {
+                connectionReady.connectionReady();
+            }
+
+            return;
+        }
+
         Timber.d("Starting BillingClient connection");
         mBillingClient = BillingClient.newBuilder(mHostActivity)
                 .setListener(this)
@@ -79,58 +121,64 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
         });
     }
 
-    public void isPremiumClient(PremiumConfirmation premiumConfirmation) {
+    private void queryPurchases(ConnectionReady connectionReady) {
 
-        AsyncTask.execute(new Runnable() {
+        startConnection(new ConnectionReady() {
             @Override
-            public void run() {
-                startPremiumClientWaitingThread(premiumConfirmation);
+            public void connectionReady() {
+                purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.SUBS);
+                if (connectionReady != null) {
+                    connectionReady.connectionReady();
+                }
             }
         });
     }
 
-    private void startPremiumClientWaitingThread(PremiumConfirmation premiumConfirmation) {
+    public interface PremiumConfirmation {
+        void isPremium(Result result);
+    }
 
-        // Sometimes on startup of the app the client will not have connected to verify the purchase.
-        // So we do a little sleep on the confirmation thread to ensure that billingClient hsa time
-        // to do its connection.
-        int sleepCounter = 0;
-        while (purchasesResult == null) {
-            try {
-                sleepCounter++;
-                Thread.sleep(1000);
-                if (sleepCounter > 10) {
-                    break;
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public void isPremiumClient(PremiumConfirmation premiumConfirmation) {
 
-        // Returning to the main thread with the result.
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
+        // If the connection isn't ready initially we are going to be starting it.  Since we aren't in control
+        // of the threading in that class and it's an internet connection we'll assume that it's using multiple
+        // or other threads to do its work.  So we'll save our current thread here and jump back to it later
+        // before we post the results to the calling object(s)
+        Handler handler = new Handler(Looper.myLooper());
+
+
+        Runnable premCheck = new Runnable() {
             @Override
             public void run() {
-                if (purchasesResult == null) {
-                    premiumConfirmation.isPremium(Result.NET_ERROR);
-                    return;
-                }
 
                 Timber.d("Iterating over PurchasesResult.  Total length:  %s", purchasesResult.getPurchasesList().size());
+
                 for (Purchase purchase : purchasesResult.getPurchasesList()) {
                     Timber.d(purchase.getSku());
                     if (purchase.getSku().equals(SUBSCRIPTION_SKU) &&
                             purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
                         premiumConfirmation.isPremium(Result.PREMIUM);
-                        return;
                     }
                 }
 
-                // The final default if nothing else returns the method.
                 premiumConfirmation.isPremium(Result.NOT_PREMIUM);
             }
-        });
+        };
+
+        if (purchasesResult == null) {
+
+            startConnection(new ConnectionReady() {
+                @Override
+                public void connectionReady() {
+                    // Once the connection is ready we have to make sure we come back from the connection
+                    // thread and post to the incoming thread that we saved at the start of the method.
+                    handler.post(premCheck);
+                }
+            });
+        } else {
+            premCheck.run();
+        }
+
     }
 
     public AlertDialog getFreeVersionRefusalDialog(Context context, @Nullable DialogInterface.OnClickListener onClickListener) {
@@ -155,31 +203,6 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
 
         return alertBuilder.create();
 
-    }
-
-    @Override
-    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
-        if (event.equals(Lifecycle.Event.ON_RESUME)) {
-            queryPurchases();
-        }
-    }
-
-    private void queryPurchases() {
-
-        if (purchasesResult == null) {
-            Timber.d("Billing client was not connected.  Calling startConnection.");
-            startConnection(new ConnectionReady() {
-                @Override
-                public void connectionReady() {
-                    Timber.d("Connection Ready in queryPurchases. Querying.");
-                    purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.SUBS);
-                }
-            });
-
-            return;
-        }
-
-        purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.SUBS);
     }
 
 }
