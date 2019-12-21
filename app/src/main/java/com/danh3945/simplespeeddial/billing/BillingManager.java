@@ -19,6 +19,7 @@ import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.danh3945.simplespeeddial.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -37,23 +38,24 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
         void connectionReady();
     }
 
-    private List<BillingListener> mObservingListeners;
+    private List<BillingListener> mListeners;
     private AppCompatActivity mHostActivity;
     private BillingClient mBillingClient;
-    private Purchase.PurchasesResult purchasesResult;
+    private Purchase.PurchasesResult mPurchasesResult;
 
     private static final String SUBSCRIPTION_SKU = "SimpleSpeedDialSub";
 
     public BillingManager(AppCompatActivity activity) {
         mHostActivity = activity;
         mHostActivity.getLifecycle().addObserver(this);
+        mListeners = new ArrayList<>();
 
         queryPurchases(null);
 
     }
 
     public void observe(BillingListener billingListener) {
-        mObservingListeners.add(billingListener);
+        mListeners.add(billingListener);
         isPremiumClient(new PremiumConfirmation() {
             @Override
             public void isPremium(Result result) {
@@ -63,14 +65,14 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
     }
 
     public void notifyObservers() {
-        if (mObservingListeners.size() < 1) {
+        if (mListeners.size() < 1) {
             return;
         }
 
         isPremiumClient(new PremiumConfirmation() {
             @Override
             public void isPremium(Result result) {
-                for (BillingListener billingListener : mObservingListeners) {
+                for (BillingListener billingListener : mListeners) {
                     billingListener.purchasesUpdated(result);
                 }
             }
@@ -126,7 +128,7 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
         startConnection(new ConnectionReady() {
             @Override
             public void connectionReady() {
-                purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.SUBS);
+                mPurchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.SUBS);
                 if (connectionReady != null) {
                     connectionReady.connectionReady();
                 }
@@ -151,9 +153,9 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
             @Override
             public void run() {
 
-                Timber.d("Iterating over PurchasesResult.  Total length:  %s", purchasesResult.getPurchasesList().size());
+                Timber.d("Iterating over PurchasesResult.  Total length:  %s", mPurchasesResult.getPurchasesList().size());
 
-                for (Purchase purchase : purchasesResult.getPurchasesList()) {
+                for (Purchase purchase : mPurchasesResult.getPurchasesList()) {
                     Timber.d(purchase.getSku());
                     if (purchase.getSku().equals(SUBSCRIPTION_SKU) &&
                             purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
@@ -165,7 +167,7 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
             }
         };
 
-        if (purchasesResult == null) {
+        if (mPurchasesResult == null) {
 
             startConnection(new ConnectionReady() {
                 @Override
