@@ -64,7 +64,7 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
         });
     }
 
-    public void notifyObservers() {
+    private void notifyObservers() {
         if (mListeners.size() < 1) {
             return;
         }
@@ -149,7 +149,7 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
         Handler handler = new Handler(Looper.myLooper());
 
 
-        Runnable premCheck = new Runnable() {
+        Runnable premiumCheck = new Runnable() {
             @Override
             public void run() {
 
@@ -174,11 +174,12 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
                 public void connectionReady() {
                     // Once the connection is ready we have to make sure we come back from the connection
                     // thread and post to the incoming thread that we saved at the start of the method.
-                    handler.post(premCheck);
+                    handler.post(premiumCheck);
                 }
             });
         } else {
-            premCheck.run();
+            // we already have a set of purchase results ready so we just iterate over them.
+            premiumCheck.run();
         }
 
     }
