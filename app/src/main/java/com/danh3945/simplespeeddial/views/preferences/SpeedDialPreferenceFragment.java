@@ -2,6 +2,7 @@ package com.danh3945.simplespeeddial.views.preferences;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -18,7 +19,7 @@ import com.danh3945.simplespeeddial.widget.SingleTileAppWidgetProvider;
 
 import timber.log.Timber;
 
-public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
+public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String TAG = "SpeedDialPreferenceFragment";
 
     private static final int PERMISSION_REQUEST_INSTANT_CALL = 5200;
@@ -37,6 +38,30 @@ public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle bundle, String s) {
         setPreferencesFromResource(R.xml.preferences, s);
         setRequestPermissions();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        notifyAllWidgets();
+    }
+
+    private void notifyAllWidgets() {
+        Timber.d("Notifying all widgets");
+        LargeWidgetProvider.notifyLargeWidgets(mContext);
+        SingleTileAppWidgetProvider.notifySingleTileWidgets(mContext);
     }
 
     private void setRequestPermissions() {
@@ -85,19 +110,5 @@ public class SpeedDialPreferenceFragment extends PreferenceFragmentCompat {
                     }
                 }
         }
-    }
-
-    private void notifyAllWidgets() {
-        Timber.d("Notifying all widgets");
-        LargeWidgetProvider.notifyLargeWidgets(mContext);
-        SingleTileAppWidgetProvider.notifySingleTileWidgets(mContext);
-    }
-
-    @Override
-    public void onDetach() {
-        // When this fragment is detached all the widgets are notified that they need to update
-        // their state to reflect preference changes.
-        notifyAllWidgets();
-        super.onDetach();
     }
 }
