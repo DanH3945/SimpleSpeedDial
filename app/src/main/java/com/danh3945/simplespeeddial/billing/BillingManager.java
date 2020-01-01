@@ -54,14 +54,18 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
 
     }
 
-    public void observe(BillingListener billingListener) {
-        mListeners.add(billingListener);
+    public void observeWithResult(BillingListener billingListener) {
+        observe(billingListener);
         isPremiumClient(new PremiumConfirmation() {
             @Override
             public void isPremium(Result result) {
                 billingListener.purchasesUpdated(result);
             }
         });
+    }
+
+    public void observe(BillingListener billingListener) {
+        mListeners.add(billingListener);
     }
 
     private void notifyObservers() {
