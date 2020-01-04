@@ -39,18 +39,19 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
     }
 
     private List<BillingListener> mListeners;
-    private AppCompatActivity mHostActivity;
     private BillingClient mBillingClient;
     private Purchase.PurchasesResult mPurchasesResult;
 
     private static final String SUBSCRIPTION_SKU = "SimpleSpeedDialSub";
 
     public BillingManager(AppCompatActivity activity) {
-        mHostActivity = activity;
-        mHostActivity.getLifecycle().addObserver(this);
-        mListeners = new ArrayList<>();
 
-        queryPurchases(null);
+        mBillingClient = BillingClient.newBuilder(activity)
+                .setListener(this)
+                .enablePendingPurchases()
+                .build();
+        activity.getLifecycle().addObserver(this);
+        mListeners = new ArrayList<>();
 
     }
 
@@ -107,10 +108,6 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
         }
 
         Timber.d("Starting BillingClient connection");
-        mBillingClient = BillingClient.newBuilder(mHostActivity)
-                .setListener(this)
-                .enablePendingPurchases()
-                .build();
         mBillingClient.startConnection(new BillingClientStateListener() {
             @Override
             public void onBillingSetupFinished(BillingResult billingResult) {
@@ -157,6 +154,13 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
             @Override
             public void run() {
 
+                while (mPurchasesResult == null) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 Timber.d("Iterating over PurchasesResult.  Total length:  %s", mPurchasesResult.getPurchasesList().size());
 
                 for (Purchase purchase : mPurchasesResult.getPurchasesList()) {
@@ -164,6 +168,7 @@ public class BillingManager implements LifecycleEventObserver, PurchasesUpdatedL
                     if (purchase.getSku().equals(SUBSCRIPTION_SKU) &&
                             purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
                         premiumConfirmation.isPremium(Result.PREMIUM);
+                        return;
                     }
                 }
 
