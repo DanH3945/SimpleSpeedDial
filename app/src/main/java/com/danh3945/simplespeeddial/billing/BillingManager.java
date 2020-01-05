@@ -82,26 +82,26 @@ public class BillingManager implements PurchasesUpdatedListener {
             public void connectionReady(int billingResponseCode) {
 
                 if (billingResponseCode != BillingClient.BillingResponseCode.OK) {
+                    Timber.d("Billing Response code was not OK.  Dispatching NET_ERROR result");
                     premiumConfirmation.isPremium(Result.NET_ERROR);
                     return;
                 }
 
-                Purchase.PurchasesResult purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.SUBS);
+                Timber.d("Billing response code was OK.  Checking premium status.");
 
-                if (purchasesResult == null) {
-                    premiumConfirmation.isPremium(Result.NOT_PREMIUM);
-                    return;
-                }
+                Purchase.PurchasesResult purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.SUBS);
 
                 for (Purchase purchase : purchasesResult.getPurchasesList()) {
                     Timber.d(purchase.getSku());
                     if (purchase.getSku().equals(SUBSCRIPTION_SKU) &&
                             purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
+                        Timber.d("Premium client confirmed.  Dispatching PREMIUM result.");
                         premiumConfirmation.isPremium(Result.PREMIUM);
                         return;
                     }
                 }
 
+                Timber.d("Premium client not confirmed.  Dispatching NOT_PREMIUM result");
                 premiumConfirmation.isPremium(Result.NOT_PREMIUM);
             }
         });
