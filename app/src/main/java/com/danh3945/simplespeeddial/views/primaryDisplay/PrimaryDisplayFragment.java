@@ -34,6 +34,9 @@ public class PrimaryDisplayFragment extends Fragment {
 
     Button mContactListBtn;
 
+    private static Fragment lastChildFragment;
+    private static String lastChildFragmentTag;
+
     public static Fragment createInstance() {
         return new PrimaryDisplayFragment();
     }
@@ -83,7 +86,7 @@ public class PrimaryDisplayFragment extends Fragment {
         });
 
         if (isLandscapeOriented()) {
-            loadFragment(CurrentSpeedDialFragment.createInstance(), CurrentSpeedDialFragment.TAG);
+            loadFragment();
         }
 
         return view;
@@ -123,6 +126,16 @@ public class PrimaryDisplayFragment extends Fragment {
         return largeWidgetObject;
     }
 
+    private void loadFragment() {
+
+        if (lastChildFragment != null && lastChildFragmentTag != null) {
+            loadFragment(lastChildFragment, lastChildFragmentTag);
+            return;
+        }
+
+        loadFragment(CurrentSpeedDialFragment.createInstance(), CurrentSpeedDialFragment.TAG);
+    }
+
     private void loadFragment(Fragment fragment, String tag) {
         if (isLandscapeOriented()) {
             loadChildFragment(fragment, tag);
@@ -145,6 +158,9 @@ public class PrimaryDisplayFragment extends Fragment {
     }
 
     private void loadChildFragment(Fragment fragment, String tag) {
+        lastChildFragment = fragment;
+        lastChildFragmentTag = tag;
+
         FragmentManager fm = getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.primary_display_landscape_frame, fragment, tag);
@@ -154,5 +170,10 @@ public class PrimaryDisplayFragment extends Fragment {
 
     private boolean isLandscapeOriented() {
         return getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }
